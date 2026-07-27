@@ -1,0 +1,55 @@
+---
+name: fetch-content
+description: Fetch and normalize any content source into clean text with metadata — YouTube video transcripts, web articles, PDFs, tweets/X posts, local files. Use when the user shares a YouTube link, article URL, tweet/X link, or PDF (URL or file) and you need its actual text content to summarize, analyze, fact-check, or answer questions about it.
+---
+
+# fetch-content
+
+Turn any URL or file into clean, analyzable text with source metadata. One script, auto-detects source type.
+
+## Quick start
+
+```bash
+uv run <this-skill-dir>/scripts/fetch.py "<url-or-file>"
+```
+
+No `uv`? Fallback:
+
+```bash
+pip install yt-dlp youtube-transcript-api trafilatura pymupdf requests
+python3 <this-skill-dir>/scripts/fetch.py "<url-or-file>"
+```
+
+Output goes to stdout: YAML front matter (title, author, date, views/likes, word count) followed by the text. Add `--json` for structured output, `--lang de` to prefer another transcript language.
+
+Long output? Redirect to a file and read it from there:
+
+```bash
+uv run .../fetch.py "<url>" > /tmp/content.md
+```
+
+## What it handles
+
+| Input | Result |
+|-------|--------|
+| YouTube URL (watch/shorts/live/youtu.be) | Timestamped transcript (`[mm:ss]` paragraphs) + views, likes, channel size |
+| Tweet / X URL | Tweet text (+ quoted tweet) + likes, retweets, views, follower count |
+| PDF — URL or local path | Text with `[p.N]` page markers |
+| Any other URL | Article text via readability extraction + title, author, date |
+| Local `.txt` / `.md` | Passthrough |
+
+## When it fails
+
+The script exits non-zero with an actionable `HINT:` on stderr. Follow it:
+
+- **Article paywalled / JS-rendered** → use your built-in web fetch tool on the same URL; if that also fails, ask the user to paste the text.
+- **Video has no captions** → tell the user; offer to transcribe audio with Whisper if available.
+- **Tweet private / deleted / login-walled** → ask the user to paste the tweet text.
+
+Never silently substitute your own guess about content you could not fetch.
+
+## Notes
+
+- Video/tweet engagement stats are point-in-time — quote them with the fetch date.
+- YouTube blocks datacenter IPs; the script is intended to run on the user's machine.
+- Metadata (views, account size, publish date) is useful context for downstream skills — keep the front matter when passing text on.

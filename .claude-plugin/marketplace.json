@@ -1,0 +1,22 @@
+{
+  "name": "serhii-korniienko",
+  "owner": {
+    "name": "Serhii Korniienko",
+    "url": "https://korniienko.dev"
+  },
+  "description": "Serhii Korniienko's content-analysis skills — bullshit detection, summarizing, and explaining for any URL — as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "bullshit-detector",
+      "source": "./",
+      "description": "Fact-check any YouTube video, article, tweet, or PDF: claim-by-claim verification with sources, hype-signal scan, and a 0-10 BS score.",
+      "category": "productivity",
+      "keywords": [
+        "fact-check",
+        "bullshit-detector",
+        "youtube",
+        "summarize"
+      ]
+    }
+  ]
+}

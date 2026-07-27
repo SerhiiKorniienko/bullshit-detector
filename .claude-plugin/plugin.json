@@ -1,0 +1,26 @@
+{
+  "name": "bullshit-detector",
+  "version": "0.1.0",
+  "description": "Fact-check the internet with your agent — fetch any YouTube video, article, tweet, or PDF, verify its claims against independent sources, and get a BS score instead of hype.",
+  "author": {
+    "name": "Serhii Korniienko",
+    "url": "https://korniienko.dev"
+  },
+  "homepage": "https://korniienko.dev/newsletter",
+  "repository": "https://github.com/SerhiiKorniienko/bullshit-detector",
+  "license": "MIT",
+  "keywords": [
+    "fact-check",
+    "bullshit-detector",
+    "youtube-transcript",
+    "summarize",
+    "content-analysis",
+    "skills"
+  ],
+  "skills": [
+    "./skills/ingestion/fetch-content",
+    "./skills/analysis/bullshit-detector",
+    "./skills/analysis/summarize",
+    "./skills/analysis/explain"
+  ]
+}
