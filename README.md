@@ -6,6 +6,8 @@ Agent skills that fact-check the internet. Point your agent at a viral YouTube v
 
 Portable [Agent Skills](https://agentskills.io) — plain markdown + self-contained Python. They work in Claude Code, Codex, OpenCode, and any harness that supports the skills format and has web search.
 
+Built in the open with [Claude Code](https://claude.com/claude-code) — an AI helped build the tool that fact-checks AI hype, and the [example report](./examples/report-14-ways-to-make-money-with-ai.md) is it auditing its own kind.
+
 Follow [@SerhiiFounder](https://x.com/SerhiiFounder) for new skills and fact-check experiments, or [join the newsletter](https://korniienko.dev/newsletter) to get them in your inbox.
 
 ## Quickstart (30-second setup)
@@ -31,8 +33,10 @@ Prefer a managed bundle that updates when a new version ships, instead of copied
 
 Two ways to install, two philosophies:
 
-- **[skills.sh](https://skills.sh/SerhiiKorniienko/bullshit-detector)** copies the skills into your setup so you can hack on them and make them your own.
-- **The plugin** keeps them as a read-only, always-current bundle — best when you just want it to work and follow along as it evolves.
+- **[skills.sh](https://skills.sh/SerhiiKorniienko/bullshit-detector)** copies the skills into your setup so you can hack on them and make them your own. Works with any agent (Claude Code, Codex, OpenCode, …).
+- **The plugin** keeps them as a read-only, always-current bundle — best when you just want it to work and follow along as it evolves. Claude Code only.
+
+**Pick one, not both** — installing both gives Claude Code two copies of every skill.
 
 ## Why These Skills Exist
 
