@@ -2,9 +2,10 @@ Skills are organized into bucket folders under `skills/`:
 
 - `analysis/` — skills that reason about content (source-agnostic, work on text)
 - `ingestion/` — skills that turn sources into text (adapters live here)
+- `publishing/` — skills that turn analysis results into shareable output (posts, carousels)
 - `in-progress/` — drafts not yet ready to ship
 
-Every skill in `analysis/` or `ingestion/` (the **promoted** buckets) must have a reference in the top-level `README.md` and an entry in `.claude-plugin/plugin.json`'s `skills` array — the Claude Code plugin ships exactly the promoted set. Skills in `in-progress/` must not appear in either. Each bucket folder has a `README.md` listing every skill in the bucket with a one-line description, skill name linked to its `SKILL.md`; the top-level `README.md` links every promoted skill the same way.
+Every skill in `analysis/`, `ingestion/`, or `publishing/` (the **promoted** buckets) must have a reference in the top-level `README.md` and an entry in `.claude-plugin/plugin.json`'s `skills` array — the Claude Code plugin ships exactly the promoted set. Skills in `in-progress/` must not appear in either. Each bucket folder has a `README.md` listing every skill in the bucket with a one-line description, skill name linked to its `SKILL.md`; the top-level `README.md` links every promoted skill the same way.
 
 The repo is also its own single-plugin Claude Code marketplace: `.claude-plugin/marketplace.json` lists the one `bullshit-detector` plugin. When releasing, bump `.claude-plugin/plugin.json`'s `version` — Claude uses it to decide when installed users see an update. Run `claude plugin validate . --strict` after touching either manifest.
 

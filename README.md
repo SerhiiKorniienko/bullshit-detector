@@ -81,6 +81,12 @@ Turn any source into clean text + metadata.
 
 - **[fetch-content](./skills/ingestion/fetch-content/SKILL.md)** — YouTube transcripts, articles, PDFs, tweets, local files. One script, auto-detects source, no API keys.
 
+### [Publishing](./skills/publishing/README.md)
+
+Turn reports into shareable output.
+
+- **[share](./skills/publishing/share/SKILL.md)** — Ready-to-paste posts for X (thread/single), LinkedIn, Facebook, Reddit, Hacker News, or a newsletter — plus a branded image carousel: 1080×1350 PNGs for X/Instagram and the PDF that LinkedIn document posts want.
+
 ## Roadmap
 
 See [skills/in-progress](./skills/in-progress/README.md): `compare` (same topic across sources — who's right?), `transcribe` (Whisper for TikTok/Reels and caption-less videos), X thread walking.
