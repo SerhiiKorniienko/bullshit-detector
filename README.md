@@ -38,6 +38,19 @@ Two ways to install, two philosophies:
 
 **Pick one, not both** — installing both gives Claude Code two copies of every skill.
 
+## Setup by agent
+
+Works beyond Claude Code — the skills are plain markdown + self-contained scripts. Full walkthroughs with caveats per surface live in **[SETUP.md](./SETUP.md)**:
+
+| Agent / app | Support | Guide |
+|---|---|---|
+| Claude Code CLI | ✅ everything | [SETUP.md → Claude Code CLI](./SETUP.md#claude-code-cli) |
+| Claude Desktop app (Code tab) | ✅ everything — same as CLI | [SETUP.md → Code tab](./SETUP.md#claude-desktop-app-code-tab) |
+| Claude Desktop / claude.ai (Chat) | ⚠️ analysis skills only (sandbox can't reach YouTube/TikTok) | [SETUP.md → Chat](./SETUP.md#claude-desktop-and-claudeai-chat) |
+| OpenAI Codex | ✅ via skills.sh installer | [SETUP.md → OpenAI Codex](./SETUP.md#openai-codex) |
+| ChatGPT | ⚠️ paste-driven workaround | [SETUP.md → ChatGPT](./SETUP.md#chatgpt) |
+| OpenCode, Cursor, Gemini CLI, … | ✅ via skills.sh installer | [SETUP.md → Other agents](./SETUP.md#other-agents) |
+
 ## Why These Skills Exist
 
 ### #1: Viral ≠ true
@@ -62,6 +75,25 @@ A real run against a 1.16M-view "make money with AI" video: **[examples/report-1
 
 > **BS score: 5/10 — real tools, real trends, guru math, and a funnel every four minutes.**
 > 12 claims verified: 4 confirmed, 2 plausible, 3 misleading, 0 false, 3 unverifiable. Among the catches: "Renaissance, D.E. Shaw, Two Sigma only trade employees' money" (true for one fund of one firm), and marketplace stats sourced from the marketplace's own PR.
+
+And a TikTok run — a 552K-view "our Sun has a hidden twin" video: **[examples/report-second-sun-binary-star.md](./examples/report-second-sun-binary-star.md)** (BS score: 9/10 — real astronomy vocabulary stitched onto a fabricated cosmology).
+
+## TikTok videos
+
+Yes, TikTok works — ask the same way: *"is this bullshit? https://vt.tiktok.com/…"*.
+
+How it works under the hood:
+
+1. **Built-in captions first.** Most TikToks ship with creator or auto-generated captions, and yt-dlp can pull them without downloading the video:
+
+   ```bash
+   uvx yt-dlp --list-subs <tiktok-url>                                  # check what's available
+   uvx yt-dlp --write-subs --sub-langs "eng-US" --skip-download <tiktok-url>  # grab the .vtt
+   ```
+
+2. **No captions? Whisper fallback.** For caption-less TikToks and Reels there's a validated local-transcription prototype (mlx-whisper on Apple Silicon, no system ffmpeg needed — PyAV decodes the audio) graduating from [skills/in-progress](./skills/in-progress/README.md) as the `transcribe` skill. Use `whisper-large-v3-turbo` — smaller models garble words badly enough to break claim extraction.
+
+The analysis side doesn't care either way — the detector sees normalized text + metadata whether it came from a 7-minute TikTok or a 3-hour podcast (that's [design principle #3](#3-separation-of-fetching-and-judging)).
 
 ## Reference
 
@@ -89,7 +121,7 @@ Turn reports into shareable output.
 
 ## Roadmap
 
-See [skills/in-progress](./skills/in-progress/README.md): `compare` (same topic across sources — who's right?), `transcribe` (Whisper for TikTok/Reels and caption-less videos), X thread walking.
+See [skills/in-progress](./skills/in-progress/README.md): `compare` (same topic across sources — who's right?), `transcribe` (Whisper for caption-less TikTok/Reels — working mlx-whisper prototype landed, SKILL.md pending), X thread walking.
 
 ## Stay in touch
 
