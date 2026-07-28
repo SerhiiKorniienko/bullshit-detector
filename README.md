@@ -63,7 +63,7 @@ A finance guy with 1M views tells you the "only 14 ways to make money with AI". 
 
 Your agent can't sit through a 27-minute video, and YouTube's official API won't give you captions for videos you don't own. Same story with tweets ($100/mo API) and paywalled articles.
 
-**The fix:** [`fetch-content`](./skills/ingestion/fetch-content/SKILL.md) — one script that turns any URL into clean text + metadata with no API keys: YouTube transcripts via yt-dlp, articles via readability extraction, PDFs, tweets via free endpoints. Every failure mode produces an actionable hint (paywall → paste, no captions → Whisper) instead of a silent guess.
+**The fix:** [`fetch-content`](./skills/ingestion/fetch-content/SKILL.md) — one script that turns any URL into clean text + metadata with no API keys: YouTube transcripts and TikTok captions via yt-dlp, articles via readability extraction, PDFs, tweets via free endpoints. Every failure mode produces an actionable hint (paywall → paste, no captions → Whisper) instead of a silent guess.
 
 ### #3: Separation of fetching and judging
 
@@ -84,7 +84,7 @@ Yes, TikTok works — ask the same way: *"is this bullshit? https://vt.tiktok.co
 
 How it works under the hood:
 
-1. **Built-in captions first.** Most TikToks ship with creator or auto-generated captions, and yt-dlp can pull them without downloading the video:
+1. **Built-in captions first.** Most TikToks ship with creator or auto-generated captions. The [`fetch-content`](./skills/ingestion/fetch-content/SKILL.md) script handles this natively — TikTok URLs (including `vt.tiktok.com` short links) return a timestamped transcript plus views/likes/reposts, no video download. The same thing by hand:
 
    ```bash
    uvx yt-dlp --list-subs <tiktok-url>                                  # check what's available
@@ -111,7 +111,7 @@ Reason about content. Source-agnostic — they never care where the text came fr
 
 Turn any source into clean text + metadata.
 
-- **[fetch-content](./skills/ingestion/fetch-content/SKILL.md)** — YouTube transcripts, articles, PDFs, tweets, local files. One script, auto-detects source, no API keys.
+- **[fetch-content](./skills/ingestion/fetch-content/SKILL.md)** — YouTube transcripts, TikTok captions, articles, PDFs, tweets, local files. One script, auto-detects source, no API keys.
 
 ### [Publishing](./skills/publishing/README.md)
 

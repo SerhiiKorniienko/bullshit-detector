@@ -28,13 +28,13 @@ First run needs a one-time browser install: `uv run --with playwright playwright
   "source": "Author · Platform · 1.16M views",
   "score": 5,
   "verdict_line": "Real tools, fantasy income math",
-  "footer": "@SerhiiFounder · korniienko.dev/newsletter",
+  "footer": "@their-handle · their-link (the sharer's, not the tool author's — see rules)",
   "slides": [
     { "type": "hook" },
     { "type": "claim", "n": "1/12", "claim": "Quoted or paraphrased claim, ≤200 chars",
       "verdict": "misleading", "evidence": "One-sentence reality, ≤160 chars" },
     { "type": "cta", "headline": "Run it on anything",
-      "lines": ["npx skills add SerhiiKorniienko/bullshit-detector", "korniienko.dev/newsletter"] }
+      "lines": ["the sharer's own links — ask, don't assume"] }
   ]
 }
 ```
@@ -44,6 +44,7 @@ Verdicts: `confirmed` / `plausible` / `misleading` / `false` / `unverifiable`. P
 ## Rules
 
 - **The report is the content; the tool is the footnote.** Hooks lead with findings ("12 claims, 3 misleading"), never with "I built a tool".
+- **Footer and CTA belong to the person sharing.** Ask for their handle/newsletter/links (or omit those slides) — never default to the tool author's branding. Crediting the tool is welcome but optional: one line like "made with bullshit-detector" is plenty.
 - Numbers must match the report exactly — a fact-checking brand cannot round its own stats.
 - Stay honest in compression: if the report's verdict is nuanced ("competent hype, not a scam"), the post says that too. No rage-bait the report doesn't support.
 - Never fabricate engagement bait ("everyone is talking about this").

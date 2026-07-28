@@ -16,6 +16,7 @@ Usage:
 
 Supported sources:
     - YouTube video URL  -> transcript (timestamped) + video metadata
+    - TikTok video URL   -> caption transcript (timestamped) + video metadata
     - Twitter/X URL      -> tweet text + engagement stats
     - PDF (URL or file)  -> extracted text with page markers
     - Any other URL      -> article text via readability extraction
@@ -36,6 +37,7 @@ import requests
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
 YOUTUBE_HOSTS = ("youtube.com", "youtu.be", "m.youtube.com", "www.youtube.com", "youtube-nocookie.com")
+TIKTOK_HOSTS = ("tiktok.com", "www.tiktok.com", "m.tiktok.com", "vt.tiktok.com", "vm.tiktok.com")
 TWITTER_HOSTS = ("twitter.com", "x.com", "mobile.twitter.com", "www.twitter.com", "www.x.com")
 
 
@@ -175,6 +177,92 @@ def fetch_youtube(url: str, lang: str) -> tuple[dict, str]:
                 "video may have captions disabled; download audio and transcribe "
                 "with Whisper, or pick another source",
             )
+    meta["transcript_language"] = used_lang
+    return meta, paragraphs_from_snippets(snippets)
+
+
+# ---------------------------------------------------------------- tiktok
+
+def vtt_snippets(vtt: str) -> list:
+    """Parse a WebVTT caption file into (start_seconds, text) snippets."""
+    snippets, last = [], None
+    for block in re.split(r"\n\s*\n", vtt):
+        m = re.search(r"(?:(\d+):)?(\d+):(\d+)\.\d+\s*-->", block)
+        if not m:
+            continue
+        start = int(m.group(1) or 0) * 3600 + int(m.group(2)) * 60 + int(m.group(3))
+        lines = [
+            re.sub(r"<[^>]+>", "", line).strip()
+            for line in block.splitlines()
+            if "-->" not in line
+        ]
+        text = " ".join(line for line in lines if line and line != "WEBVTT")
+        if text and text != last:
+            snippets.append((float(start), text))
+            last = text
+    return snippets
+
+
+def tiktok_snippets(info: dict, lang: str, urlread) -> tuple[list, str]:
+    """Pull a caption track (vtt) out of yt-dlp info and parse it."""
+    prefix = lang[:2].lower()
+    for source in ("subtitles", "automatic_captions"):
+        tracks = info.get(source) or {}
+        # prefer the requested language, then whatever exists
+        for code in sorted(tracks, key=lambda c: not c.lower().startswith(prefix)):
+            for fmt in tracks[code]:
+                if fmt.get("ext") not in ("vtt", "srt"):
+                    continue
+                try:
+                    snippets = vtt_snippets(urlread(fmt["url"]))
+                except Exception:
+                    continue
+                if snippets:
+                    return snippets, code
+    raise RuntimeError("no caption tracks in yt-dlp info")
+
+
+def fetch_tiktok(url: str, lang: str) -> tuple[dict, str]:
+    import yt_dlp
+
+    # writesubtitles/writeautomaticsub make the extractor populate caption
+    # tracks in the info dict; skip_download still prevents any file writes.
+    opts = {
+        "quiet": True,
+        "no_warnings": True,
+        "skip_download": True,
+        "writesubtitles": True,
+        "writeautomaticsub": True,
+    }
+    with yt_dlp.YoutubeDL(opts) as ydl:
+        info = ydl.extract_info(url, download=False)
+        # caption URLs need the extractor's challenge cookies — fetch them
+        # through yt-dlp's own session, not a bare requests call
+        urlread = lambda u: ydl.urlopen(u).read().decode("utf-8", "replace")
+        try:
+            snippets, used_lang = tiktok_snippets(info, lang, urlread)
+        except Exception:
+            snippets = None
+    upload = info.get("upload_date") or ""
+    if len(upload) == 8:
+        upload = f"{upload[:4]}-{upload[4:6]}-{upload[6:]}"
+    meta = {
+        "source_type": "tiktok",
+        "title": info.get("title"),
+        "author": info.get("uploader") or info.get("channel"),
+        "published": upload,
+        "duration": fmt_ts(info.get("duration") or 0),
+        "views": fmt_int(info.get("view_count")),
+        "likes": fmt_int(info.get("like_count")),
+        "comments": fmt_int(info.get("comment_count")),
+        "reposts": fmt_int(info.get("repost_count")),
+    }
+    if not snippets:
+        fail(
+            "no captions available for this TikTok",
+            "transcribe the audio locally with Whisper and re-run on the text "
+            "file, or ask the user to paste what is said",
+        )
     meta["transcript_language"] = used_lang
     return meta, paragraphs_from_snippets(snippets)
 
@@ -338,6 +426,8 @@ def main() -> None:
         host = host_of(src)
         if any(host == h or host.endswith("." + h) for h in YOUTUBE_HOSTS):
             meta, text = fetch_youtube(src, args.lang)
+        elif any(host == h or host.endswith(".tiktok.com") for h in TIKTOK_HOSTS):
+            meta, text = fetch_tiktok(src, args.lang)
         elif any(host == h for h in TWITTER_HOSTS):
             meta, text = fetch_twitter(src)
         elif re.search(r"\.pdf(\?|$)", src, re.I):

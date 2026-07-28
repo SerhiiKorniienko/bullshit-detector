@@ -13,6 +13,8 @@ Architecture rule: analysis skills never fetch — they receive normalized text 
 
 The detector's core integrity rule — verdicts require sources, never confirm/refute a claim from model memory — is load-bearing; don't weaken it when editing `skills/analysis/bullshit-detector/`.
 
-`fetch.py` is self-contained via PEP 723 inline dependencies and must stay runnable with plain `uv run` and with `python3` after a manual `pip install`. After changing it, smoke-test all adapters: a YouTube URL, an article, a tweet (`https://x.com/naval/status/1002103360646823936` works), and a PDF.
+`fetch.py` is self-contained via PEP 723 inline dependencies and must stay runnable with plain `uv run` and with `python3` after a manual `pip install`. After changing it, smoke-test all adapters: a YouTube URL, a TikTok URL (`https://vt.tiktok.com/ZS4dhBje6` has eng-US captions), an article, a tweet (`https://x.com/naval/status/1002103360646823936` works), and a PDF.
+
+The `agents/` directory ships with the Claude Code plugin (auto-discovered) and holds subagents that skills delegate to — e.g. `claim-extractor` pinned to a cheap model for parallel claim extraction on long transcripts. SKILL.md bodies must stay portable: reference such agents conditionally ("if your harness supports subagents…"), never as a hard requirement.
 
 To (re)link every promoted skill into the local harness skill directories (`~/.claude/skills`, `~/.agents/skills`), run `scripts/link-skills.sh`. Symlinks point into this repo, so `git pull` keeps them current; re-run after adding, removing, or renaming a skill.

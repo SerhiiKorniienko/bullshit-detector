@@ -1,6 +1,6 @@
 ---
 name: fetch-content
-description: Fetch and normalize any content source into clean text with metadata — YouTube video transcripts, web articles, PDFs, tweets/X posts, local files. Use when the user shares a YouTube link, article URL, tweet/X link, or PDF (URL or file) and you need its actual text content to summarize, analyze, fact-check, or answer questions about it.
+description: Fetch and normalize any content source into clean text with metadata — YouTube video transcripts, TikTok captions, web articles, PDFs, tweets/X posts, local files. Use when the user shares a YouTube link, TikTok link, article URL, tweet/X link, or PDF (URL or file) and you need its actual text content to summarize, analyze, fact-check, or answer questions about it.
 ---
 
 # fetch-content
@@ -33,6 +33,7 @@ uv run .../fetch.py "<url>" > /tmp/content.md
 | Input | Result |
 |-------|--------|
 | YouTube URL (watch/shorts/live/youtu.be) | Timestamped transcript (`[mm:ss]` paragraphs) + views, likes, channel size |
+| TikTok URL (incl. vt/vm short links) | Caption transcript (`[mm:ss]` paragraphs) + views, likes, comments, reposts |
 | Tweet / X URL | Tweet text (+ quoted tweet) + likes, retweets, views, follower count |
 | PDF — URL or local path | Text with `[p.N]` page markers |
 | Any other URL | Article text via readability extraction + title, author, date |
@@ -43,7 +44,7 @@ uv run .../fetch.py "<url>" > /tmp/content.md
 The script exits non-zero with an actionable `HINT:` on stderr. Follow it:
 
 - **Article paywalled / JS-rendered** → use your built-in web fetch tool on the same URL; if that also fails, ask the user to paste the text.
-- **Video has no captions** → tell the user; offer to transcribe audio with Whisper if available.
+- **Video has no captions** (YouTube or TikTok) → tell the user; offer to transcribe audio with Whisper if available.
 - **Tweet private / deleted / login-walled** → ask the user to paste the tweet text.
 
 Never silently substitute your own guess about content you could not fetch.

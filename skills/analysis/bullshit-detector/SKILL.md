@@ -16,6 +16,15 @@ Separate what's verifiably true from what's hype in any piece of content.
 5. **Scan for hype signals** using the checklist in [RUBRIC.md](RUBRIC.md).
 6. **Write the report card** using the template in [RUBRIC.md](RUBRIC.md), ending with the 0-10 BS score.
 
+## Long content
+
+For transcripts over ~10,000 words (feature-length videos, podcasts, long interviews):
+
+- Split the transcript into 4–6 chunks and, if your harness supports subagents or parallel tasks, fan claim extraction out across them — one chunk per task, each returning claims with timestamps, speaker, and type. Extraction is mechanical: if your harness lets you pick a model per task, a small/fast model is fine here (the Claude Code plugin bundles a `claim-extractor` agent preconfigured for this).
+- Merge and dedupe the extracted claims, then select the load-bearing ones as usual.
+- Verification of independent claims can also run in parallel.
+- No subagents available? Process sequentially — the workflow is identical, just slower.
+
 ## Verdict scale
 
 | Verdict | Meaning |
@@ -34,3 +43,4 @@ Separate what's verifiably true from what's hype in any piece of content.
 - High production value, confidence, and view counts are not evidence of anything.
 - Steelman first: check whether a generous reading of the claim survives before rating it `misleading` or `false`.
 - If the content is mostly solid, say so plainly — the tool detects bullshit, it doesn't manufacture it.
+- Write the report in the user's language, whatever language the content is in. Keep quoted claims in the original language when the wording itself is the evidence, with a translation if the languages differ.
