@@ -22,7 +22,7 @@ python3 <this-skill-dir>/scripts/fetch.py "<url-or-file>"
 
 Output goes to stdout: YAML front matter (title, author, date, views/likes, word count) followed by the text. Add `--json` for structured output, `--lang de` to prefer another transcript language.
 
-Long output? Redirect to a file and read it from there:
+Long output? Redirect to a file and read it from there. A long transcript (a 3-hour podcast, say) can swamp the context window if it all arrives at once; from a file you can read it in chunks, or hand the path to a subagent and keep it out of your own context entirely:
 
 ```bash
 uv run .../fetch.py "<url>" > /tmp/content.md
