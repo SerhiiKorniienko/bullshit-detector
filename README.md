@@ -10,7 +10,7 @@ Built in the open with [Claude Code](https://claude.com/claude-code) — an AI h
 
 Follow [@SerhiiFounder](https://x.com/SerhiiFounder) for new skills and fact-check experiments, or [join the newsletter](https://korniienko.dev/newsletter) to get them in your inbox.
 
-## Quickstart (30-second setup)
+## Quickstart
 
 1. Install [uv](https://docs.astral.sh/uv/) if you don't have it (the fetch script uses it to self-resolve its dependencies).
 
@@ -61,7 +61,7 @@ A finance guy with 1M views tells you the "only 14 ways to make money with AI". 
 
 ### #2: Agents can't watch videos
 
-Your agent can't sit through a 27-minute video, and YouTube's official API won't give you captions for videos you don't own. Same story with tweets ($100/mo API) and paywalled articles.
+Your agent can't sit through a 27-minute video, and YouTube's official API won't give you captions for videos you don't own. Same story with tweets, where the official API now bills per post, and with paywalled articles.
 
 **The fix:** [`fetch-content`](./skills/ingestion/fetch-content/SKILL.md) — one script that turns any URL into clean text + metadata with no API keys: YouTube transcripts and TikTok captions via yt-dlp, articles via readability extraction, PDFs, tweets via free endpoints. Every failure mode produces an actionable hint (paywall → paste, no captions → Whisper) instead of a silent guess.
 
@@ -77,6 +77,8 @@ A real run against a 1.16M-view "make money with AI" video: **[examples/report-1
 > 12 claims verified: 4 confirmed, 2 plausible, 3 misleading, 0 false, 3 unverifiable. Among the catches: "Renaissance, D.E. Shaw, Two Sigma only trade employees' money" (true for one fund of one firm), and marketplace stats sourced from the marketplace's own PR.
 
 And a TikTok run — a 552K-view "our Sun has a hidden twin" video: **[examples/report-second-sun-binary-star.md](./examples/report-second-sun-binary-star.md)** (BS score: 9/10 — real astronomy vocabulary stitched onto a fabricated cosmology).
+
+Someone on Hacker News asked for the obvious test — run it on this README. **[examples/report-own-readme.md](./examples/report-own-readme.md)** (BS score: 3/10). It caught a two-year-stale API price and a "30-second setup" that began with installing a package manager, both fixed in v0.4.2, and one thing that can't be fixed by editing: the only evidence this tool is accurate is reports it wrote about videos its author picked.
 
 ## TikTok videos
 
