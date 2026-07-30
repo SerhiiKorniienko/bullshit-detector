@@ -108,12 +108,45 @@ Count how many apply. Each is a signal, not proof — the report should name the
 - Hedge-free confidence about the future
 - Preemptive dismissal of skeptics ("haters", "broke mindset")
 
+**Fabrication tells**
+- A named specific with no footprint at all: a framework, award, certification, case or reference
+  number, study, or affiliation that returns *nothing* — not thin coverage, nothing
+- Credentials attached to real institutions that the institution itself has no record of
+- A public figure or statistic presented as the speaker's own result
+- Precision that rises as checkability falls: exact numbers about things nobody else can see
+
+This group inverts the usual reading of specificity. "Our TrustFrame™ methodology, used by 340+
+organisations, delivered a 340% improvement under reference NHS-2024-AI-0891" sounds more rigorous
+than a vague version of the same boast, and scores better with any reader — human or model — who
+treats detail as evidence. It is also easier to check, and that is the point: a real framework, a
+real award and a real case number leave traces, and an invented one leaves none.
+
+Two guards, because this signal fails in a specific direction:
+
+- **Only fire it when the search is working.** Zero results because a domain blocks the crawler,
+  because the entity is non-English, or because it predates the searchable web is not a fabrication
+  tell — it is the reachability problem above wearing a disguise. The test is whether searches
+  return *other* things: a working search that finds everything except this is evidence; a search
+  that finds nothing at all is a broken search.
+- **This is never proof of invention.** You cannot verify nonexistence. The verdict stays
+  ❓ unverifiable with "no record found" in the evidence cell — but unlike other ❓ rows, it counts
+  as a signal, because the content chose to assert something checkable and there was nothing there.
+
+The misattribution case is different and rates differently: a real public statistic presented as the
+speaker's own result is 🟠 **misleading**, not unverifiable. The number is fine. The attribution is
+the claim, and it is false.
+
 ## BS score (0–10)
 
 **The score covers what you checked, and nothing else.** A `⚪ not checked` claim must not move it in
 either direction — not up because something looked shaky, not down because the rest held up. If the
 unchecked remainder is large enough that a reader might reasonably reach a different score, say so
 next to the number rather than letting it imply full coverage.
+
+**The one ❓ that does move the score** is the fabrication tell above: a named, checkable specific
+with no footprint, where the search was demonstrably working. That is not a statement about the
+evidence available to you — the content picked the referent, and picked one that isn't there. It
+counts as a signal like any other, and it counts harder when the claim is load-bearing.
 
 **Never raise the score because sourcing was poor.** A 🟡 that means *"this is probably true but the
 only reachable source was a vendor blog"* is a statement about the evidence available to you, not
