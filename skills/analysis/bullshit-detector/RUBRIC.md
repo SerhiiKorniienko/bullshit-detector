@@ -115,6 +115,12 @@ Count how many apply. Each is a signal, not proof — the report should name the
 - A public figure or statistic presented as the speaker's own result
 - Precision that rises as checkability falls: exact numbers about things nobody else can see
 
+**An invented term is a fabrication tell, not an ambiguous claim.** A claim built on a construct that
+denotes nothing — "algorithm authority", a proprietary-sounding metric no one else uses — reads as
+unpinnable, and step 3's disambiguation gate will drop it unless told otherwise. It must not: the
+absent referent is the finding, and dropping the row means the invention is why the invention goes
+unreported. Keep the row, and say the term has no definition outside this content.
+
 This group inverts the usual reading of specificity. "Our TrustFrame™ methodology, used by 340+
 organisations, delivered a 340% improvement under reference NHS-2024-AI-0891" sounds more rigorous
 than a vague version of the same boast, and scores better with any reader — human or model — who
