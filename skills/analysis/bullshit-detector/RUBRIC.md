@@ -170,9 +170,20 @@ neighbouring search or from memory. Close with a tally that separates the two:
 > **Tally: N claims extracted, M individually source-checked** — a confirmed, b plausible,
 > c misleading, d false, e unverifiable. K claims were not checked; P were opinion or anecdote and
 > are not rateable.
+>
+> **Ambiguous: J claims dropped before verification** — what they were, in a few words.
 
 `M` is the number a reader should judge the report by. A table of 20 verdicts built on 14 searches
 overstates the work, and this tool cannot afford to overstate anything.
+
+**The ambiguous line is required, and `0` is a real answer.** Step 3 drops claims whose meaning the
+content never fixes, so `N` is a filtered number — and a filtered number that doesn't say it was
+filtered reads as a complete inventory. Without the line a reader cannot tell a content with four
+checkable claims from one with four checkable claims and eleven that could mean anything, which is
+most of what they wanted to know. `J` is counted separately and is deliberately *not* part of `N`:
+these claims were never rated, so folding them into the table would put unrated rows next to rated
+ones and break the tally arithmetic. When `J` is high, say so in the bottom line — content that
+can't be pinned down is a finding about the content, not a limitation of the check.
 
 **Count the rows, then check the sum before you write the line.** Every verdict bucket plus the
 unchecked, unverifiable, and not-rateable counts must add up to `N` exactly. Do not estimate the

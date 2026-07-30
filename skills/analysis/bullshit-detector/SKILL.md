@@ -19,6 +19,14 @@ Separate what's verifiably true from what's hype in any piece of content.
    - **Don't merge** two facts that need separate sources just because they share a sentence.
    - **Don't extract framing as fact.** Definitions ("a token is roughly a word"), scene-setting and rhetorical asides are not claims the content is staking anything on; listing them pads the denominator and makes the content look better-sourced than it is.
    - **Rank by load-bearing weight, not order of appearance.** The reader needs to know which claims the thesis dies without.
+
+   **Then pin each claim down, and drop the ones you can't.** A claim whose meaning isn't fixed is a claim you will check against a guess — and the report will show no trace of the guess.
+
+   - **Resolve the referents from the surrounding content.** "They said it would double next year" isn't checkable until *they*, *it* and *next year* are fixed. Two things block this: *referential* ambiguity (unclear what a word points to) and *structural* ambiguity (the grammar allows two readings — "AI advanced renewable energy and agriculture at Acme and Globex" can mean both at both, or one at each).
+   - **Vagueness is not ambiguity.** "Some experts", "involved in", "the early days" are vague but unambiguous. They stay, and they get checked as stated. Do not "resolve" a vague claim into a sharper one the speaker didn't make — that is the same error in the other direction.
+   - **If the content doesn't resolve it, drop the claim** — even when the rest of the sentence is checkable. The test: would readers given this same content converge on one reading? If they wouldn't, you are about to pick one and attribute it to the speaker. Dropping loses a row; guessing invents a claim and then fact-checks it, which is the worse failure by a distance.
+   - **Write every surviving claim so it stands alone**, with the missing context in square brackets: `The [Boston] council expects its law [banning plastic bags] to pass in January 2025`. A reader must be able to re-check row 7 without having read rows 1–6 or watched the video. This is what makes the claims table independently checkable rather than a set of notes about the content.
+   - **Dropped claims are not table rows and do not count toward `N`.** They are reported as a count next to the tally, with a word on what they were. A content full of assertions nobody can pin down is itself a finding — say so in the bottom line when the count is high.
 4. **Verify.** First split the factual claims into **load-bearing** (the thesis collapses without them, including any claim *derived* from them) and **incidental**. Then:
 
    - **Verify every load-bearing claim, however many there are.** There is no cap on these. If the argument rests on twelve interlocking numbers, checking ten of them produces a report that cannot support its own conclusion.

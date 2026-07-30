@@ -35,6 +35,12 @@ RATED = ["confirmed", "plausible", "misleading", "false"]
 
 CLAIM_ROW = re.compile(r"^\|\s*(\d+)\s*\|")
 TALLY_LINE = re.compile(r"^>?\s*\*\*Tally:.*", re.M)
+VERSION_STAMP = re.compile(r"bullshit-detector\s+v?(\d+)\.(\d+)\.(\d+)")
+AMBIG_LINE = re.compile(r"\*\*Ambiguous:\s*(\d+)\s+claims?\s+dropped[^*]*\*\*\s*(.*)", re.I)
+# Reports stamped by an older release were written under that release's rules. Checking
+# them against rules added later is the same error as re-scoring an old report with a new
+# rubric, so each check that postdates a release records the version it starts applying at.
+AMBIG_SINCE = (0, 6, 0)
 
 
 def classify(row: str):
@@ -132,6 +138,39 @@ def undeclared_unverifiable(text: str) -> list:
     return bad
 
 
+def report_version(text: str):
+    """The release the report says it was produced by, or None if unstamped.
+
+    None means "current run against a manifest-less install" — new checks apply. An old
+    version number means the report predates them and must not be judged by them.
+    """
+    m = VERSION_STAMP.search(text)
+    return tuple(int(g) for g in m.groups()) if m else None
+
+
+def ambiguous_line_problem(text: str):
+    """The dropped-claims count next to the tally — required, and 0 is a real answer.
+
+    Step 3 drops claims the content never disambiguates, so N is a filtered number. A
+    filtered number that doesn't say it was filtered reads as a complete inventory, and
+    the reader cannot tell "four checkable claims" from "four checkable claims and eleven
+    that could mean anything". Counting what you threw away is exactly the bookkeeping
+    that rots when it is merely instructed.
+    """
+    version = report_version(text)
+    if version is not None and version < AMBIG_SINCE:
+        return None
+    m = AMBIG_LINE.search(text)
+    if not m:
+        return ("no ambiguous-claims line — state "
+                "`**Ambiguous: J claims dropped before verification**` next to the Tally "
+                "(J may be 0) so a filtered claim count can't read as a complete one")
+    if int(m.group(1)) > 0 and not m.group(2).strip(" —–-\t"):
+        return (f"{m.group(1)} claims dropped as ambiguous but the line doesn't say what "
+                f"they were — a bare count can't be argued with")
+    return None
+
+
 def build_line(counts: Counter, total: int, m: int) -> str:
     rated = ", ".join(f"{counts[k]} {k}" for k in RATED if counts[k])
     tail = []
@@ -186,8 +225,11 @@ def main() -> None:
             f"❓ rows {undeclared} don't say whether a search ran — each must state "
             f'"searched; nothing found" or "unverifiable by construction" so M is recountable')
 
-    if not re.search(r"bullshit-detector\s+v?\d+\.\d+\.\d+", text):
+    if not VERSION_STAMP.search(text):
         problems.append("no version stamp — header must carry `bullshit-detector <version>`")
+    ambiguous = ambiguous_line_problem(text)
+    if ambiguous:
+        problems.append(ambiguous)
     if not re.search(r"\*\*Source:\*\*.*\]\(https?://", text):
         problems.append("no linked source URL in the header")
     breadth = breadth_without_origin(text)
