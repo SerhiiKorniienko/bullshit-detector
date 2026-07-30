@@ -1,6 +1,6 @@
 {
   "name": "bullshit-detector",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Fact-check the internet with your agent — fetch any YouTube video, article, tweet, or PDF, verify its claims against independent sources, and get a BS score instead of hype.",
   "author": {
     "name": "Serhii Korniienko",
