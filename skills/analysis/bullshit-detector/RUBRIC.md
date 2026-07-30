@@ -58,6 +58,31 @@ same thing — it groups coverage into story clusters and flags publication burs
 origin count rather than an impression. Its 3-month window is the catch: an empty result there means
 "outside the window", never "unreported".
 
+## When is the evidence enough?
+
+Before assigning a verdict, check what you have against these. They are the bar SKILL.md step 4
+loops against — miss one and the answer is another search, not a softer verdict.
+
+- **It addresses the claim, not its neighbourhood.** Evidence that the company exists, or that the
+  topic is real, is not evidence for the specific assertion being checked.
+- **It is the best tier reachable for a claim of this kind.** A figure sourced only to the party
+  it flatters has not been checked, it has been repeated. If a primary document would settle it and
+  you haven't looked for the document, you aren't done.
+- **It is current with respect to the claim.** A superseded filing, a pre-revision guideline or a
+  price from two years ago answers a question nobody asked.
+- **Nothing credible contradicts it unresolved.** A contradiction from a source at the same tier or
+  higher has to be addressed, not omitted.
+- **Corroboration is counted in origins.** See the syndication rules above: repetition is not
+  independence, and volume never substitutes for tier.
+
+**There is deliberately no minimum source count here.** One tier-1 primary document settles a claim
+that five tier-3 mentions cannot, so a numeric threshold ("three or more sources") would demand
+padding on the claims that are best evidenced and permit thin agreement on the ones that aren't.
+The hierarchy already answers the question a count is trying to approximate.
+
+When it still doesn't clear the bar after the follow-up searches SKILL.md allows: ❓ unverifiable,
+with the gap named. That is an honest answer. A ✅ built on the best of a weak pool is not.
+
 ## Hype-signal checklist
 
 Count how many apply. Each is a signal, not proof — the report should name the ones observed with examples.
@@ -194,7 +219,9 @@ easiest error for a reader to catch.
 **`M` must be countable from the table too.** A reader who disagrees with your total needs to be able
 to recount it, so ❓ rows must say which kind they are:
 
-- *"searched; nothing found"* — a search ran, so it **counts toward `M`**
+- *"searched; nothing found"* — a search ran, so it **counts toward `M`**. Name the gap that stopped
+  you rather than leaving it at "nothing found": *"searched three angles; the underlying study was
+  never located"* tells the reader what kind of hole this is, and tells a later run where to start
 - *"unverifiable by construction — private financials / unnamed subject / no record can exist"* —
   nothing was searched, so it **does not count toward `M`**
 

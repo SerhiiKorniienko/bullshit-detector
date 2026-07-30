@@ -35,6 +35,13 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md) — empirical and primary sources first, interested parties last. Before calling a claim corroborated, **collapse syndicated results to their origin and count origins, not URLs** (RUBRIC.md has the tells).
 
+   **One search is a first attempt, not a verdict.** When what came back doesn't clear the bar in [RUBRIC.md](RUBRIC.md) ("When is the evidence enough?"), don't settle for it — say what's missing and go get that:
+
+   - **Name the gap in words before searching again.** "Found the figure repeated everywhere, never the study it comes from." "Nothing dated after the 2024 revision." "Only the company's own blog." A named gap produces a targeted query; "search again" produces the same results twice.
+   - **Change the angle, not the wording.** A rephrase of a query that failed usually fails again. Go at it from a different direction: the primary document rather than coverage of it, the regulator rather than the press, the original language, the date range, or the claim's opposite.
+   - **Search for what would refute it, not for more of what you have.** A fourth URL agreeing with the first three usually shares their origin and changes nothing. The follow-up search exists to find what would move the verdict.
+   - **Cap it and say so.** Two follow-ups per claim, three for load-bearing ones, then stop. A claim that exhausts the budget is ❓ unverifiable **with the gap named** — "searched three angles; the underlying study was never located" tells a reader something a bare ❓ doesn't, and tells the next run where to start.
+
    If the `coverage-check` skill is available, **run it on any claim whose corroboration rests on breadth of coverage** — where you are about to write "widely reported" or cite four or more URLs for one fact. Those are the claims where eyeballing fails and a measured origin count changes the verdict. Skipping it is fine for a claim resting on one primary document; skipping it on "everyone reported this" is the error it exists to prevent. If it returns exit 3, the measurement is unavailable — fall back to the tells and say the count is an estimate. Assign a verdict (scale below) and cite what you found, naming the tier when it's doing the work. Never rate a claim `confirmed` or `false` on memory alone — verdicts need sources.
 5. **Scan for hype signals** using the checklist in [RUBRIC.md](RUBRIC.md).
 6. **Write the report card** using the template in [RUBRIC.md](RUBRIC.md), ending with the 0-10 BS score.
