@@ -384,6 +384,16 @@ def fetch_article(url: str) -> tuple[dict, str]:
                 "site may block scripts — use your built-in web fetch tool or ask "
                 "the user to paste the text",
             )
+    # Plenty of PDFs live at extensionless URLs — arxiv.org/pdf/2506.15794 is the
+    # common case for this tool. The download succeeds, so the fallback above never
+    # fires, and the HTML extractor happily returns raw PDF bytes as "article text".
+    # Sniff the payload instead of trusting the URL.
+    if downloaded.lstrip()[:5] == "%PDF-":
+        r = requests.get(url, headers={"User-Agent": UA}, timeout=60)
+        if r.ok:
+            return pdf_extract(r.content, url)
+        fail(f"HTTP {r.status_code} re-fetching PDF at {url}")
+
     text = trafilatura.extract(downloaded, include_comments=False, favor_recall=True)
     if not text:
         fail(
