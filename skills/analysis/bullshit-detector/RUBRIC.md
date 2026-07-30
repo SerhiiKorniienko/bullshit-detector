@@ -272,8 +272,10 @@ the table doesn't support — that is the same failure as an unsourced verdict, 
 
 - **Link the source.** A reader must be able to open the thing being judged and check the call
   themselves. A fact-check that can't be traced back to its subject is asking for trust it hasn't
-  earned. If the content has no stable permalink (a paste, a deleted post, a search result), say
-  that explicitly rather than linking something approximate.
+  earned. If the content has no stable permalink (a paste, a local file, a deleted post, a draft
+  you were asked to check), say so **in the Source line, in those words** — `no permalink` or
+  `no stable URL`, plus the reason — rather than linking something approximate. An invented link
+  is worse than an absent one, and the validator accepts the declaration but not silence.
 - **Stamp the version.** Verdicts move between releases — the rubric, the source hierarchy and the
   verdict rules all change — so a report without a version can't be reproduced or fairly compared.
   Read it from `.claude-plugin/plugin.json` and print it as-is. If the skills were installed without

@@ -138,6 +138,30 @@ def undeclared_unverifiable(text: str) -> list:
     return bad
 
 
+SOURCE_LINE = re.compile(r"^\*\*Source:\*\*.*", re.M)
+LINKED_URL = re.compile(r"\]\(https?://")
+NO_PERMALINK = re.compile(
+    r"no (?:stable |public |web |permanent |direct )?(?:permalink|url|link)", re.I)
+
+
+def source_link_problem(text: str):
+    """The header must let a reader reach the thing being judged — or say why they can't.
+
+    Requiring a link outright made an entire legitimate class of report permanently
+    non-compliant: pasted text, local files, deleted posts, and the draft-checking
+    workflow, none of which have a permalink. RUBRIC.md already tells those reports to
+    say so rather than link something approximate, so the validator has to accept that
+    answer instead of demanding a URL that would be a fabrication.
+    """
+    line = SOURCE_LINE.search(text)
+    if not line:
+        return "no `**Source:**` line in the header"
+    if LINKED_URL.search(line.group(0)) or NO_PERMALINK.search(line.group(0)):
+        return None
+    return ("header has no source link and doesn't say why — link the content, or state "
+            "`no permalink` with the reason (a paste, a local file, a deleted post)")
+
+
 def report_version(text: str):
     """The release the report says it was produced by, or None if unstamped.
 
@@ -230,8 +254,9 @@ def main() -> None:
     ambiguous = ambiguous_line_problem(text)
     if ambiguous:
         problems.append(ambiguous)
-    if not re.search(r"\*\*Source:\*\*.*\]\(https?://", text):
-        problems.append("no linked source URL in the header")
+    source_problem = source_link_problem(text)
+    if source_problem:
+        problems.append(source_problem)
     breadth = breadth_without_origin(text)
     if breadth:
         problems.append(
