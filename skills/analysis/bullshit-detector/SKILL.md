@@ -12,9 +12,62 @@ Separate what's verifiably true from what's hype in any piece of content.
 1. **Get the text.** If the input is a URL and the `fetch-content` skill is installed, use its script. Otherwise use your web fetch tool or ask the user to paste the content. Keep the metadata (views, author, date) — it feeds step 5.
 2. **Read the whole thing** before judging anything. Note the author's incentive: what are they selling, and where does the content funnel the audience?
 3. **Extract claims.** List every distinct claim and classify each: `factual` (checkable now), `prediction`, `opinion`, `anecdote` (personal story, unverifiable by definition). Number them with source timestamps/locations.
-4. **Verify.** Take the factual claims — all of them if ≤10, otherwise the ~10 most load-bearing (the ones the content's thesis depends on). For each, web-search for independent evidence; prefer primary sources (papers, official docs, filings, reputable reporting) over content marketing. Assign a verdict (scale below) and cite what you found. Never rate a claim `confirmed` or `false` on memory alone — verdicts need sources.
+
+   **One claim = one assertion a single search could settle.** Granularity is not a free choice: it sets the denominator every ratio in the report is built on, and two runs that slice the same content differently are not comparable. So:
+
+   - **Don't split** one assertion into parts that would share a search. "$3–4T poured in, mostly debt" is *two* claims only because the spend figure and the debt share need different sources — "$3–4T poured in during 2020–2026" is one, not three.
+   - **Don't merge** two facts that need separate sources just because they share a sentence.
+   - **Don't extract framing as fact.** Definitions ("a token is roughly a word"), scene-setting and rhetorical asides are not claims the content is staking anything on; listing them pads the denominator and makes the content look better-sourced than it is.
+   - **Rank by load-bearing weight, not order of appearance.** The reader needs to know which claims the thesis dies without.
+4. **Verify.** First split the factual claims into **load-bearing** (the thesis collapses without them, including any claim *derived* from them) and **incidental**. Then:
+
+   - **Verify every load-bearing claim, however many there are.** There is no cap on these. If the argument rests on twelve interlocking numbers, checking ten of them produces a report that cannot support its own conclusion.
+   - **Verify incidental claims as budget allows**, most consequential first. Anything you don't reach is `⚪ not checked` — never a guess.
+   - **If you cannot verify a load-bearing claim**, say so prominently in the bottom line. A thesis with an unchecked load-bearing premise has not been audited, and the report must not imply otherwise.
+
+   For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md) — empirical and primary sources first, interested parties last. Before calling a claim corroborated, **collapse syndicated results to their origin and count origins, not URLs** (RUBRIC.md has the tells).
+
+   If the `coverage-check` skill is available, **run it on any claim whose corroboration rests on breadth of coverage** — where you are about to write "widely reported" or cite four or more URLs for one fact. Those are the claims where eyeballing fails and a measured origin count changes the verdict. Skipping it is fine for a claim resting on one primary document; skipping it on "everyone reported this" is the error it exists to prevent. If it returns exit 3, the measurement is unavailable — fall back to the tells and say the count is an estimate. Assign a verdict (scale below) and cite what you found, naming the tier when it's doing the work. Never rate a claim `confirmed` or `false` on memory alone — verdicts need sources.
 5. **Scan for hype signals** using the checklist in [RUBRIC.md](RUBRIC.md).
 6. **Write the report card** using the template in [RUBRIC.md](RUBRIC.md), ending with the 0-10 BS score.
+
+7. **Save it to a file, always.** The file is the artifact — it survives the session, it can be diffed against a later run, and it is what gets published.
+
+   - Write the complete markdown to `/tmp/bs-report-<slug>-<YYYY-MM-DD>.md`, where `<slug>` is a short kebab-case form of the content's title (`bs-report-claude-situation-shitshow-2026-07-30.md`). On a system without `/tmp`, use the platform temp directory.
+   - **Never overwrite.** If the path exists, append `-2`, `-3`, … Re-running the same content on the same day produces a *second* reading, and comparing them is the point — silently clobbering the first destroys the evidence that verdicts move between runs.
+   - **Always end your reply with the full file path on its own line**, whichever output mode you used.
+   - If writing fails, say so plainly and print the report inline rather than losing it.
+
+   Then **check it with the script — do not count the table by hand**:
+
+   ```bash
+   uv run scripts/tally.py <the-file-you-just-wrote>
+   ```
+
+   It recounts every row, rebuilds the tally line, and verifies the version stamp, the linked source, the origin markers and the claim numbering. Exit 2 means the report is non-compliant: fix what it names and re-run until it exits 0. `--fix` rewrites the tally line in place.
+
+   This is not belt-and-braces. Counting a 40-row table by eye failed in three consecutive real runs — off by 2, then by 8 — while the analysis itself was sound. Attention goes to the argument and the bookkeeping silently rots, so the bookkeeping is the script's job now.
+
+8. **Print the full report by default.** Reproduce the whole card in the reply — claims table included — unless the user asked for something shorter.
+
+   Switch to a summary only when they signal it ("short version", "just the score", "TLDR", "summary only", or a standing instruction to keep output brief). A summary is: the source line, the BS score and its one-line verdict, the tally, the two or three findings that actually matter, and the file path.
+
+   Don't offer the choice up front or ask which they want — print the full report and let them ask for less. They already have the path either way.
+
+## Checking your own draft before you publish
+
+The workflow runs on any text, including text the user wrote themselves — a blog post, a launch
+announcement, a README, a pitch deck, a thread. When someone asks you to check their own draft,
+skip steps 1–2 (you already have the text, and the incentive analysis is theirs), then run claim
+extraction and verification exactly as normal.
+
+Two adjustments:
+
+- **Report before they publish, not after.** Flag the claims that won't survive a reader checking
+  them, and say which source would fix each — a stale figure with a current one next to it is
+  more useful than a verdict.
+- **Don't soften it because it's theirs.** A draft audit that grades on a curve is worthless; the
+  whole value is finding what a hostile reader would find first.
 
 ## Long content
 
@@ -34,10 +87,14 @@ For transcripts over ~10,000 words (feature-length videos, podcasts, long interv
 | 🟠 misleading | Kernel of truth, framed to deceive (cherry-picked, outdated, exaggerated) |
 | ❌ false | Contradicted by evidence |
 | ❓ unverifiable | No way to check (private data, anecdote, vague) |
+| ⚪ not checked | Extracted but outside the verification cap — **no verdict claimed** |
 
 ## Judgment rules
 
 - Distinguish "this claim is false" from "this claim is unproven" — don't inflate verdicts in either direction.
+- **You check premises, not reasoning.** A false fact gets caught; a valid-looking inference drawn from true facts does not. If the content's conclusion doesn't follow from its own claims even though every claim checks out, say that explicitly in the bottom line — the per-claim table will not show it.
+- **Checking arithmetic is not confirming a claim.** If a figure follows correctly from inputs the content supplied, you have verified its calculator, not the world. Rate it on whether the *inputs* survive: sound inputs and sound arithmetic is ✅; sound arithmetic on inflated inputs is 🟠 misleading, however clean the sum. Never award ✅ for internal consistency alone — say "arithmetic checks out" in the evidence cell and let the input's verdict carry the row.
+- **Unreachable ≠ unverifiable.** If the evidence trail dead-ends at a paywall, a blocked domain, or a dead link, rate the claim ❓ unverifiable *and say the evidence exists but you couldn't reach it*. That is a different failure from a claim nobody has ever checked, and the reader needs to tell them apart.
 - Predictions are not lies; judge them on whether the stated reasoning holds and whether the speaker hedges honestly.
 - An anecdote used as proof of a general pattern is a hype signal even when the anecdote itself is true.
 - High production value, confidence, and view counts are not evidence of anything.

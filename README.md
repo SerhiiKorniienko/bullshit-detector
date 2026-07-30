@@ -78,7 +78,46 @@ A real run against a 1.16M-view "make money with AI" video: **[examples/report-1
 
 And a TikTok run — a 552K-view "our Sun has a hidden twin" video: **[examples/report-second-sun-binary-star.md](./examples/report-second-sun-binary-star.md)** (BS score: 9/10 — real astronomy vocabulary stitched onto a fabricated cosmology).
 
+A 137K-view "$1M YouTube channel in 1 hour a day" video — **[examples/report-1m-youtube-channel.md](./examples/report-1m-youtube-channel.md)** (BS score: 7/10). The advice is fine and unremarkable; the headline "$76,000 per video" turns out to be total business revenue divided by videos published. Every proof point is a number only the seller can see, which the report says plainly rather than pretending to have audited it.
+
+And the awkward one: a 43K-view video arguing the AI buildout is about to collapse, checked by a tool built with Claude — **[examples/report-claude-situation-shitshow.md](./examples/report-claude-situation-shitshow.md)** (BS score: 5/10). The reporting holds up; the arithmetic behind its headline number is roughly double reality. The claim it rates ❌ false is also the one most favourable to Anthropic, so the report carries a conflict-of-interest disclosure and links every source to check it against.
+
 Someone on Hacker News asked for the obvious test — run it on this README. **[examples/report-own-readme.md](./examples/report-own-readme.md)** (BS score: 3/10). It caught a two-year-stale API price and a "30-second setup" that began with installing a package manager, both fixed in v0.4.2, and one thing that can't be fixed by editing: the only evidence this tool is accurate is reports it wrote about videos its author picked.
+
+## Check your own draft before you publish
+
+The detector runs on any text, including yours. Point it at a post, README, or launch announcement
+you're about to ship — *"fact-check my draft"* — and it flags the claims a hostile reader would go
+after first, with the source that fixes each one. Cheaper than a correction.
+
+That's how [examples/report-own-readme.md](./examples/report-own-readme.md) exists: someone on
+Hacker News asked for it live, and it found a two-year-stale API price before more people did.
+
+## What it doesn't do
+
+Honest limits, because a tool like this earns nothing by overselling itself:
+
+- **It checks premises, not reasoning.** Every claim can verify clean and the conclusion still not
+  follow. A false fact gets caught; a bad inference drawn from true facts sails straight through.
+  If you want the argument audited rather than the facts, this is the wrong tool.
+- **It can only cite what it can reach.** Many high-reputation outlets block agent crawlers
+  entirely, so they never appear in results — and SEO content marketing ranks in the gap. Their
+  reporting sometimes re-enters quoted secondhand by an aggregator, which looks like an independent
+  source and isn't. [The measurements are here](./experiments/2026-07-30-credible-sources.md); it's
+  worse than I assumed before running them.
+- **It has no eval harness yet.** So there is no number for how often it's right. The only evidence
+  of accuracy is reports it wrote about content its author chose — which is exactly the circularity
+  its own [self-audit](./examples/report-own-readme.md) flagged and editing can't fix. Tracked as
+  [#3](https://github.com/SerhiiKorniienko/bullshit-detector/issues/3), and it's the top of the backlog.
+- **Verdicts vary between runs.** Web search is non-deterministic; the same query minutes apart can
+  return a mostly different evidence base. Treat a single report as one reading, not a measurement.
+
+## Experiments
+
+Tests of the detector's own behaviour, published whichever way they land — see
+**[experiments/](./experiments/README.md)**. Most recent: [does telling it to "use credible sources"
+help?](./experiments/2026-07-30-credible-sources.md) (asked for on Hacker News; the answer is "I
+can't tell yet, and here's the more interesting thing I hit instead").
 
 ## TikTok videos
 
@@ -114,6 +153,7 @@ Reason about content. Source-agnostic — they never care where the text came fr
 Turn any source into clean text + metadata.
 
 - **[fetch-content](./skills/ingestion/fetch-content/SKILL.md)** — YouTube transcripts, TikTok captions, articles, PDFs, tweets, local files. One script, auto-detects source, no API keys.
+- **[coverage-check](./skills/ingestion/coverage-check/SKILL.md)** — Counts the *independent origins* behind news coverage of a claim, collapsing reprints and wire copy into one source. Turns "40 outlets confirmed it" into "one press release, reprinted 40 times". GDELT, no API key.
 
 ### [Publishing](./skills/publishing/README.md)
 

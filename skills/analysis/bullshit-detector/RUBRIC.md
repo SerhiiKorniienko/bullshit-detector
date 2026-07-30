@@ -1,4 +1,62 @@
-# Hype signals & report card
+# Sourcing, hype signals & report card
+
+## Source hierarchy
+
+Rank every source you cite. When sources disagree, the higher tier wins unless you can say why it
+shouldn't. When the best you can reach is tier 4 or 5, the verdict is capped at 🟡 plausible or
+❓ unverifiable — never ✅ confirmed.
+
+| Tier | What it is | Examples |
+|---|---|---|
+| **1 — Empirical / primary** | The thing itself, or a direct record of it | Filings, court records, official docs and changelogs, datasets, papers, the actual video/photo/receipt, public disclosures at source |
+| **2 — Reporting with a corrections desk** | Outlets with a fact-checking reputation and a published corrections policy | Established news organisations, dedicated fact-checkers |
+| **3 — Trade / niche reporting** | Credible but narrow, usually no corrections desk | Industry press, specialist newsletters, analyst notes |
+| **4 — Interested party** | Accurate about itself at best, marketing at worst | Vendor blogs, press releases, the subject's own site/podcast/PR, affiliate and SEO content |
+| **5 — Unattributed** | No accountable author | Forums, aggregators, content farms, AI-generated wikis |
+
+Two rules that do the work:
+
+- **Empirical beats eloquent.** A filing that is boring and hard to read outranks a well-written
+  article about the filing. If the article's claim traces back to a document, cite the document.
+- **A source about itself is tier 4, whatever its usual tier.** A company's own numbers for its own
+  product are marketing even when published by a reputable outlet quoting the press release. Say
+  so in the evidence column: "the platform's own figure".
+
+### Reachability is not credibility
+
+Some high-reputation outlets block agent crawlers, so they never appear in your results — their
+absence is not evidence that no one reported the claim, and the SEO blog that ranked in their place
+is not the best available source, only the best *reachable* one. If a claim's evidence trail dead-ends
+at a paywall or a blocked domain, say the evidence was unreachable. Do not silently substitute
+whatever ranked next. See [experiments/](../../../experiments/2026-07-30-credible-sources.md) for how
+badly this skews the pool in practice.
+
+## Counting sources: collapse syndication first
+
+Ten URLs are not ten sources. Before you describe a claim as independently corroborated, collapse
+everything that traces back to one origin into a single source, and count origins.
+
+Signs that several results share one origin:
+
+- **Explicit attribution** — "according to Reuters", "the AP reported", a bylined wire credit
+- **Near-identical phrasing**, especially identical quotes, identical figures to the same odd
+  precision, or the same unusual turn of phrase
+- **Timing cluster** — a run of pieces within hours of each other after a press release or embargo lift
+- **All roads lead to one document** — every result cites the same study, filing or announcement
+- **Laundered reporting** — an aggregator quoting an outlet you couldn't reach. That is still the
+  blocked outlet's reporting; credit it to them, at their tier, and note you couldn't read the original
+
+State the count honestly in the evidence column: "4 results, 1 origin (all quoting the same company
+press release)" is worth more than a list of four links. **One origin corroborating itself across ten
+outlets is one source, and a claim resting on it cannot be ✅ confirmed on volume alone.**
+
+Independence means *separate access to the underlying facts* — a second newsroom that made its own
+calls, a regulator that ran its own audit, a researcher with their own data. Not a second URL.
+
+The tells above are eyeball heuristics. If the `coverage-check` skill is available, it measures the
+same thing — it groups coverage into story clusters and flags publication bursts, so you get an
+origin count rather than an impression. Its 3-month window is the catch: an empty result there means
+"outside the window", never "unreported".
 
 ## Hype-signal checklist
 
@@ -27,6 +85,38 @@ Count how many apply. Each is a signal, not proof — the report should name the
 
 ## BS score (0–10)
 
+**The score covers what you checked, and nothing else.** A `⚪ not checked` claim must not move it in
+either direction — not up because something looked shaky, not down because the rest held up. If the
+unchecked remainder is large enough that a reader might reasonably reach a different score, say so
+next to the number rather than letting it imply full coverage.
+
+**Never raise the score because sourcing was poor.** A 🟡 that means *"this is probably true but the
+only reachable source was a vendor blog"* is a statement about the evidence available to you, not
+about the content's honesty. It must not count toward the BS score the way a 🟠 does. Score on:
+
+- ❌ **false** and 🟠 **misleading** — these are the content's failures, and they drive the number
+- ✅ **confirmed** — pulls the number down
+- 🟡 **plausible** — nearly neutral. Weight it by *why* it landed there: "hedged prediction" is mildly
+  against the content; "capped by a tier-4 ceiling" is not the content's fault at all
+
+This matters more than it looks, because reputable sources are the ones most often unreachable — see
+[experiments/](../../../experiments/2026-07-30-credible-sources.md). Without this rule the tool scores
+content as more dishonest exactly when good sourcing is hardest to reach, which is a bias in the
+instrument, not a finding about the world.
+
+**When load-bearing claims went unverified, it matters why.**
+
+- **Unreached** — you ran out of budget, the source was blocked, the page was down. **Do not score.**
+  A number would imply work that wasn't done. Report what you found and say the thesis wasn't audited.
+- **Unverifiable in principle** — private financials, undisclosed internal data, unnamed clients.
+  **Score, and say what the score covers.** Here the unverifiability *is* the finding: content whose
+  entire proof rests on numbers only the seller can see has told you something important about itself.
+  Put a load-bearing warning next to the tally naming which claims are unauditable and why, and make
+  clear the score covers the checkable perimeter, not the core.
+
+The distinction is the whole point: "I couldn't check this" and "nobody outside this company could
+ever check this" are different findings, and only one of them is about the content.
+
 Anchor on verified claims first, adjust with signals:
 
 - **0–2 Solid.** Factual claims check out; conclusions follow from evidence; incentives disclosed.
@@ -40,15 +130,80 @@ Anchor on verified claims first, adjust with signals:
 ```markdown
 # BS Report: <title>
 
-**Source:** <author>, <platform>, <date> · <views/engagement> · fetched <date>
+**Source:** [<title>](<url>) — <author>, <platform>, <date> · <views/engagement>
+**Checked:** <fetch date> · bullshit-detector <version>
 **BS score: N/10 — <one-line verdict>**
 
 ## What it says (neutral summary)
 2–4 sentences. No judgment here.
 
-## Claims
+## Load-bearing claims
+The ones the thesis dies without. Verify all of them.
+
 | # | Claim (with timestamp/location) | Type | Verdict | Evidence |
 |---|--------------------------------|------|---------|----------|
+
+## Incidental claims
+Supporting detail. Wrong here is embarrassing, not fatal.
+
+| # | Claim (with timestamp/location) | Type | Verdict | Evidence |
+|---|--------------------------------|------|---------|----------|
+
+In Evidence, name the source tier when it changes the verdict, and say so when evidence existed but
+was unreachable.
+
+**Every claim backed by more than one URL must open its Evidence cell with an origin count**, in the
+form `[4 URLs → 1 origin]`. Not optional, and not only when syndication is suspected — a reader
+cannot tell corroboration from an echo unless the count is always there, and "no marker" must mean
+"single source", never "nobody looked".
+
+State what the origin *is* when it matters: `[8 URLs → 1 origin: vendor press release]` is the whole
+story in six words. What this marker says is **"these URLs are not independent"** — nothing more. It
+is not a fabrication signal. Syndicated reporting is usually accurate; it is simply one source
+wearing many URLs, and this tool has no way to detect fabrication.
+
+**Every claim carrying a verdict must have had its own search.** If verification was capped (see
+SKILL.md step 4), the claims you did not individually check still belong in the table — but with
+verdict `⚪ not checked` and an empty evidence cell, never a substantive verdict inherited from a
+neighbouring search or from memory. Close with a tally that separates the two:
+
+> **Tally: N claims extracted, M individually source-checked** — a confirmed, b plausible,
+> c misleading, d false, e unverifiable. K claims were not checked; P were opinion or anecdote and
+> are not rateable.
+
+`M` is the number a reader should judge the report by. A table of 20 verdicts built on 14 searches
+overstates the work, and this tool cannot afford to overstate anything.
+
+**Count the rows, then check the sum before you write the line.** Every verdict bucket plus the
+unchecked, unverifiable, and not-rateable counts must add up to `N` exactly. Do not estimate the
+tally from memory of what you wrote — go back through the table and count. A fact-checking report
+whose own arithmetic doesn't reconcile discredits every number above it, and this is the single
+easiest error for a reader to catch.
+
+**`M` must be countable from the table too.** A reader who disagrees with your total needs to be able
+to recount it, so ❓ rows must say which kind they are:
+
+- *"searched; nothing found"* — a search ran, so it **counts toward `M`**
+- *"unverifiable by construction — private financials / unnamed subject / no record can exist"* —
+  nothing was searched, so it **does not count toward `M`**
+
+Both are legitimate ❓ verdicts and the difference matters: one says the evidence is missing, the
+other says the claim was built so that no evidence could ever exist. Never assert a summary number
+the table doesn't support — that is the same failure as an unsourced verdict, one level up.
+
+**The two header fields are not decoration.**
+
+- **Link the source.** A reader must be able to open the thing being judged and check the call
+  themselves. A fact-check that can't be traced back to its subject is asking for trust it hasn't
+  earned. If the content has no stable permalink (a paste, a deleted post, a search result), say
+  that explicitly rather than linking something approximate.
+- **Stamp the version.** Verdicts move between releases — the rubric, the source hierarchy and the
+  verdict rules all change — so a report without a version can't be reproduced or fairly compared.
+  Read it from `.claude-plugin/plugin.json` and print it as-is. If the skills were installed without
+  a manifest and no version is available, write `version unknown` rather than guessing.
+
+Both fields also protect the reader from search non-determinism: the same claim re-checked a week
+later can surface a different evidence base, so a report is a dated reading, not a permanent verdict.
 
 ## Hype signals observed
 Bulleted, each with a quoted example from the content.
@@ -59,4 +214,13 @@ Who benefits if you believe this, and how.
 ## Bottom line
 3–5 sentences: what's actually true, what's noise, what a viewer
 should take away. If some advice is genuinely sound, say which.
+If the claims check out but the conclusion still doesn't follow
+from them, say that here — the table above cannot show it.
+
+## What a hostile reader would hit first
+Ranked, 3–5 items. The errors an opponent leads with are not the
+same as the ones that matter most to the argument: a checkable
+date error in the opening act does more damage than a subtle
+misattribution buried at the end. Name each one, say why it lands,
+and — where it's fixable — say what would fix it.
 ```
