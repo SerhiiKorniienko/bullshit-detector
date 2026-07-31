@@ -40,7 +40,13 @@ AMBIG_LINE = re.compile(r"\*\*Ambiguous:\s*(\d+)\s+claims?\s+dropped[^*]*\*\*\s*
 # Reports stamped by an older release were written under that release's rules. Checking
 # them against rules added later is the same error as re-scoring an old report with a new
 # rubric, so each check that postdates a release records the version it starts applying at.
+# ⚠️ These must move with the release they ship in — a check gated at a version that never
+# ships never fires, and the failure is silent.
 AMBIG_SINCE = (0, 6, 0)
+LINKED_EVIDENCE_SINCE = (0, 6, 1)
+
+EVIDENCE_LINK = re.compile(r"\]\(https?://")
+RESTS_ON_ROW = re.compile(r"\b(?:see |per |from )?claims?\s*#?\s*\d+", re.I)
 
 
 def classify(row: str):
@@ -172,6 +178,40 @@ def report_version(text: str):
     return tuple(int(g) for g in m.groups()) if m else None
 
 
+def check_applies(text: str, since: tuple) -> bool:
+    """Whether a check added in release `since` should judge this report."""
+    version = report_version(text)
+    return version is None or version >= since
+
+
+def unlinked_evidence(text: str) -> list:
+    """Rows carrying a searched verdict whose evidence links nothing.
+
+    Every v0.6.0 report checked came back 100% unlinked — the reports named their
+    sources ("reported by Bloomberg, CNBC, TechCrunch") and linked none of them, so a
+    reader had to redo the search to check any claim. The documented marker format was
+    `[4 URLs → 1 origin]`, which is not a link in markdown, and the tool did what the
+    docs showed.
+
+    Skips the rows where nothing was searched, and rows that say they rest on another
+    claim — a derived figure's evidence legitimately lives in the row it derives from.
+    """
+    bad = []
+    for line in text.splitlines():
+        m = CLAIM_ROW.match(line)
+        if not m:
+            continue
+        verdict = classify(line)
+        if verdict is None or verdict == "not checked":
+            continue
+        if verdict == "unverifiable" and re.search(r"by construction", line, re.I):
+            continue
+        if EVIDENCE_LINK.search(line) or RESTS_ON_ROW.search(line):
+            continue
+        bad.append(int(m.group(1)))
+    return bad
+
+
 def ambiguous_line_problem(text: str):
     """The dropped-claims count next to the tally — required, and 0 is a real answer.
 
@@ -181,8 +221,7 @@ def ambiguous_line_problem(text: str):
     that could mean anything". Counting what you threw away is exactly the bookkeeping
     that rots when it is merely instructed.
     """
-    version = report_version(text)
-    if version is not None and version < AMBIG_SINCE:
+    if not check_applies(text, AMBIG_SINCE):
         return None
     m = AMBIG_LINE.search(text)
     if not m:
@@ -254,6 +293,13 @@ def main() -> None:
     ambiguous = ambiguous_line_problem(text)
     if ambiguous:
         problems.append(ambiguous)
+    if check_applies(text, LINKED_EVIDENCE_SINCE):
+        unlinked = unlinked_evidence(text)
+        if unlinked:
+            problems.append(
+                f"rows {unlinked} carry a searched verdict with nothing to click — link "
+                f"the origin marker, or the source itself, so a reader can check the call "
+                f"without redoing the search")
     source_problem = source_link_problem(text)
     if source_problem:
         problems.append(source_problem)

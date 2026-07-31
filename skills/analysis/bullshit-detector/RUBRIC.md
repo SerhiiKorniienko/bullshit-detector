@@ -216,13 +216,30 @@ Supporting detail. Wrong here is embarrassing, not fatal.
 In Evidence, name the source tier when it changes the verdict, and say so when evidence existed but
 was unreachable.
 
-**Every claim backed by more than one URL must open its Evidence cell with an origin count**, in the
-form `[4 URLs → 1 origin]`. Not optional, and not only when syndication is suspected — a reader
-cannot tell corroboration from an echo unless the count is always there, and "no marker" must mean
-"single source", never "nobody looked".
+**Every claim backed by more than one URL must open its Evidence cell with an origin count**, and
+**the marker must be a link to the origin**:
 
-State what the origin *is* when it matters: `[8 URLs → 1 origin: vendor press release]` is the whole
-story in six words. What this marker says is **"these URLs are not independent"** — nothing more. It
+```markdown
+[4 URLs → 1 origin](https://example.org/the-filing)
+```
+
+Not optional, and not only when syndication is suspected — a reader cannot tell corroboration from
+an echo unless the count is always there, and "no marker" must mean "single source", never "nobody
+looked".
+
+**A verdict a reader cannot click through to is asking for trust it hasn't earned.** Every row
+carrying a verdict that came from a search must contain at least one working link — the origin
+marker where there is one, the source itself where there isn't. Naming four outlets and linking
+none tells the reader to go and redo your work, which is the work they came here to avoid. This is
+the same rule as linking the source in the header, one level down, and it matters more: the header
+proves what was judged, these prove the judging.
+
+The exceptions are the rows where nothing was searched — `⚪ not checked`, and `❓ unverifiable by
+construction` — plus rows whose basis is another row (a derived figure, an arithmetic check), which
+should say which claim they rest on instead.
+
+State what the origin *is* when it matters: `[8 URLs → 1 origin: vendor press release](url)` is the
+whole story in six words. What this marker says is **"these URLs are not independent"** — nothing more. It
 is not a fabrication signal. Syndicated reporting is usually accurate; it is simply one source
 wearing many URLs, and this tool has no way to detect fabrication.
 
