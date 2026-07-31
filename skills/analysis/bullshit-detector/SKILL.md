@@ -10,6 +10,12 @@ Separate what's verifiably true from what's hype in any piece of content.
 ## Workflow
 
 1. **Get the text.** If the input is a URL and the `fetch-content` skill is installed, use its script. Otherwise use your web fetch tool or ask the user to paste the content. Keep the metadata (views, author, date) — it feeds step 5.
+
+   **Note the wall-clock time before you fetch.** The report ends with what the run cost, and the clock can only start here. Read the actual time; don't reconstruct it at the end.
+
+   **Save the normalized text once, then re-read it rather than re-fetching.** Write it to `/tmp/bs-source-<slug>-<YYYY-MM-DD>.md` and use that file every later time you need the content — building the claims table, checking a quote, writing the incentive analysis. If the file is already there, read it instead of fetching again.
+
+   Fetching is the most expensive call in the workflow and the most likely to fail; for YouTube it only works from a residential connection at all. It also moves the evidence underneath you — three runs of one video across a few hours reported 137,717, 141,618 and 141,926 views, which is harmless in a header and not harmless if a claim was rated against the older figure. Looking up something *else* (another channel's subscriber count, the author's other claims) is a different question and stays live. This is only about not asking the same question twice.
 2. **Read the whole thing** before judging anything. Note the author's incentive: what are they selling, and where does the content funnel the audience?
 3. **Extract claims.** List every distinct claim and classify each: `factual` (checkable now), `prediction`, `opinion`, `anecdote` (personal story, unverifiable by definition). Number them with source timestamps/locations.
 
@@ -35,6 +41,10 @@ Separate what's verifiably true from what's hype in any piece of content.
    - **If you cannot verify a load-bearing claim**, say so prominently in the bottom line. A thesis with an unchecked load-bearing premise has not been audited, and the report must not imply otherwise.
 
    For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md) — empirical and primary sources first, interested parties last. Before calling a claim corroborated, **collapse syndicated results to their origin and count origins, not URLs** (RUBRIC.md has the tells).
+
+   **Issue the first-pass searches together, not one at a time.** The claims are independent and so are their opening queries, so if your harness can run several searches at once, send them in as few waves as it allows and read the results as they land. Only the claims that miss the bar below go on to a follow-up, and those are sequential by nature — each one needs to see what the last search returned before it can pick a different angle.
+
+   This is a change to *when* the searches are issued, never to how carefully the results are read. A batch of ten result sets is ten separate judgements about tier, origin and sufficiency; if reading them together tempts you to skim, issue smaller waves. No harness support? Run them one at a time — same workflow, more wall-clock.
 
    **One search is a first attempt, not a verdict.** When what came back doesn't clear the bar in [RUBRIC.md](RUBRIC.md) ("When is the evidence enough?"), don't settle for it — say what's missing and go get that:
 
