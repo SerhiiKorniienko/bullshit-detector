@@ -64,6 +64,22 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    This is not belt-and-braces. Counting a 40-row table by eye failed in three consecutive real runs — off by 2, then by 8 — while the analysis itself was sound. Attention goes to the argument and the bookkeeping silently rots, so the bookkeeping is the script's job now.
 
+   Then write a run record beside it — same path with `.md` swapped for `.run.json`:
+
+   ```json
+   {"schema": "bullshit-detector/run@1", "version": "<same stamp the report carries>",
+    "source": "<url or file>", "report": "<report path>",
+    "started": "<ISO time from step 1>", "finished": "<ISO time now>", "wall_seconds": 722,
+    "claims": {"extracted": 28, "checked": 23, "dropped_ambiguous": 2},
+    "fetches": 1, "coverage_checks": 0,
+    "queries": [{"claim": 3, "pass": "first", "q": "the query, verbatim"},
+                {"claim": 3, "pass": "follow-up", "q": "the next angle, verbatim"}]}
+   ```
+
+   **This never appears in the report.** A reader wants to know whether the content is true, not what it cost to find out. The record exists so runs can be compared across releases — `scripts/runstats.py` reads them — and so the follow-up searches in step 4 can be checked afterwards for whether they genuinely changed angle or just reworded. Log each query as you issue it, including the ones that return nothing; a list rebuilt from memory at the end is wrong in the direction that flatters the run.
+
+   If you can't write it, skip it silently. It is diagnostic, and no part of the report depends on it.
+
 8. **Print the full report by default.** Reproduce the whole card in the reply — claims table included — unless the user asked for something shorter.
 
    Switch to a summary only when they signal it ("short version", "just the score", "TLDR", "summary only", or a standing instruction to keep output brief). A summary is: the source line, the BS score and its one-line verdict, the tally, the two or three findings that actually matter, and the file path.
