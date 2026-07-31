@@ -319,4 +319,20 @@ same as the ones that matter most to the argument: a checkable
 date error in the opening act does more damage than a subtle
 misattribution buried at the end. Name each one, say why it lands,
 and — where it's fixable — say what would fix it.
+
+*run: 16m55s, searches 24, tools 30, checks 1, per claim 44s*
 ```
+
+### The run line
+
+One italic line, last thing in the report, and deliberately dull. A reader came to find out
+whether the content is true, not what it cost to find out — so this stays a footnote, and
+anything longer belongs in the run record beside the file rather than in the report.
+
+It earns its place by being checkable. `per claim` is the wall time over `M`, not a fresh
+number, so it cannot drift from the tally. And `searches` against `tools` is a reconciliation
+a reader can do at a glance: **every search is at least one tool call, so searches can never
+exceed tools.** A report claiming 31 searches from 15 tool calls is claiming work it did not
+do, and that is now visible on the face of it rather than buried in a transcript nobody reads.
+
+`checks` counts `coverage-check` runs — the expensive call, and the one worth watching.

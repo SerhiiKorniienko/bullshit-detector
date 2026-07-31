@@ -44,6 +44,13 @@ AMBIG_LINE = re.compile(r"\*\*Ambiguous:\s*(\d+)\s+claims?\s+dropped[^*]*\*\*\s*
 # ships never fires, and the failure is silent.
 AMBIG_SINCE = (0, 6, 0)
 LINKED_EVIDENCE_SINCE = (0, 6, 1)
+RUN_LINE_SINCE = (0, 7, 0)
+
+RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
+RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
+RUN_FIELD = {name: re.compile(rf"{name}\s+(\d+)", re.I)
+             for name in ("searches", "tools", "checks")}
+RUN_PER_CLAIM = re.compile(r"per claim\s+(\d+)s", re.I)
 
 EVIDENCE_LINK = re.compile(r"\]\(https?://")
 RESTS_ON_ROW = re.compile(r"\b(?:see |per |from )?claims?\s*#?\s*\d+", re.I)
@@ -212,6 +219,52 @@ def unlinked_evidence(text: str) -> list:
     return bad
 
 
+def run_line_problems(text: str, m: int) -> list:
+    """The one-line cost footer, and the two things about it that can be checked.
+
+    Nothing here proves the run issued the searches it claims — a finished report cannot
+    carry that proof. But two of the figures are derivable from the others, so a report
+    that misstates them says so out loud:
+
+    - `per claim` must be the wall time over M. Stated fresh, it would drift from the
+      tally the way every hand-maintained number in this project eventually has.
+    - `searches` cannot exceed `tools`, because issuing a search *is* a tool call. A real
+      report claimed 31 claims individually source-checked against 15 tool calls, which
+      is not possible, and nothing in the artifact made that visible. Now it does.
+    """
+    if not check_applies(text, RUN_LINE_SINCE):
+        return []
+    line = RUN_LINE.search(text)
+    if not line:
+        return ["no run line — end the report with "
+                "`*run: 16m55s, searches 24, tools 30, checks 1, per claim 44s*`"]
+    body, problems = line.group(0), []
+    values = {}
+    for name, pattern in RUN_FIELD.items():
+        found = pattern.search(body)
+        if not found:
+            problems.append(f"run line has no `{name}` count")
+        else:
+            values[name] = int(found.group(1))
+
+    if {"searches", "tools"} <= values.keys() and values["searches"] > values["tools"]:
+        problems.append(
+            f"run line: {values['searches']} searches from {values['tools']} tool calls — "
+            f"a search is a tool call, so this reports more work than was done")
+
+    wall, per = RUN_WALL.search(body), RUN_PER_CLAIM.search(body)
+    if not wall:
+        problems.append("run line has no wall time")
+    elif per and m:
+        seconds = int(wall.group(1) or 0) * 3600 + int(wall.group(2)) * 60 + int(wall.group(3))
+        expected = round(seconds / m)
+        if abs(expected - int(per.group(1))) > 1:
+            problems.append(
+                f"run line: {seconds}s over {m} checked claims is {expected}s per claim, "
+                f"not {per.group(1)}s")
+    return problems
+
+
 def ambiguous_line_problem(text: str):
     """The dropped-claims count next to the tally — required, and 0 is a real answer.
 
@@ -293,6 +346,7 @@ def main() -> None:
     ambiguous = ambiguous_line_problem(text)
     if ambiguous:
         problems.append(ambiguous)
+    problems.extend(run_line_problems(text, m))
     if check_applies(text, LINKED_EVIDENCE_SINCE):
         unlinked = unlinked_evidence(text)
         if unlinked:
