@@ -2,6 +2,13 @@
 
 [![skills.sh](https://skills.sh/b/SerhiiKorniienko/bullshit-detector)](https://skills.sh/SerhiiKorniienko/bullshit-detector)
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.png">
+  <img src="./assets/banner-light.png" alt="BS REPORT — bullshit-detector. Point your agent at a video, article, tweet or PDF. Get every claim back, checked, scored, and sourced. Verdicts: confirmed, plausible, misleading, false, unverifiable. No source, no verdict — not even when the model is sure." width="900">
+</picture>
+
+**[Read a real report →](https://serhiikorniienko.github.io/bullshit-detector/examples/0.8.0/report-needle-at-the-speed-of-light.html)** — 42 claims from a 906K-view physics video, every one searched, 69 sources linked.
+
 Agent skills that fact-check the internet. Point your agent at a viral YouTube video, article, tweet, or PDF — get a claim-by-claim verification report with sources and a **BS score (0–10)** instead of taking "10 WAYS TO MAKE MONEY WITH AI 🤯" at face value.
 
 Portable [Agent Skills](https://agentskills.io) — plain markdown + self-contained Python. They work in Claude Code, Codex, OpenCode, and any harness that supports the skills format and has web search.
@@ -159,6 +166,7 @@ Turn any source into clean text + metadata.
 
 Turn reports into shareable output.
 
+- **[report-card](./skills/publishing/report-card/SKILL.md)** — The report as one self-contained HTML page you can send to someone who won't read a markdown table: score hero, filter to just the ❌ and 🟠, claims as cards on a phone, clean print-to-PDF. Stdlib only — no dependencies, no install step.
 - **[share](./skills/publishing/share/SKILL.md)** — Ready-to-paste posts for X (thread/single), LinkedIn, Facebook, Reddit, Hacker News, or a newsletter — plus a branded image carousel: 1080×1350 PNGs for X/Instagram and the PDF that LinkedIn document posts want.
 
 ## Roadmap

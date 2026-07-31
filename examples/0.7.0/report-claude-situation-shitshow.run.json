@@ -1,0 +1,148 @@
+{
+ "schema": "bullshit-detector/run@1",
+ "version": "0.7.0",
+ "source": "https://youtu.be/uvxnBk-coXM",
+ "report": "examples/0.7.0/report-claude-situation-shitshow.md",
+ "started": "2026-07-31T16:13:40Z",
+ "finished": "2026-07-31T16:31:23Z",
+ "wall_seconds": 1080,
+ "claims": {
+  "extracted": 19,
+  "checked": 16,
+  "dropped_ambiguous": 0
+ },
+ "fetches": 4,
+ "coverage_checks": 0,
+ "queries": [
+  {
+   "claim": 1,
+   "pass": "first",
+   "q": "Anthropic valuation $350 billion 2026 funding round"
+  },
+  {
+   "claim": 2,
+   "pass": "first",
+   "q": "Anthropic annualized revenue $47 billion May 2026"
+  },
+  {
+   "claim": 2,
+   "pass": "follow-up",
+   "q": "Anthropic annualized revenue $47 billion 2026 (via html.duckduckgo.com)"
+  },
+  {
+   "claim": 3,
+   "pass": "first",
+   "q": "Anthropic $74 billion annualized revenue July 2026 tracker"
+  },
+  {
+   "claim": 4,
+   "pass": "first",
+   "q": "Anthropic revenue growth slowing 8% per month July 2026"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "Anthropic Yipit revenue tracker $54 billion $67 billion $70 billion 2026"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "Anthropic revenue growth rate deceleration month over month 2026"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "Anthropic revenue \"54% growth\" OR \"8% growth\" OR \"growth cooling\" July 2026"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "Anthropic revenue stall headwind investors July 2026"
+  },
+  {
+   "claim": 5,
+   "pass": "first",
+   "q": "Anthropic first operating profit 2026"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "Anthropic revenue growth slowing analysts concerned 2026"
+  },
+  {
+   "claim": 5,
+   "pass": "follow-up",
+   "q": "Anthropic \"559 million\" operating profit Q2 2026"
+  },
+  {
+   "claim": 5,
+   "pass": "follow-up",
+   "q": "CNBC OR WSJ Anthropic operating profit Q2 2026 investors"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "Anthropic valuation 2026 trillion funding round"
+  },
+  {
+   "claim": 6,
+   "pass": "first",
+   "q": "AI data center debt trillion corporate bonds 2026"
+  },
+  {
+   "claim": 10,
+   "pass": "first",
+   "q": "OpenRouter Chinese open models 60% of tokens 2026"
+  },
+  {
+   "claim": 11,
+   "pass": "first",
+   "q": "AI job replacement estimate \"100,000\" workers per year 2026"
+  },
+  {
+   "claim": 12,
+   "pass": "first",
+   "q": "survey AI customer service agents rolled back 70% companies 2026"
+  },
+  {
+   "claim": 19,
+   "pass": "first",
+   "q": "AI companies ask government loan guarantees backstop data centers 2026"
+  },
+  {
+   "claim": 18,
+   "pass": "first",
+   "q": "AI company IPO 2026 OpenAI Anthropic stock market listing"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "Anthropic revenue growth rate \"percent per month\" 2026 tracker chart"
+  },
+  {
+   "claim": 9,
+   "pass": "first",
+   "q": "US white collar wage economy size trillion dollars total salaries"
+  },
+  {
+   "claim": 6,
+   "pass": "follow-up",
+   "q": "Fortune OR Bloomberg AI data center debt trillion bonds 2026 borrowing spree"
+  },
+  {
+   "claim": 17,
+   "pass": "first",
+   "q": "lawyers sanctioned AI hallucinated fake case law citations court 2026"
+  },
+  {
+   "claim": 15,
+   "pass": "first",
+   "q": "Moonshot Kimi K2 benchmark comparable GPT Claude 2026"
+  },
+  {
+   "claim": 17,
+   "pass": "follow-up",
+   "q": "Reuters appeals court lawyer fake hallucinated AI citations 2026"
+  }
+ ]
+}

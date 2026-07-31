@@ -1,0 +1,253 @@
+{
+ "schema": "bullshit-detector/run@1",
+ "version": "0.8.0",
+ "source": "https://youtu.be/Fzi39NMYWO4",
+ "report": "examples/0.8.0/report-needle-at-the-speed-of-light.md",
+ "started": "2026-07-31T21:14:05Z",
+ "finished": "2026-07-31T21:30:25Z",
+ "wall_seconds": 980,
+ "claims": {
+  "extracted": 42,
+  "checked": 42,
+  "dropped_ambiguous": 0
+ },
+ "fetches": 3,
+ "coverage_checks": 0,
+ "queries": [
+  {
+   "claim": 22,
+   "pass": "first",
+   "q": "Parker Solar Probe fastest human-made object speed record km/h"
+  },
+  {
+   "claim": 19,
+   "pass": "first",
+   "q": "average distance Earth to Moon 384,400 km"
+  },
+  {
+   "claim": 25,
+   "pass": "first",
+   "q": "1906 San Francisco earthquake magnitude 7.9 death toll 3000 buildings destroyed 28000"
+  },
+  {
+   "claim": 28,
+   "pass": "first",
+   "q": "Operation Crossroads Baker test 23 kilotons underwater water column height wave height meters"
+  },
+  {
+   "claim": 10,
+   "pass": "first",
+   "q": "Toba eruption 74000 years ago genetic bottleneck 2000 to 20000 survivors disputed evidence"
+  },
+  {
+   "claim": 11,
+   "pass": "first",
+   "q": "how long does volcanic ash stay in the atmosphere sulfate aerosols years volcanic winter"
+  },
+  {
+   "claim": 29,
+   "pass": "first",
+   "q": "2004 Indian Ocean tsunami energy equivalent 23,000 Hiroshima atomic bombs USGS"
+  },
+  {
+   "claim": 30,
+   "pass": "first",
+   "q": "nuclear winter island refuge New Zealand Australia food production study resilience"
+  },
+  {
+   "claim": 11,
+   "pass": "follow-up",
+   "q": "Toba supereruption cooling duration decade climate model years volcanic winter length"
+  },
+  {
+   "claim": 32,
+   "pass": "first",
+   "q": "spacesuit glove reduces hand range of motion 20 percent astronaut dexterity study"
+  },
+  {
+   "claim": 34,
+   "pass": "first",
+   "q": "ISS continuously occupied since November 2 2000 Expedition 1"
+  },
+  {
+   "claim": 36,
+   "pass": "first",
+   "q": "NASA astronaut food must be approved months before launch space food system certification"
+  },
+  {
+   "claim": 13,
+   "pass": "first",
+   "q": "reentry heating caused by compression not friction ram pressure spacecraft myth"
+  },
+  {
+   "claim": 41,
+   "pass": "first",
+   "q": "ISS orbital decay without reboost how long until reentry years"
+  },
+  {
+   "claim": 17,
+   "pass": "first",
+   "q": "ISS orbital speed 28000 km/h altitude 400 km orbital period 90 minutes"
+  },
+  {
+   "claim": 42,
+   "pass": "first",
+   "q": "NASA banned beans broccoli cabbage astronaut flatulence space food"
+  },
+  {
+   "claim": 14,
+   "pass": "first",
+   "q": "what if you dropped a steak from space would it cook falling speed of sound 177 degrees"
+  },
+  {
+   "claim": 1,
+   "pass": "first",
+   "q": "needle traveling 99.9% speed of light hits Earth kinetic energy megatons calculation"
+  },
+  {
+   "claim": 18,
+   "pass": "first",
+   "q": "light travels around the Earth 7.5 times in one second speed of light"
+  },
+  {
+   "claim": 33,
+   "pass": "first",
+   "q": "astronaut lost spatula spacewalk Piers Sellers 2006 shuttle repair lost camera EVA"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "how much does a sewing needle weigh grams mass"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "Hiroshima bomb yield 15 kilotons Little Boy energy"
+  },
+  {
+   "claim": 3,
+   "pass": "first",
+   "q": "seismic coupling efficiency surface nuclear explosion versus earthquake magnitude equivalent fraction of energy"
+  },
+  {
+   "claim": 20,
+   "pass": "first",
+   "q": "Apollo 11 travel time Earth to Moon 3 days 76 hours translunar coast duration"
+  },
+  {
+   "claim": 27,
+   "pass": "first",
+   "q": "iScanner app 125 million downloads top scanning app"
+  },
+  {
+   "claim": 9,
+   "pass": "first",
+   "q": "can an asteroid or meteorite impact trigger volcanic eruptions evidence research"
+  },
+  {
+   "claim": 31,
+   "pass": "first",
+   "q": "world population 8 billion 2022 2026 current estimate"
+  },
+  {
+   "claim": 8,
+   "pass": "first",
+   "q": "why underwater nuclear explosions cannot generate tsunamis point source displacement large area seafloor"
+  },
+  {
+   "claim": 38,
+   "pass": "first",
+   "q": "NASA astronauts must report objects lost during spacewalk debris tracking requirement"
+  },
+  {
+   "claim": 36,
+   "pass": "follow-up",
+   "q": "astronaut menu selection eight months before flight food chosen six months in advance ISS"
+  },
+  {
+   "claim": 2,
+   "pass": "follow-up",
+   "q": "\"needle\" \"speed of light\" Earth impact \"100 times\" nuclear bomb estimate energy release"
+  },
+  {
+   "claim": 37,
+   "pass": "first",
+   "q": "ISS rules bringing unapproved food aboard raw meat prohibited regulations number"
+  },
+  {
+   "claim": 24,
+   "pass": "first",
+   "q": "1 megaton nuclear surface burst damage radius building collapse kilometers overpressure 5 psi"
+  },
+  {
+   "claim": 0,
+   "pass": "first",
+   "q": "\"What If\" YouTube channel Underknown science accuracy criticism speculative"
+  },
+  {
+   "claim": 0,
+   "pass": "first",
+   "q": "relativistic projectile hitting atmosphere would vaporize before reaching ground near light speed object"
+  },
+  {
+   "claim": 40,
+   "pass": "first",
+   "q": "stratosphere temperature range minus 60 celsius to near zero at stratopause altitude profile"
+  },
+  {
+   "claim": 12,
+   "pass": "first",
+   "q": "large igneous province flood basalt volcanism caused mass extinctions Permian Triassic Deccan evidence"
+  },
+  {
+   "claim": 4,
+   "pass": "first",
+   "q": "special relativity relativistic mass increase time dilation infinite energy required to reach speed of light"
+  },
+  {
+   "claim": 18,
+   "pass": "follow-up",
+   "q": "Earth equatorial circumference 40075 km exact value"
+  },
+  {
+   "claim": 7,
+   "pass": "first",
+   "q": "speed of light exact value 299792458 metres per second definition SI"
+  },
+  {
+   "claim": 21,
+   "pass": "first",
+   "q": "light travel time from the Moon to Earth 1.28 seconds lunar laser ranging"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "time dilation experimentally confirmed muon decay atomic clock Hafele Keating"
+  },
+  {
+   "claim": 6,
+   "pass": "first",
+   "q": "why nothing can travel faster than light causality cosmic speed limit physics"
+  },
+  {
+   "claim": 15,
+   "pass": "first",
+   "q": "steak dropped from 100 kilometers Mach 2 minute and a half falling xkcd what if"
+  },
+  {
+   "claim": 16,
+   "pass": "first",
+   "q": "object dropped from 250 km reaches Mach 6 seared surface raw inside reentry meat"
+  },
+  {
+   "claim": 39,
+   "pass": "first",
+   "q": "International Space Station average altitude 400 408 kilometers orbit NASA"
+  },
+  {
+   "claim": 31,
+   "pass": "follow-up",
+   "q": "island refuge nuclear winter survivors population capacity how many people could New Zealand Australia feed"
+  }
+ ]
+}

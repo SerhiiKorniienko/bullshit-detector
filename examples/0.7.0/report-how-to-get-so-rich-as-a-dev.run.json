@@ -1,0 +1,123 @@
+{
+ "schema": "bullshit-detector/run@1",
+ "version": "0.7.0",
+ "source": "https://youtu.be/CEqosMn3m34",
+ "report": "examples/0.7.0/report-how-to-get-so-rich-as-a-dev.md",
+ "started": "2026-07-31T19:49:02Z",
+ "finished": "2026-07-31T20:00:33Z",
+ "wall_seconds": 691,
+ "claims": {
+  "extracted": 23,
+  "checked": 14,
+  "dropped_ambiguous": 0
+ },
+ "fetches": 11,
+ "coverage_checks": 0,
+ "queries": [
+  {
+   "claim": 10,
+   "pass": "first",
+   "q": "Amazon leadership principles how many 16 official list"
+  },
+  {
+   "claim": 4,
+   "pass": "first",
+   "q": "data entry clerk average hourly wage United States BLS 2025"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "BLS OES 43-9021 data entry keyers mean hourly wage occupational employment statistics"
+  },
+  {
+   "claim": 2,
+   "pass": "first",
+   "q": "software development consulting firm billing rate per hour developer $1850 an hour market rates"
+  },
+  {
+   "claim": 1,
+   "pass": "first",
+   "q": "levels.fyi Google L7 total compensation Meta E7 Amazon L7 principal engineer 2026"
+  },
+  {
+   "claim": 6,
+   "pass": "first",
+   "q": "\"Code to CEO\" Bgo developer consulting program price cost"
+  },
+  {
+   "claim": 14,
+   "pass": "first",
+   "q": "\"Port City AI\" founder Dom AI consultancy"
+  },
+  {
+   "claim": 9,
+   "pass": "first",
+   "q": "Amazon interview which leadership principle asked most frequently bias for action customer obsession data"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "levels.fyi Google L7 senior staff software engineer median total compensation"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "levels.fyi Meta E7 software engineer median total compensation United States"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "levels.fyi Amazon L7 principal software engineer median total compensation United States"
+  },
+  {
+   "claim": 13,
+   "pass": "first",
+   "q": "FLSA computer employee exemption software engineers salaried not entitled overtime pay Department of Labor fact sheet 17E"
+  },
+  {
+   "claim": 3,
+   "pass": "first",
+   "q": "billing the same hour to multiple clients double billing professional services ethics prohibited"
+  },
+  {
+   "claim": 17,
+   "pass": "first",
+   "q": "ChatGPT launch date November 30 2022 OpenAI announcement"
+  },
+  {
+   "claim": 4,
+   "pass": "follow-up",
+   "q": "\"data entry keyers\" mean hourly wage \"43-9021\" May 2024 national estimate $"
+  },
+  {
+   "claim": 15,
+   "pass": "first",
+   "q": "Bgo \"Code to CEO\" free live training \"first $10,000\" client developer registration webinar"
+  },
+  {
+   "claim": 14,
+   "pass": "follow-up",
+   "q": "\"Dominik Fretz\" Portcity AI Sydney Australia"
+  },
+  {
+   "claim": 2,
+   "pass": "follow-up",
+   "q": "GSA schedule published hourly labor rates senior consultant principal architect ceiling rate government contract IT services"
+  },
+  {
+   "claim": 9,
+   "pass": "follow-up",
+   "q": "Amazon behavioral interview leadership principle frequency analysis most asked questions ranking bias for action second most common"
+  },
+  {
+   "claim": 16,
+   "pass": "first",
+   "q": "\"Code to CEO\" members Pedro Brazil Toufic Bangalore Marco Serbia developer consulting testimonials"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "\"AB Analytics\" Bgo Armenian software engineer consulting firm founder LinkedIn"
+  }
+ ]
+}
