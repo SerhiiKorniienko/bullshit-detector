@@ -49,7 +49,7 @@ RUN_LINE_SINCE = (0, 7, 0)
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
 RUN_FIELD = {name: re.compile(rf"{name}\s+(\d+)", re.I)
-             for name in ("searches", "tools", "checks")}
+             for name in ("searches", "tools", "coverage")}
 RUN_PER_CLAIM = re.compile(r"per claim\s+(\d+)s", re.I)
 
 EVIDENCE_LINK = re.compile(r"\]\(https?://")
@@ -237,7 +237,7 @@ def run_line_problems(text: str, m: int) -> list:
     line = RUN_LINE.search(text)
     if not line:
         return ["no run line — end the report with "
-                "`*run: 16m55s, searches 24, tools 30, checks 1, per claim 44s*`"]
+                "`*run: 16m55s, searches 24, tools 30, coverage 1, per claim 44s*`"]
     body, problems = line.group(0), []
     values = {}
     for name, pattern in RUN_FIELD.items():

@@ -320,7 +320,7 @@ date error in the opening act does more damage than a subtle
 misattribution buried at the end. Name each one, say why it lands,
 and — where it's fixable — say what would fix it.
 
-*run: 16m55s, searches 24, tools 30, checks 1, per claim 44s*
+*run: 16m55s, searches 24, tools 30, coverage 1, per claim 44s*
 ```
 
 ### The run line
@@ -335,4 +335,7 @@ a reader can do at a glance: **every search is at least one tool call, so search
 exceed tools.** A report claiming 31 searches from 15 tool calls is claiming work it did not
 do, and that is now visible on the face of it rather than buried in a transcript nobody reads.
 
-`checks` counts `coverage-check` runs — the expensive call, and the one worth watching.
+`coverage` counts `coverage-check` runs — the expensive call, and the one worth watching.
+It is spelled out rather than shortened to `checks`, because a report that already says
+"individually source-checked" and carries a `⚪ not checked` verdict cannot afford a third,
+different meaning of the same word.

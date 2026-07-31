@@ -64,7 +64,7 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    This is not belt-and-braces. Counting a 40-row table by eye failed in three consecutive real runs — off by 2, then by 8 — while the analysis itself was sound. Attention goes to the argument and the bookkeeping silently rots, so the bookkeeping is the script's job now.
 
-   End the report with the run line from [RUBRIC.md](RUBRIC.md) — one italic line, counting the searches you issued, the tool calls you made, the `coverage-check` runs, the wall time since step 1, and the wall time divided by `M`. It is the only cost figure a reader sees.
+   End the report with the run line from [RUBRIC.md](RUBRIC.md) — one italic line, counting the searches you issued, the tool calls you made, the `coverage-check` runs (the `coverage` field), the wall time since step 1, and the wall time divided by `M`. It is the only cost figure a reader sees.
 
    Then write a run record beside it — same path with `.md` swapped for `.run.json`:
 
