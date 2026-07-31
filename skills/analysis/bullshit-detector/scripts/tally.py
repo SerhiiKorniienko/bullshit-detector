@@ -258,6 +258,12 @@ def run_line_problems(text: str, m: int) -> list:
             f"run line: {values['searches']} searches from {values['tools']} tool calls — "
             f"a search is a tool call, so this reports more work than was done")
 
+    if "searches" in values and m and values["searches"] < m:
+        problems.append(
+            f"run line: {m} claims individually source-checked from {values['searches']} "
+            f"searches — every claim carrying a verdict needs its own search, so this "
+            f"reports more verification than was performed")
+
     wall, per = RUN_WALL.search(body), RUN_PER_CLAIM.search(body)
     if not wall:
         problems.append("run line has no wall time")

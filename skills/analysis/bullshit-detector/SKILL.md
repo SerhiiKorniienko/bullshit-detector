@@ -42,10 +42,6 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md) — empirical and primary sources first, interested parties last. Before calling a claim corroborated, **collapse syndicated results to their origin and count origins, not URLs** (RUBRIC.md has the tells).
 
-   **Issue the first-pass searches together, not one at a time.** The claims are independent and so are their opening queries, so if your harness can run several searches at once, send them in as few waves as it allows and read the results as they land. Only the claims that miss the bar below go on to a follow-up, and those are sequential by nature — each one needs to see what the last search returned before it can pick a different angle.
-
-   This is a change to *when* the searches are issued, never to how carefully the results are read. A batch of ten result sets is ten separate judgements about tier, origin and sufficiency; if reading them together tempts you to skim, issue smaller waves. No harness support? Run them one at a time — same workflow, more wall-clock.
-
    **One search is a first attempt, not a verdict.** When what came back doesn't clear the bar in [RUBRIC.md](RUBRIC.md) ("When is the evidence enough?"), don't settle for it — say what's missing and go get that:
 
    - **Name the gap in words before searching again.** "Found the figure repeated everywhere, never the study it comes from." "Nothing dated after the 2024 revision." "Only the company's own blog." A named gap produces a targeted query; "search again" produces the same results twice.
@@ -73,6 +69,8 @@ Separate what's verifiably true from what's hype in any piece of content.
    It recounts every row, rebuilds the tally line, and verifies the version stamp, the linked source, the origin markers and the claim numbering. Exit 2 means the report is non-compliant: fix what it names and re-run until it exits 0. `--fix` rewrites the tally line in place.
 
    This is not belt-and-braces. Counting a 40-row table by eye failed in three consecutive real runs — off by 2, then by 8 — while the analysis itself was sound. Attention goes to the argument and the bookkeeping silently rots, so the bookkeeping is the script's job now.
+
+   **Count the searches from the query log you kept in step 4, never from memory.** One run reported 35 searches in its footer against 40 logged; another said 21 against 29. Recalling a number you already wrote down produces a different number, every time — the log is the source of truth, the footer is derived from it, and `tally.py` rejects the report when they disagree.
 
    End the report with the run line from [RUBRIC.md](RUBRIC.md) — one italic line, counting the searches you issued, the tool calls you made, the `coverage-check` runs (the `coverage` field), the wall time since step 1, and the wall time divided by `M`. It is the only cost figure a reader sees.
 
