@@ -13,7 +13,7 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    **Note the wall-clock time before you fetch.** The report ends with what the run cost, and the clock can only start here. Read the actual time; don't reconstruct it at the end.
 
-   **Save the normalized text once, then re-read it rather than re-fetching.** Write it to `/tmp/bs-source-<slug>-<YYYY-MM-DD>.md` and use that file every later time you need the content — building the claims table, checking a quote, writing the incentive analysis. If the file is already there, read it instead of fetching again.
+   **Save the normalized text once, then re-read it rather than re-fetching.** Write it to `/tmp/bs-source-<slug>-<YYYY-MM-DD>.md` (the temp directory is right here — this one is a cache, and losing it costs a re-fetch, not evidence) and use that file every later time you need the content — building the claims table, checking a quote, writing the incentive analysis. If the file is already there, read it instead of fetching again.
 
    Fetching is the most expensive call in the workflow and the most likely to fail; for YouTube it only works from a residential connection at all. It also moves the evidence underneath you — three runs of one video across a few hours reported 137,717, 141,618 and 141,926 views, which is harmless in a header and not harmless if a claim was rated against the older figure. Looking up something *else* (another channel's subscriber count, the author's other claims) is a different question and stays live. This is only about not asking the same question twice.
 2. **Read the whole thing** before judging anything. Note the author's incentive: what are they selling, and where does the content funnel the audience?
@@ -31,9 +31,10 @@ Separate what's verifiably true from what's hype in any piece of content.
    - **Resolve the referents from the surrounding content.** "They said it would double next year" isn't checkable until *they*, *it* and *next year* are fixed. Two things block this: *referential* ambiguity (unclear what a word points to) and *structural* ambiguity (the grammar allows two readings — "AI advanced renewable energy and agriculture at Acme and Globex" can mean both at both, or one at each).
    - **Vagueness is not ambiguity.** "Some experts", "involved in", "the early days" are vague but unambiguous. They stay, and they get checked as stated. Do not "resolve" a vague claim into a sharper one the speaker didn't make — that is the same error in the other direction.
    - **If the content doesn't resolve it, drop the claim** — even when the rest of the sentence is checkable. The test: would readers given this same content converge on one reading? If they wouldn't, you are about to pick one and attribute it to the speaker. Dropping loses a row; guessing invents a claim and then fact-checks it, which is the worse failure by a distance.
+   - **Unless every reading reaches the same verdict — then keep it and show the readings.** Enumerate them in the evidence cell, check each one, and say the verdict is invariant: *"15 h/wk = 780 h/yr → ~$15K. Read as 15 h/wk each (1,560 h) → ~$30K. 2–4× over the wage data either way."* The reason to drop an ambiguous claim is that you would otherwise check one reading and attribute it to the speaker; when you check all of them and show your work, there is nothing attributed and nothing hidden. This is not licence to *pick* a reading — the moment two readings would earn different verdicts, the claim drops as above. The test stays strict: the readings must be **enumerable**, each **actually checked**, and each **shown**. One reading you didn't enumerate, or didn't check, and it drops.
    - **Undefined is not ambiguous — never drop a claim for inventing its own terms.** "Consistency builds algorithm authority over time" can't be pinned down, but not because the content left something unsaid: "algorithm authority" denotes nothing. Ambiguity means the content has a meaning you can't determine; invention means there is no meaning to determine. Dropping the second makes the invention the reason the invention goes unreported, which is backwards — it keeps a row, and the missing referent *is* the evidence. See the fabrication tells in [RUBRIC.md](RUBRIC.md). Same for a claim that is simply false: unpinnable and untrue are different findings, and only one of them is a reason to stop looking.
    - **Write every surviving claim so it stands alone**, with the missing context in square brackets: `The [Boston] council expects its law [banning plastic bags] to pass in January 2025`. A reader must be able to re-check row 7 without having read rows 1–6 or watched the video. This is what makes the claims table independently checkable rather than a set of notes about the content.
-   - **Dropped claims are not table rows and do not count toward `N`.** They are reported as a count next to the tally, with a word on what they were. A content full of assertions nobody can pin down is itself a finding — say so in the bottom line when the count is high.
+   - **Dropped claims are not table rows and do not count toward `N`.** They are reported as a count next to the tally, with a word on what they were. A content full of assertions nobody can pin down is itself a finding — say so in the bottom line when the count is high. Claims *kept* under every reading are ordinary table rows and do count toward `N` — they are reported separately on the same line, because "nobody could pin this down" and "this means two things and both are wrong" are different findings about the content.
 4. **Verify.** First split the factual claims into **load-bearing** (the thesis collapses without them, including any claim *derived* from them) and **incidental**. Then:
 
    - **Verify every load-bearing claim, however many there are.** There is no cap on these. If the argument rests on twelve interlocking numbers, checking ten of them produces a report that cannot support its own conclusion.
@@ -55,7 +56,19 @@ Separate what's verifiably true from what's hype in any piece of content.
 
 7. **Save it to a file, always.** The file is the artifact — it survives the session, it can be diffed against a later run, and it is what gets published.
 
-   - Write the complete markdown to `/tmp/bs-report-<slug>-<YYYY-MM-DD>.md`, where `<slug>` is a short kebab-case form of the content's title (`bs-report-claude-situation-shitshow-2026-07-30.md`). On a system without `/tmp`, use the platform temp directory.
+   - Write the complete markdown to the **reports directory**, creating it if it doesn't exist:
+     `$BULLSHIT_DETECTOR_REPORTS` when that variable is set, otherwise `~/.bullshit-detector/reports/<YYYY>/`.
+     The file name is `bs-report-<slug>-<YYYY-MM-DD>.md`, where `<slug>` is a short kebab-case form
+     of the content's title (`bs-report-claude-situation-shitshow-2026-07-30.md`).
+
+     **Not the temp directory.** Reports are meant to be re-read, diffed against a later run and
+     compared across releases, and none of that survives a temp sweep — macOS runs a cleaner nightly
+     and prunes old files. A report that quietly evaporates after a few days is not an artifact.
+     Point `$BULLSHIT_DETECTOR_REPORTS` at a git repo if you want them versioned.
+
+     If the home directory isn't writable — a sandboxed environment, a locked-down host — fall back
+     to the platform temp directory **and say so in your reply**, because then the file dies with
+     the session and the user needs to save it themselves.
    - **Never overwrite.** If the path exists, append `-2`, `-3`, … Re-running the same content on the same day produces a *second* reading, and comparing them is the point — silently clobbering the first destroys the evidence that verdicts move between runs.
    - **Always end your reply with the full file path on its own line**, whichever output mode you used.
    - If writing fails, say so plainly and print the report inline rather than losing it.
@@ -94,11 +107,64 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    If you can't write it, skip it silently. It is diagnostic, and no part of the report depends on it.
 
-8. **Print the full report by default.** Reproduce the whole card in the reply — claims table included — unless the user asked for something shorter.
+8. **Render the page, once the markdown passes.** If the `report-card` skill is installed:
 
-   Switch to a summary only when they signal it ("short version", "just the score", "TLDR", "summary only", or a standing instruction to keep output brief). A summary is: the source line, the BS score and its one-line verdict, the tally, the two or three findings that actually matter, and the file path.
+   ```bash
+   uv run <report-card-skill-dir>/scripts/render_report.py <the-report.md> --open
+   ```
 
-   Don't offer the choice up front or ask which they want — print the full report and let them ask for less. They already have the path either way.
+   One self-contained HTML file beside the markdown — readable on a phone, printable, no network
+   requests in it. `--open` shows it in the default browser; where there is no browser (a sandbox,
+   a headless host) the script says so and the file is still written.
+
+   The script re-runs `tally.py` itself and **refuses to render a report that fails it**. Treat a
+   refusal as the report not being finished: fix what it names, rewrite the markdown, run again.
+   Do not reach for `--force` to get past it, and do not present a forced render as a finished
+   report — a page that looks more trustworthy than the thing behind it is the exact failure this
+   tool exists to catch.
+
+   No `report-card` installed? Skip this step. The markdown is the artifact; the page is a view of it.
+
+9. **Hand off with a short message, not the whole report.**
+
+   The reply that ends the run is: what the score was, where the two files are, and what the run
+   cost. `render_report.py` prints exactly that block — **paste it, don't rebuild it**. Every figure
+   in it was recounted by `tally.py` seconds earlier, and a summary retyped from memory of what you
+   wrote is wrong in the direction that flatters the run. That is the same failure as the tally and
+   the search count, one level up.
+
+   ```
+   BS score 4/10 · Mostly fine
+     the macro data is real and mostly checks out; the narrative glue is crypto-Twitter.
+   Tally: 35 claims extracted, 34 individually source-checked — 22 confirmed, 5 plausible,
+     5 misleading, 2 false. 1 not checked.
+   Ambiguous: 2 claims dropped before verification — …
+   run: 16m30s, searches 35, tools 65, coverage 1, per claim 29s
+
+   markdown  file:///Users/…/reports/2026/bs-report-japans-money-is-collapsing-2026-07-31.md
+   page      file:///Users/…/reports/2026/bs-report-japans-money-is-collapsing-2026-07-31.html
+             opened in your browser
+   ```
+
+   **Leave the two `file://` URLs exactly as printed.** They are bare URLs because that is what a
+   terminal turns into something clickable — shortening them to `~/…`, or hiding them behind link
+   text, costs the reader the one-click open and gains nothing.
+
+   Add at most two sentences of your own — the finding that actually matters, the one a reader
+   would want before opening anything. Then stop, and say the full report is there if they want it
+   inline.
+
+   **Reproduce the whole card in the reply only when asked** — "print it", "show me the report",
+   "paste the table", or a standing instruction to output in full. The reader already has both
+   files; re-printing forty rows they can open in a browser is not service, it is noise.
+
+   Two cases where the handoff is not enough on its own:
+
+   - **The file could not be written**, or landed in a temp directory that dies with the session.
+     Say so, and print the report inline rather than losing it.
+   - **The markdown is there but the page was refused.** Say the report failed its own compliance
+     check and name what `tally.py` flagged. Never hand over a green-looking summary for a report
+     that did not pass.
 
 ## Checking your own draft before you publish
 
@@ -140,6 +206,8 @@ For transcripts over ~10,000 words (feature-length videos, podcasts, long interv
 - Distinguish "this claim is false" from "this claim is unproven" — don't inflate verdicts in either direction.
 - **You check premises, not reasoning.** A false fact gets caught; a valid-looking inference drawn from true facts does not. If the content's conclusion doesn't follow from its own claims even though every claim checks out, say that explicitly in the bottom line — the per-claim table will not show it.
 - **Checking arithmetic is not confirming a claim.** If a figure follows correctly from inputs the content supplied, you have verified its calculator, not the world. Rate it on whether the *inputs* survive: sound inputs and sound arithmetic is ✅; sound arithmetic on inflated inputs is 🟠 misleading, however clean the sum. Never award ✅ for internal consistency alone — say "arithmetic checks out" in the evidence cell and let the input's verdict carry the row.
+- **Show the sum.** When a claim asserts a computed figure, put the computation in the evidence cell — inputs, operation, result — so a reader can redo it in seconds: `1,850 × 3 = 5,550, not "almost 6,000"`. "Arithmetic checks out" without the arithmetic is an unsourced verdict about a number, which is the one kind of claim this report has no excuse for. It applies to figures that are *correct* as much as to ones that aren't: a visible sum is what lets a reader see you rated the inputs rather than the calculator. It also catches rounding dressed as approximation — printing the real product is the whole rebuttal.
+- **A derived row inherits its input's spread.** A row that rests on another row (`rests on claim 4`) takes that claim's range with it. If claim 4 was checked under two readings — `~$15K` and `~$30K` — the derived row says `the fee equals six months to a year of the savings`, not whichever end makes the sharper sentence. Collapsing a range you inherited is running clean arithmetic on a selected input: the same error the rule above calls 🟠 in the content, one step downstream, and a report that does it has no standing to call it out.
 - **A specific claim with no footprint is not the same as a private one.** "Our internal revenue tripled" is unverifiable because the data is private, which is expected. A named framework, award, certification, case number, study or affiliation that returns *nothing* is a different finding — the content chose a checkable referent and there is no trace of it. Both are ❓, but the second says "no record found", counts as the fabrication tell in [RUBRIC.md](RUBRIC.md), and gets called out by name in the bottom line. Only fire it when your searches are demonstrably working — a search returning nothing at all is broken, not evidence.
 - **Unreachable ≠ unverifiable.** If the evidence trail dead-ends at a paywall, a blocked domain, or a dead link, rate the claim ❓ unverifiable *and say the evidence exists but you couldn't reach it*. That is a different failure from a claim nobody has ever checked, and the reader needs to tell them apart.
 - Predictions are not lies; judge them on whether the stated reasoning holds and whether the speaker hedges honestly.

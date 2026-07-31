@@ -6,7 +6,7 @@
 """Summarise what detector runs cost, from the run records they leave behind.
 
 Usage:
-    uv run scripts/runstats.py                    # every run record in /tmp
+    uv run scripts/runstats.py                    # every run record in the reports dir
     uv run scripts/runstats.py /path/*.run.json   # specific ones
     uv run scripts/runstats.py --by-version       # group and average per release
 
@@ -27,12 +27,28 @@ any single run — the same video checked four times produced 18/22/20/28 claims
 import argparse
 import glob
 import json
+import os
 import re
 import statistics
 import sys
 from pathlib import Path
 
-DEFAULT_GLOB = "/tmp/bs-report-*.run.json"
+
+def default_globs() -> list:
+    """Where run records live.
+
+    Reports moved out of the temp directory once it became clear a temp sweep was
+    quietly deleting the evidence that runs are meant to be compared against. The
+    old location stays in the list so records written before the move still count
+    — dropping them would make the release-over-release numbers this tool exists
+    to produce jump for no reason.
+    """
+    root = os.environ.get("BULLSHIT_DETECTOR_REPORTS") or \
+        str(Path.home() / ".bullshit-detector" / "reports")
+    return [
+        str(Path(root).expanduser() / "**" / "bs-report-*.run.json"),
+        "/tmp/bs-report-*.run.json",
+    ]
 
 
 def load(paths: list) -> list:
@@ -109,14 +125,26 @@ def inconsistencies(run: dict) -> list:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("records", nargs="*", help=f"run records (default: {DEFAULT_GLOB})")
+    globs = default_globs()
+    ap.add_argument("records", nargs="*",
+                    help=f"run records (default: {' and '.join(globs)})")
     ap.add_argument("--by-version", action="store_true",
                     help="average per release instead of listing every run")
     args = ap.parse_args()
 
-    paths = args.records or sorted(glob.glob(DEFAULT_GLOB))
+    # Dedupe by file name, not by path: a record copied out of the temp directory
+    # into the reports directory exists twice, and counting it twice silently
+    # doubles every median this tool prints. Globs are ordered most-durable first,
+    # so first-seen wins.
+    paths = args.records
     if not paths:
-        print(f"no run records found — looked for {DEFAULT_GLOB}", file=sys.stderr)
+        seen = {}
+        for g in globs:
+            for q in sorted(glob.glob(g, recursive=True)):
+                seen.setdefault(Path(q).name, q)
+        paths = sorted(seen.values())
+    if not paths:
+        print(f"no run records found — looked in {', '.join(globs)}", file=sys.stderr)
         sys.exit(1)
     runs = load(paths)
     if not runs:

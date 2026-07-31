@@ -81,6 +81,37 @@ ChatGPT (web/desktop chat) has no Agent Skills support and no local shell, so th
 
 For videos, fetch the transcript locally first (`uvx yt-dlp --write-auto-subs --skip-download <url>`) and paste it.
 
+## Where the report ends up
+
+Skill availability is only half the question. The other half is whether the artifact survives.
+
+| Surface | Report lands in | Survives the session? |
+|---|---|---|
+| Claude Code CLI | `~/.bullshit-detector/reports/<YYYY>/` on your machine | ✅ yes |
+| Desktop **Code** tab | same — it is the same filesystem | ✅ yes |
+| Desktop / claude.ai **Chat** | the sandbox, which is per-conversation | ❌ no — download it |
+| **Cowork** tab | sandbox, same caveat | ❌ no — download it |
+
+**Local surfaces.** The report writes to `$BULLSHIT_DETECTOR_REPORTS` if you set it, otherwise
+`~/.bullshit-detector/reports/<YYYY>/`. Deliberately **not** the temp directory: reports exist to be
+re-read, diffed against a later run and compared across releases, and macOS runs a temp cleaner
+nightly that quietly deletes exactly that evidence. Point the variable at a git repo if you want
+them versioned:
+
+```bash
+export BULLSHIT_DETECTOR_REPORTS=~/reports   # in .zshrc / .bashrc
+```
+
+**Sandboxed surfaces.** The home directory may not be writable, in which case the skill falls back
+to the temp directory and says so in its reply. The file dies with the conversation, so the thing
+to take away is the **HTML** — `report-card` is stdlib-only and runs under plain `python3`, no `uv`
+needed, and the page it produces is a single self-contained file with no external references. Save
+it and it keeps working offline, forever.
+
+Either way, **`tally.py` decides whether the report is sound** — exit 0 compliant, exit 2 not — and
+`report-card` refuses to render a report that fails it. A good-looking page built from a report
+that fails its own arithmetic is worse than no page.
+
 ## Other agents
 
 **OpenCode, Cursor, Amp, Gemini CLI, …** — anything the skills.sh installer supports:
