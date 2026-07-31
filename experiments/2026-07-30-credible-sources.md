@@ -38,7 +38,7 @@ Both halves are below. The negative result is not buried.
 
 ## What I ran
 
-**Subject:** [the Dan Martell report](../examples/report-14-ways-to-make-money-with-ai.md) —
+**Subject:** [the Dan Martell report](../examples/0.4.x/report-14-ways-to-make-money-with-ai.md) —
 YouTube, 1,164,773 views, published BS score 5/10. Picked because business/AI-market claims are
 where content-marketing blogs pollute results hardest. The astronomy report would have been a weak
 test: NASA dominates that result pool no matter how you ask.

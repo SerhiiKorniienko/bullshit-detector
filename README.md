@@ -6,7 +6,7 @@ Agent skills that fact-check the internet. Point your agent at a viral YouTube v
 
 Portable [Agent Skills](https://agentskills.io) — plain markdown + self-contained Python. They work in Claude Code, Codex, OpenCode, and any harness that supports the skills format and has web search.
 
-Built in the open with [Claude Code](https://claude.com/claude-code) — an AI helped build the tool that fact-checks AI hype, and the [example report](./examples/report-14-ways-to-make-money-with-ai.md) is it auditing its own kind.
+Built in the open with [Claude Code](https://claude.com/claude-code) — an AI helped build the tool that fact-checks AI hype, and the [example report](./examples/0.4.x/report-14-ways-to-make-money-with-ai.md) is it auditing its own kind.
 
 Follow [@SerhiiFounder](https://x.com/SerhiiFounder) for new skills and fact-check experiments, or [join the newsletter](https://korniienko.dev/newsletter) to get them in your inbox.
 
@@ -71,18 +71,18 @@ Ingestion and analysis are different jobs. Scripts do the deterministic work (fe
 
 ## Example
 
-A real run against a 1.16M-view "make money with AI" video: **[examples/report-14-ways-to-make-money-with-ai.md](./examples/report-14-ways-to-make-money-with-ai.md)**.
+A real run against a 1.16M-view "make money with AI" video: **[examples/0.4.x/report-14-ways-to-make-money-with-ai.md](./examples/0.4.x/report-14-ways-to-make-money-with-ai.md)**.
 
 > **BS score: 5/10 — real tools, real trends, guru math, and a funnel every four minutes.**
 > 12 claims verified: 4 confirmed, 2 plausible, 3 misleading, 0 false, 3 unverifiable. Among the catches: "Renaissance, D.E. Shaw, Two Sigma only trade employees' money" (true for one fund of one firm), and marketplace stats sourced from the marketplace's own PR.
 
-And a TikTok run — a 552K-view "our Sun has a hidden twin" video: **[examples/report-second-sun-binary-star.md](./examples/report-second-sun-binary-star.md)** (BS score: 9/10 — real astronomy vocabulary stitched onto a fabricated cosmology).
+And a TikTok run — a 552K-view "our Sun has a hidden twin" video: **[examples/0.4.x/report-second-sun-binary-star.md](./examples/0.4.x/report-second-sun-binary-star.md)** (BS score: 9/10 — real astronomy vocabulary stitched onto a fabricated cosmology).
 
-A 137K-view "$1M YouTube channel in 1 hour a day" video — **[examples/report-1m-youtube-channel.md](./examples/report-1m-youtube-channel.md)** (BS score: 7/10). The advice is fine and unremarkable; the headline "$76,000 per video" turns out to be total business revenue divided by videos published. Every proof point is a number only the seller can see, which the report says plainly rather than pretending to have audited it.
+A 137K-view "$1M YouTube channel in 1 hour a day" video — **[examples/0.5.0/report-1m-youtube-channel.md](./examples/0.5.0/report-1m-youtube-channel.md)** (BS score: 7/10). The advice is fine and unremarkable; the headline "$76,000 per video" turns out to be total business revenue divided by videos published. Every proof point is a number only the seller can see, which the report says plainly rather than pretending to have audited it.
 
-And the awkward one: a 43K-view video arguing the AI buildout is about to collapse, checked by a tool built with Claude — **[examples/report-claude-situation-shitshow.md](./examples/report-claude-situation-shitshow.md)** (BS score: 5/10). The reporting holds up; the arithmetic behind its headline number is roughly double reality. The claim it rates ❌ false is also the one most favourable to Anthropic, so the report carries a conflict-of-interest disclosure and links every source to check it against.
+And the awkward one: a 43K-view video arguing the AI buildout is about to collapse, checked by a tool built with Claude — **[examples/0.5.0/report-claude-situation-shitshow.md](./examples/0.5.0/report-claude-situation-shitshow.md)** (BS score: 5/10). The reporting holds up; the arithmetic behind its headline number is roughly double reality. The claim it rates ❌ false is also the one most favourable to Anthropic, so the report carries a conflict-of-interest disclosure and links every source to check it against.
 
-Someone on Hacker News asked for the obvious test — run it on this README. **[examples/report-own-readme.md](./examples/report-own-readme.md)** (BS score: 3/10). It caught a two-year-stale API price and a "30-second setup" that began with installing a package manager, both fixed in v0.4.2, and one thing that can't be fixed by editing: the only evidence this tool is accurate is reports it wrote about videos its author picked.
+Someone on Hacker News asked for the obvious test — run it on this README. **[examples/0.4.x/report-own-readme.md](./examples/0.4.x/report-own-readme.md)** (BS score: 3/10). It caught a two-year-stale API price and a "30-second setup" that began with installing a package manager, both fixed in v0.4.2, and one thing that can't be fixed by editing: the only evidence this tool is accurate is reports it wrote about videos its author picked.
 
 ## Check your own draft before you publish
 
@@ -90,7 +90,7 @@ The detector runs on any text, including yours. Point it at a post, README, or l
 you're about to ship — *"fact-check my draft"* — and it flags the claims a hostile reader would go
 after first, with the source that fixes each one. Cheaper than a correction.
 
-That's how [examples/report-own-readme.md](./examples/report-own-readme.md) exists: someone on
+That's how [examples/0.4.x/report-own-readme.md](./examples/0.4.x/report-own-readme.md) exists: someone on
 Hacker News asked for it live, and it found a two-year-stale API price before more people did.
 
 ## What it doesn't do
@@ -107,7 +107,7 @@ Honest limits, because a tool like this earns nothing by overselling itself:
   worse than I assumed before running them.
 - **It has no eval harness yet.** So there is no number for how often it's right. The only evidence
   of accuracy is reports it wrote about content its author chose — which is exactly the circularity
-  its own [self-audit](./examples/report-own-readme.md) flagged and editing can't fix. Tracked as
+  its own [self-audit](./examples/0.4.x/report-own-readme.md) flagged and editing can't fix. Tracked as
   [#3](https://github.com/SerhiiKorniienko/bullshit-detector/issues/3), and it's the top of the backlog.
 - **Verdicts vary between runs.** Web search is non-deterministic; the same query minutes apart can
   return a mostly different evidence base. Treat a single report as one reading, not a measurement.
