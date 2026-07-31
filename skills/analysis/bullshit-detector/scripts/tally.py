@@ -38,7 +38,10 @@ RATED = ["confirmed", "plausible", "misleading", "false"]
 CLAIM_ROW = re.compile(r"^\|\s*(\d+)\s*\|")
 TALLY_LINE = re.compile(r"^>?\s*\*\*Tally:.*", re.M)
 VERSION_STAMP = re.compile(r"bullshit-detector\s+v?(\d+)\.(\d+)\.(\d+)")
-AMBIG_LINE = re.compile(r"\*\*Ambiguous:\s*(\d+)\s+claims?\s+dropped[^*]*\*\*\s*(.*)", re.I)
+AMBIG_LINE = re.compile(
+    r"\*\*Ambiguous:\s*(\d+)\s+claims?\s+dropped"               # J — could not be pinned down
+    r"(?:[^*]*?;\s*(\d+)\s+checked under every reading)?"       # K — kept, invariant verdict
+    r"[^*]*\*\*\s*(.*)", re.I)
 # Reports stamped by an older release were written under that release's rules. Checking
 # them against rules added later is the same error as re-scoring an old report with a new
 # rubric, so each check that postdates a release records the version it starts applying at.
@@ -47,6 +50,7 @@ AMBIG_LINE = re.compile(r"\*\*Ambiguous:\s*(\d+)\s+claims?\s+dropped[^*]*\*\*\s*
 AMBIG_SINCE = (0, 6, 0)
 LINKED_EVIDENCE_SINCE = (0, 6, 1)
 RUN_LINE_SINCE = (0, 7, 0)
+AMBIG_READINGS_SINCE = (0, 8, 0)
 
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
@@ -332,6 +336,11 @@ def ambiguous_line_problem(text: str):
     the reader cannot tell "four checkable claims" from "four checkable claims and eleven
     that could mean anything". Counting what you threw away is exactly the bookkeeping
     that rots when it is merely instructed.
+
+    Since 0.8.0 the line carries a second number: claims that had more than one reading,
+    were checked under all of them, and reached the same verdict either way. Those are
+    kept as table rows, so `J` alone could not describe them and reports were writing
+    "0 dropped" next to prose admitting two claims were ambiguous — true, and unreadable.
     """
     if not check_applies(text, AMBIG_SINCE):
         return None
@@ -340,9 +349,19 @@ def ambiguous_line_problem(text: str):
         return ("no ambiguous-claims line — state "
                 "`**Ambiguous: J claims dropped before verification**` next to the Tally "
                 "(J may be 0) so a filtered claim count can't read as a complete one")
-    if int(m.group(1)) > 0 and not m.group(2).strip(" —–-\t"):
+    prose = m.group(3).strip(" —–-\t")
+    if int(m.group(1)) > 0 and not prose:
         return (f"{m.group(1)} claims dropped as ambiguous but the line doesn't say what "
                 f"they were — a bare count can't be argued with")
+    if check_applies(text, AMBIG_READINGS_SINCE):
+        kept = int(m.group(2)) if m.group(2) else 0
+        # Only the mechanical half is enforced: say *which rows* you kept. Whether the
+        # readings themselves are adequately described is a judgement, and a regex that
+        # pretended to check it would pass on the word "reading" and fail on "base pay
+        # vs total comp" — rejecting the better line of the two.
+        if kept > 0 and not RESTS_ON_ROW.search(prose):
+            return (f"{kept} claims kept under every reading but the line doesn't say which "
+                    f"claims — name the rows, and the readings each one carried")
     return None
 
 

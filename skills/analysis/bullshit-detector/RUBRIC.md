@@ -252,7 +252,14 @@ neighbouring search or from memory. Close with a tally that separates the two:
 > c misleading, d false, e unverifiable. K claims were not checked; P were opinion or anecdote and
 > are not rateable.
 >
-> **Ambiguous: J claims dropped before verification** — what they were, in a few words.
+> **Ambiguous: J claims dropped before verification; K checked under every reading** — what the
+> J were, in a few words, and which readings the K carried.
+
+The second half is omitted when `K` is 0. `J` counts claims whose meaning could not be pinned down
+at all; `K` counts claims that had more than one reading, were checked under all of them, and
+reached the same verdict either way — those are ordinary table rows and **do** count toward `N`
+(step 3). Reporting them together in one number would merge two different findings about the
+content: nobody can tell what this means, versus this means two things and both are wrong.
 
 `M` is the number a reader should judge the report by. A table of 20 verdicts built on 14 searches
 overstates the work, and this tool cannot afford to overstate anything.
