@@ -27,6 +27,7 @@ any single run — the same video checked four times produced 18/22/20/28 claims
 import argparse
 import glob
 import json
+import re
 import statistics
 import sys
 from pathlib import Path
@@ -47,8 +48,13 @@ def load(paths: list) -> list:
     return sorted(runs, key=lambda r: r.get("finished") or "")
 
 
+FETCH_ENTRY = re.compile(r"^\s*(?:fetch\b|https?://)", re.I)
+
+
 def counts(run: dict) -> tuple:
-    queries = run.get("queries") or []
+    """Search queries only — a fetch of a page you found is not a search."""
+    queries = [q for q in (run.get("queries") or [])
+               if not FETCH_ENTRY.match(str(q.get("q", "")))]
     first = sum(1 for q in queries if q.get("pass") != "follow-up")
     return len(queries), first, len(queries) - first
 

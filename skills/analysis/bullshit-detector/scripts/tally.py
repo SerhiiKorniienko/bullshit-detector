@@ -18,8 +18,10 @@ Exit codes: 0 all checks pass · 1 bad input · 2 report is non-compliant.
 """
 
 import argparse
+import json
 import re
 import sys
+from pathlib import Path
 from collections import Counter
 
 VERDICTS = [
@@ -51,6 +53,10 @@ RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
 RUN_FIELD = {name: re.compile(rf"{name}\s+(\d+)", re.I)
              for name in ("searches", "tools", "coverage")}
 RUN_PER_CLAIM = re.compile(r"per claim\s+(\d+)s", re.I)
+# A run record logs one entry per lookup; only the search ones count as searches.
+FETCH_ENTRY = re.compile(r"^\s*(?:fetch\b|https?://)", re.I)
+SEARCH_QUERIES = lambda entries: sum(
+    1 for e in entries if not FETCH_ENTRY.match(str(e.get("q", ""))))
 
 EVIDENCE_LINK = re.compile(r"\]\(https?://")
 RESTS_ON_ROW = re.compile(r"\b(?:see |per |from )?claims?\s*#?\s*\d+", re.I)
@@ -265,6 +271,53 @@ def run_line_problems(text: str, m: int) -> list:
     return problems
 
 
+def run_record_problems(report_path: str, text: str, m: int) -> list:
+    """Cross-check the report's footer against the run record beside it.
+
+    Both are written by the same run about the same events, and until this existed
+    nothing compared them: tally.py read only the report, runstats.py read only the
+    record. A real run reported 21 searches in its footer and logged 29 in its record,
+    and both artifacts passed every check they had.
+
+    Two numbers for one quantity, reconciled nowhere, is the failure this project exists
+    to catch in other people's work.
+    """
+    record_path = Path(report_path).with_suffix(".run.json")
+    if not record_path.exists():
+        return []
+    try:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as e:
+        return [f"run record beside the report is unreadable: {e}"]
+
+    line = RUN_LINE.search(text)
+    if not line:
+        return []
+    problems, body = [], line.group(0)
+
+    queries = record.get("queries") or []
+    searches = SEARCH_QUERIES(queries)
+    stated = RUN_FIELD["searches"].search(body)
+    if stated and searches and int(stated.group(1)) != searches:
+        problems.append(
+            f"run line says {stated.group(1)} searches, the run record lists {searches} — "
+            f"one number, counted twice, disagreeing")
+
+    wall = RUN_WALL.search(body)
+    recorded = record.get("wall_seconds")
+    if wall and recorded:
+        seconds = int(wall.group(1) or 0) * 3600 + int(wall.group(2)) * 60 + int(wall.group(3))
+        if abs(seconds - recorded) > max(60, 0.2 * recorded):
+            problems.append(
+                f"run line says {seconds}s, the run record says {recorded}s")
+
+    claims = record.get("claims") or {}
+    if claims.get("checked") not in (None, m):
+        problems.append(
+            f"run record says {claims['checked']} claims checked, the table says {m}")
+    return problems
+
+
 def ambiguous_line_problem(text: str):
     """The dropped-claims count next to the tally — required, and 0 is a real answer.
 
@@ -347,6 +400,7 @@ def main() -> None:
     if ambiguous:
         problems.append(ambiguous)
     problems.extend(run_line_problems(text, m))
+    problems.extend(run_record_problems(args.report, text, m))
     if check_applies(text, LINKED_EVIDENCE_SINCE):
         unlinked = unlinked_evidence(text)
         if unlinked:

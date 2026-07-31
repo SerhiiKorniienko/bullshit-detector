@@ -88,6 +88,10 @@ Separate what's verifiably true from what's hype in any piece of content.
                 {"claim": 3, "pass": "follow-up", "q": "the next angle, verbatim"}]}
    ```
 
+   `queries` holds **search queries only** — one entry per search you issue. Fetching a page you found is not a search; it belongs in `fetches`. The two got mixed in a real run and the record ended up claiming eight more searches than the report did.
+
+   **The counts in the record and the run line describe the same events and must agree.** `tally.py` compares them when both exist.
+
    **This never appears in the report.** A reader wants to know whether the content is true, not what it cost to find out. The record exists so runs can be compared across releases — `scripts/runstats.py` reads them — and so the follow-up searches in step 4 can be checked afterwards for whether they genuinely changed angle or just reworded. Log each query as you issue it, including the ones that return nothing; a list rebuilt from memory at the end is wrong in the direction that flatters the run.
 
    If you can't write it, skip it silently. It is diagnostic, and no part of the report depends on it.
