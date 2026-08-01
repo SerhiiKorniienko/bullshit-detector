@@ -94,6 +94,15 @@ same thing — it groups coverage into story clusters and flags publication burs
 origin count rather than an impression. Its 3-month window is the catch: an empty result there means
 "outside the window", never "unreported".
 
+**It is not the usual way to get an origin count, though — reading your own results is.** When four
+URLs are in front of you and all four cite the same filing, collapsing them yourself costs nothing
+and lets you name the origin, which tells a reader more than a number does. Save the measurement for
+the claim that rests on breadth you cannot inspect, and run it once per report rather than once per
+row (SKILL.md step 4 has the cost that forces this). **Say which kind of count it is** when the
+distinction could matter: a measured origin count and one judged from the tells are different
+evidence, and a report that presents the second as the first is doing the thing this tool exists to
+catch.
+
 ## When is the evidence enough?
 
 Before assigning a verdict, check what you have against these. They are the bar SKILL.md step 4

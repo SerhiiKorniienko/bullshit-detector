@@ -56,7 +56,13 @@ Separate what's verifiably true from what's hype in any piece of content.
 
      Then stop. A claim that exhausts the budget is ❓ unverifiable **with the gap named** — "searched three angles; the underlying study was never located" tells a reader something a bare ❓ doesn't, and tells the next run where to start.
 
-   If the `coverage-check` skill is available, **run it on any claim whose corroboration rests on breadth of coverage** — where you are about to write "widely reported" or cite four or more URLs for one fact. Those are the claims where eyeballing fails and a measured origin count changes the verdict. Skipping it is fine for a claim resting on one primary document; skipping it on "everyone reported this" is the error it exists to prevent. If it returns exit 3, the measurement is unavailable — fall back to the tells and say the count is an estimate. Assign a verdict (scale below) and cite what you found, naming the tier when it's doing the work. Never rate a claim `confirmed` or `false` on memory alone — verdicts need sources.
+   **Counting origins is the normal path; running `coverage-check` is not.** Every claim backed by more than one URL needs an origin count in its evidence cell (RUBRIC.md) — and you can nearly always produce one from the results already in hand: read them, see that all four trace to the same press release, and write `[4 URLs → 1 origin: the vendor's release]`. That costs nothing and names the origin, which is worth more than a number.
+
+   Reach for the `coverage-check` skill only when that fails: the claim rests on *breadth you cannot inspect* — "widely reported", "every outlet covered it" — and the results in front of you can't settle whether that breadth is real. **Run it on the single claim whose verdict most depends on the answer, two at the very most.**
+
+   The reason for the cap is its cost. GDELT takes 11–15 seconds for a trivial one-day query and much longer for wide windows; the documented limit is one request per five seconds, but once tripped the throttle **persists for minutes** — four retries backing off 6s, 12s and 24s were all still refused. Five calls is a minute at best and a stalled run at worst. The tool exists to stop "everyone reported this" passing unexamined, and one measured count on the claim that matters does that.
+
+   If it returns exit 3, the measurement is unavailable — fall back to the tells and **say the count is an estimate**, so a reader can tell a measured origin count from a judged one. Assign a verdict (scale below) and cite what you found, naming the tier when it's doing the work. Never rate a claim `confirmed` or `false` on memory alone — verdicts need sources.
 5. **Scan for hype signals** using the checklist in [RUBRIC.md](RUBRIC.md).
 6. **Write the report card** using the template in [RUBRIC.md](RUBRIC.md), ending with the 0-10 BS score.
 
