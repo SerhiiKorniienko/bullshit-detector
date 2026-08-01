@@ -51,6 +51,7 @@ AMBIG_SINCE = (0, 6, 0)
 LINKED_EVIDENCE_SINCE = (0, 6, 1)
 RUN_LINE_SINCE = (0, 7, 0)
 AMBIG_READINGS_SINCE = (0, 8, 0)
+SPONSORED_SINCE = (0, 9, 0)
 
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
@@ -64,6 +65,25 @@ SEARCH_QUERIES = lambda entries: sum(
 
 EVIDENCE_LINK = re.compile(r"\]\(https?://")
 RESTS_ON_ROW = re.compile(r"\b(?:see |per |from )?claims?\s*#?\s*\d+", re.I)
+
+# Advertorial published under a reputable masthead. The tier belongs to the
+# advertiser, not the publisher (RUBRIC, "Tier the document, not the domain"),
+# and the signal is right there in the URL — so a row citing one without saying
+# so is mechanically detectable. Restricting search to reputable domains raises
+# the share of these rather than lowering it: five of twenty top results in
+# experiments/2026-07-30-search-api-access.md.
+SPONSORED_URL = re.compile(
+    r"https?://(?:"
+    # host starts with a sponsored subdomain: sponsored.bloomberg.com
+    r"(?:sponsored|partners|paidpost|advertorial)\.[^\s)]*"
+    # or a sponsored path segment anywhere: ft.com/partnercontent/...
+    r"|[^\s)]*?/(?:sponsored|partner-?content|brandfeatures|brand-?features"
+    r"|branded|paid-?post|media-campaign|advertorial|promoted)(?:[/?#][^\s)]*|\b)"
+    r")", re.I)
+# Wording that shows the row already knows what it is citing.
+SPONSORED_DECLARED = re.compile(
+    r"tier\s*4|sponsor|advertorial|branded|partner content|paid[- ]for"
+    r"|paid post|advertisement|promoted|in partnership with|presented by", re.I)
 
 
 def classify(row: str):
@@ -195,6 +215,32 @@ def report_version(text: str):
     return tuple(int(g) for g in m.groups()) if m else None
 
 
+def gate_constants_shippable(manifest: Path) -> list:
+    """Every `*_SINCE` must be <= the version in the manifest.
+
+    A check gated at a version that never ships never fires, and does so silently —
+    the report passes, the rule looks enforced, and nothing says otherwise. That
+    failure is called out in CLAUDE.md; this is the check that makes it loud. It runs
+    on `--self-test` rather than on every report, because it is a fact about the repo
+    rather than about the report being validated.
+    """
+    try:
+        current = tuple(int(p) for p in
+                        json.loads(manifest.read_text())["version"].split("."))
+    except (OSError, KeyError, ValueError, json.JSONDecodeError) as e:
+        return [f"could not read the manifest version from {manifest}: {e}"]
+    bad = []
+    for name, value in sorted(globals().items()):
+        if not name.endswith("_SINCE") or not isinstance(value, tuple):
+            continue
+        if value > current:
+            bad.append(
+                f"{name} = {'.'.join(map(str, value))} is ahead of the manifest "
+                f"({'.'.join(map(str, current))}) — this check can never fire. Bump the "
+                f"manifest before shipping, or lower the constant.")
+    return bad
+
+
 def check_applies(text: str, since: tuple) -> bool:
     """Whether a check added in release `since` should judge this report."""
     version = report_version(text)
@@ -226,6 +272,36 @@ def unlinked_evidence(text: str) -> list:
         if EVIDENCE_LINK.search(line) or RESTS_ON_ROW.search(line):
             continue
         bad.append(int(m.group(1)))
+    return bad
+
+
+def undeclared_sponsored(text: str) -> list:
+    """Rows citing advertorial without saying that is what it is.
+
+    Tiering by domain reads `ft.com/partnercontent/comarch/...` as tier 2 when it is
+    the advertiser talking about itself under a masthead it paid for. That is the
+    existing "a source about itself is tier 4" rule one level down, and unlike most of
+    this file's subject matter it is decidable from the URL alone — so it is checked
+    rather than instructed.
+
+    Only the *undeclared* case fails. Citing sponsored content is legitimate, and
+    sometimes the advertorial is the story; a row that names it has done the work.
+    """
+    bad = []
+    for line in text.splitlines():
+        m = CLAIM_ROW.match(line)
+        if not m:
+            continue
+        hit = SPONSORED_URL.search(line)
+        if not hit:
+            continue
+        # Look for the declaration in the PROSE, not the whole row: every URL this
+        # fires on contains "sponsored" or "partner content" by construction, so
+        # searching the raw line lets the link declare itself and the check passes
+        # on exactly the rows it exists to catch.
+        prose = re.sub(r"https?://[^\s)]*", " ", line)
+        if not SPONSORED_DECLARED.search(prose):
+            bad.append((int(m.group(1)), hit.group(0)[:70]))
     return bad
 
 
@@ -381,9 +457,23 @@ def build_line(counts: Counter, total: int, m: int) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Check a BS report's tally against its own table")
-    ap.add_argument("report", help="path to the report markdown")
+    ap.add_argument("report", nargs="?", help="path to the report markdown")
     ap.add_argument("--fix", action="store_true", help="rewrite the Tally line in place")
+    ap.add_argument("--self-test", action="store_true",
+                    help="check this script's own version gates against the manifest")
     args = ap.parse_args()
+
+    if args.self_test:
+        manifest = Path(__file__).resolve().parents[4] / ".claude-plugin" / "plugin.json"
+        problems = gate_constants_shippable(manifest)
+        for p in problems:
+            print(f"  \u2717 {p}")
+        print("\u2714 every version gate can fire" if not problems
+              else f"{len(problems)} unshippable gate constant(s)")
+        sys.exit(2 if problems else 0)
+
+    if not args.report:
+        ap.error("a report path is required (or use --self-test)")
 
     try:
         text = open(args.report, encoding="utf-8").read()
@@ -433,6 +523,12 @@ def main() -> None:
                 f"rows {unlinked} carry a searched verdict with nothing to click — link "
                 f"the origin marker, or the source itself, so a reader can check the call "
                 f"without redoing the search")
+    if check_applies(text, SPONSORED_SINCE):
+        for row, url in undeclared_sponsored(text):
+            problems.append(
+                f"row {row} cites sponsored content without naming it: {url} — "
+                f"advertorial carries the advertiser's tier, not the publisher's, so "
+                f"say `[tier 4: <publisher> partner content]` and cap the verdict at 🟡")
     source_problem = source_link_problem(text)
     if source_problem:
         problems.append(source_problem)

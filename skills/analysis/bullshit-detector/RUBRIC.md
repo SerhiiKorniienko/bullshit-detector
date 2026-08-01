@@ -22,6 +22,42 @@ Two rules that do the work:
   product are marketing even when published by a reputable outlet quoting the press release. Say
   so in the evidence column: "the platform's own figure".
 
+### Tier the document, not the domain
+
+The rule above has a second form that catches far more results: **sponsored, branded, partner and
+advertorial content carries the advertiser's tier, not the publisher's.** It is the advertiser
+talking about itself, printed under a masthead it paid for. Tier 4, and name it —
+`[tier 4: FT partner content, paid for by Comarch]`.
+
+This is not an edge case. Restricting search to reputable domains and reading the top twenty results
+returned **five** advertorials and index pages, every one of which reads as tier 2 if you tier by
+domain (see [experiments/](../../../experiments/2026-07-30-search-api-access.md)):
+
+```
+reuters.com/media-campaign/brandfeatures/medc/...    branded content
+theatlantic.com/sponsored/deloitte-shifts/...        sponsored
+sponsored.bloomberg.com/immersive/globalx/...        sponsored subdomain
+ft.com/partnercontent/comarch/...                    "paid for and produced by Comarch"
+```
+
+Restricting to reputable domains *raises* the share of these, because that is where the advertising
+budget goes. The signal is usually in the URL and almost always in the page:
+
+- **URL path** — `/sponsored/`, `/partnercontent/`, `/partner-content/`, `/brandfeatures/`,
+  `/branded/`, `/paid-post/`, `/paidpost/`, `/media-campaign/`, `/advertorial/`, `/promoted/`
+- **Subdomain** — `sponsored.*`, `partners.*`, `paidpost.*`
+- **On the page** — "paid for and produced by", "sponsored content", "brand feature",
+  "in partnership with", "advertisement feature", "promoted by", "presented by"
+
+**A tier-4 ceiling means a tier-4 verdict cap**: the rule at the top of this file already caps a
+claim at 🟡 plausible when the best reachable source is tier 4. Advertorial corroboration does not
+make a claim ✅ confirmed, however reputable the masthead above it.
+
+Two things this rule is *not*. It is not a judgement about accuracy — sponsored content is often
+factually correct, and the tier is about who is accountable for it, not whether it is wrong. And it
+does not apply to ordinary journalism that merely quotes a company; that is already covered by
+"a source about itself", one row up.
+
 ### Reachability is not credibility
 
 Some high-reputation outlets block agent crawlers, so they never appear in your results — their

@@ -41,7 +41,7 @@ Separate what's verifiably true from what's hype in any piece of content.
    - **Verify incidental claims as budget allows**, most consequential first. Anything you don't reach is `⚪ not checked` — never a guess.
    - **If you cannot verify a load-bearing claim**, say so prominently in the bottom line. A thesis with an unchecked load-bearing premise has not been audited, and the report must not imply otherwise.
 
-   For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md) — empirical and primary sources first, interested parties last. Before calling a claim corroborated, **collapse syndicated results to their origin and count origins, not URLs** (RUBRIC.md has the tells).
+   For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md) — empirical and primary sources first, interested parties last. **Tier the document, not the domain**: a `/sponsored/`, `/partnercontent/` or `/paid-post/` URL under a reputable masthead is the advertiser talking about itself and is tier 4, which caps the claim at 🟡. Say so in the cell — `tally.py` rejects a row that cites one without naming it. Before calling a claim corroborated, **collapse syndicated results to their origin and count origins, not URLs** (RUBRIC.md has the tells).
 
    **One search is a first attempt, not a verdict.** When what came back doesn't clear the bar in [RUBRIC.md](RUBRIC.md) ("When is the evidence enough?"), don't settle for it — say what's missing and go get that:
 
