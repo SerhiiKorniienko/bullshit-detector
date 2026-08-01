@@ -27,12 +27,16 @@ from pathlib import Path
 
 W, H = 1080, 1350
 
+# Must stay in step with the verdict scale in SKILL.md, tally.py and
+# report-card's render_report.py. `not checked` was missing here until 0.8.1
+# and any carousel built from such a claim died with a KeyError.
 VERDICTS = {
     "confirmed": ("#00FF00", "CONFIRMED"),
     "plausible": ("#FFFF00", "PLAUSIBLE"),
     "misleading": ("#FF8800", "MISLEADING"),
     "false": ("#FF00FF", "FALSE"),
     "unverifiable": ("#F5F5F5", "UNVERIFIABLE"),
+    "not checked": ("#FFFFFF", "NOT CHECKED"),
 }
 
 CSS = f"""
@@ -87,29 +91,61 @@ def esc(s: str) -> str:
     return html.escape(str(s))
 
 
+def require(d: dict, key: str, where: str):
+    """Fetch a required field, or exit saying which one is missing.
+
+    Everything here used to be direct dict access, so a slides.json with a
+    typo'd key produced a traceback pointing at an f-string rather than a
+    sentence naming the field. Slide *type* already failed this way; the rest
+    did not.
+    """
+    if key not in d:
+        sys.exit(f"ERROR: {where} is missing required field {key!r}")
+    return d[key]
+
+
+def verdict_style(value, where: str) -> tuple:
+    """Colour and label for a verdict, or exit listing the valid ones.
+
+    Deliberately not a neutral fallback chip. An unrecognised verdict is
+    either a typo or a scale this renderer hasn't been taught, and guessing a
+    colour would put a wrong verdict on a slide people share — the one failure
+    a fact-checking tool cannot ship. Better to stop and say so.
+    """
+    key = str(value).strip().lower()
+    if key not in VERDICTS:
+        sys.exit(
+            f"ERROR: {where} has unknown verdict {value!r}.\n"
+            f"       Valid verdicts: {', '.join(VERDICTS)}"
+        )
+    return VERDICTS[key]
+
+
 def hook_slide(meta: dict) -> str:
+    where = "the hook slide"
     return f"""
   <div class="slide">
     <div class="kicker">BS REPORT</div>
-    <div class="title">&ldquo;{esc(meta['title'])}&rdquo;</div>
-    <div class="source">{esc(meta['source'])}</div>
+    <div class="title">&ldquo;{esc(require(meta, 'title', where))}&rdquo;</div>
+    <div class="source">{esc(require(meta, 'source', where))}</div>
     <div class="scorebox">
-      <div class="num">{esc(meta['score'])}/10</div>
-      <div class="verdict">{esc(meta['verdict_line'])}</div>
+      <div class="num">{esc(require(meta, 'score', where))}/10</div>
+      <div class="verdict">{esc(require(meta, 'verdict_line', where))}</div>
     </div>
-    <div class="footer">{esc(meta['footer'])}</div>
+    <div class="footer">{esc(require(meta, 'footer', where))}</div>
   </div>"""
 
 
 def claim_slide(s: dict, meta: dict) -> str:
-    color, label = VERDICTS[s["verdict"].lower()]
+    where = f"claim slide {s.get('n') or '(unnumbered)'}"
+    color, label = verdict_style(require(s, "verdict", where), where)
     return f"""
   <div class="slide">
     <div class="claim-n">CLAIM {esc(s.get('n', ''))}</div>
-    <div class="claim">&ldquo;{esc(s['claim'])}&rdquo;</div>
+    <div class="claim">&ldquo;{esc(require(s, 'claim', where))}&rdquo;</div>
     <div class="chip" style="background:{color}">{label}</div>
-    <div class="evidence">{esc(s['evidence'])}</div>
-    <div class="footer">{esc(meta['footer'])}</div>
+    <div class="evidence">{esc(require(s, 'evidence', where))}</div>
+    <div class="footer">{esc(require(meta, 'footer', where))}</div>
   </div>"""
 
 
@@ -120,7 +156,7 @@ def cta_slide(s: dict, meta: dict) -> str:
     <div class="kicker">TRY IT</div>
     <div class="cta-head">{esc(s.get('headline', 'Run it on anything'))}</div>
     {lines}
-    <div class="footer">{esc(meta['footer'])}</div>
+    <div class="footer">{esc(require(meta, 'footer', 'the CTA slide'))}</div>
   </div>"""
 
 

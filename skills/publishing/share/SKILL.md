@@ -39,7 +39,9 @@ First run needs a one-time browser install: `uv run --with playwright playwright
 }
 ```
 
-Verdicts: `confirmed` / `plausible` / `misleading` / `false` / `unverifiable`. Pick 3–4 claim slides — the spiciest verdicts with the strongest evidence, not the first four. Hook and CTA slides bookend them.
+Verdicts: `confirmed` / `plausible` / `misleading` / `false` / `unverifiable` / `not checked` — the same six the report uses, and the renderer rejects anything else rather than guessing a colour. Pick 3–4 claim slides — the spiciest verdicts with the strongest evidence, not the first four. Hook and CTA slides bookend them.
+
+A `not checked` claim renders, but think before using one: it carries no verdict and no evidence by definition, so it makes a weak slide and a reader may take the empty cell for a finding.
 
 ## Rules
 
