@@ -296,6 +296,11 @@ neighbouring search or from memory. Close with a tally that separates the two:
 > **Tally: N claims extracted, M individually source-checked** — a confirmed, b plausible,
 > c misleading, d false, e unverifiable. K claims were not checked; P were opinion or prediction and
 > are not rateable.
+
+**Buckets that are zero are omitted, not printed as "0 false".** The template above shows every
+bucket so you know the order; a real line carries only the non-empty ones. Don't assemble it by
+hand — `tally.py --fix` writes it, and a hand-written line that spells out the empty buckets is
+rejected even though its arithmetic is right. That has cost real runs a fix-and-rerun cycle.
 >
 > **Ambiguous: J claims dropped before verification; K checked under every reading** — what the
 > J were, in a few words, and which readings the K carried.

@@ -94,8 +94,16 @@ Separate what's verifiably true from what's hype in any piece of content.
    Then **check it with the script — do not count the table by hand**:
 
    ```bash
-   uv run scripts/tally.py <the-file-you-just-wrote>
+   uv run <detector-skill-dir>/scripts/tally.py <the-file-you-just-wrote>
    ```
+
+   `<detector-skill-dir>` is wherever this skill is installed — `~/.claude/skills/bullshit-detector`
+   under the usual layouts. The bare `scripts/tally.py` written here previously resolved from
+   nowhere and cost a real run a failed invocation.
+
+   **Let the script write the tally line.** `--fix` rewrites it in place, and that is the shortest
+   path to a compliant one: the script omits zero-count buckets, so a hand-written line carrying
+   "0 false" or a trailing "0 not checked" is rejected even though it is arithmetically correct.
 
    It recounts every row, rebuilds the tally line, and verifies the version stamp, the linked source, the origin markers and the claim numbering. Exit 2 means the report is non-compliant: fix what it names and re-run until it exits 0. `--fix` rewrites the tally line in place.
 
@@ -260,6 +268,7 @@ which have no truth value to check and carry an em-dash instead.
 - **You check premises, not reasoning.** A false fact gets caught; a valid-looking inference drawn from true facts does not. If the content's conclusion doesn't follow from its own claims even though every claim checks out, say that explicitly in the bottom line — the per-claim table will not show it.
 - **Checking arithmetic is not confirming a claim.** If a figure follows correctly from inputs the content supplied, you have verified its calculator, not the world. Rate it on whether the *inputs* survive: sound inputs and sound arithmetic is ✅; sound arithmetic on inflated inputs is 🟠 misleading, however clean the sum. Never award ✅ for internal consistency alone — say "arithmetic checks out" in the evidence cell and let the input's verdict carry the row.
 - **Show the sum.** When a claim asserts a computed figure, put the computation in the evidence cell — inputs, operation, result — so a reader can redo it in seconds: `1,850 × 3 = 5,550, not "almost 6,000"`. "Arithmetic checks out" without the arithmetic is an unsourced verdict about a number, which is the one kind of claim this report has no excuse for. It applies to figures that are *correct* as much as to ones that aren't: a visible sum is what lets a reader see you rated the inputs rather than the calculator. It also catches rounding dressed as approximation — printing the real product is the whole rebuttal.
+- **When the content omits an input the answer depends on, compute the range — don't pick a value.** A claim that needs a number the content never gives ("a needle at light speed") is not ambiguous and not unverifiable; it is *underspecified*, and the honest check reports where it holds and where it fails. Show both ends: *"at 0.4 g the impact yields 0.18 Mt; 1 Mt needs 2.2 g — the claim holds only at the top of the plausible range."* Picking one value silently makes the verdict an artefact of your assumption: three runs of one video chose 0.4 g, 1 g and 2.2 g for the same unstated needle and landed on 🟠, 🟡 and 🟡. The rule below is the same idea for a range you inherited from another row; this is for one the content never supplied.
 - **A derived row inherits its input's spread.** A row that rests on another row (`rests on claim 4`) takes that claim's range with it. If claim 4 was checked under two readings — `~$15K` and `~$30K` — the derived row says `the fee equals six months to a year of the savings`, not whichever end makes the sharper sentence. Collapsing a range you inherited is running clean arithmetic on a selected input: the same error the rule above calls 🟠 in the content, one step downstream, and a report that does it has no standing to call it out.
 - **A specific claim with no footprint is not the same as a private one.** "Our internal revenue tripled" is unverifiable because the data is private, which is expected. A named framework, award, certification, case number, study or affiliation that returns *nothing* is a different finding — the content chose a checkable referent and there is no trace of it. Both are ❓, but the second says "no record found", counts as the fabrication tell in [RUBRIC.md](RUBRIC.md), and gets called out by name in the bottom line. Only fire it when your searches are demonstrably working — a search returning nothing at all is broken, not evidence.
 - **Unreachable ≠ unverifiable.** If the evidence trail dead-ends at a paywall, a blocked domain, or a dead link, rate the claim ❓ unverifiable *and say the evidence exists but you couldn't reach it*. That is a different failure from a claim nobody has ever checked, and the reader needs to tell them apart.
