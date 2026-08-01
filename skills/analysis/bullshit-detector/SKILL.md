@@ -19,10 +19,15 @@ Separate what's verifiably true from what's hype in any piece of content.
 2. **Read the whole thing** before judging anything. Note the author's incentive: what are they selling, and where does the content funnel the audience?
 3. **Extract claims.** List every distinct claim and classify each: `factual` (checkable now), `prediction`, `opinion`, `anecdote` (personal story, unverifiable by definition). Number them with source timestamps/locations.
 
+   **Extract exhaustively, and finish extracting before you think about budget.** Go through the content start to finish and list every checkable assertion it makes, including the ones in asides, sponsor reads and throwaway lines. Verification is capped (step 4); extraction is not. When the budget runs out the surplus claims become `⚪ not checked` rows — a disclosed gap a reader can see and a later run can pick up. A claim you never extracted is invisible instead, and the report silently describes a smaller video than the one you watched.
+
+   Two blind runs of one video extracted 42 claims and 30, both verified everything they listed, and neither produced a single `⚪`. The shorter one lost nine subjects entirely — including the pair that caught the video calling entry heating "friction" in one beat and "compression" in another. That finding cannot exist in a report that extracted neither half. **If you are tempted to stop extracting, extract and mark `⚪` instead.**
+
    **One claim = one assertion a single search could settle.** Granularity is not a free choice: it sets the denominator every ratio in the report is built on, and two runs that slice the same content differently are not comparable. So:
 
    - **Don't split** one assertion into parts that would share a search. "$3–4T poured in, mostly debt" is *two* claims only because the spend figure and the debt share need different sources — "$3–4T poured in during 2020–2026" is one, not three.
    - **Don't merge** two facts that need separate sources just because they share a sentence.
+   - **A merged row never gets a gentler verdict than its harshest part.** This is the rule merging actually needs, and it is checked at verification time rather than here. If two assertions in one row would separately earn 🟠 and ✅, the row is 🟠. If both would earn 🟠, the row cannot come out 🟡 because the pair reads as directionally reasonable — that is the merge laundering two problems into one soft impression. The moment a merged row's verdict is milder than any part of it, split the row (`6a`, `6b`) and let each part carry its own.
    - **Splitting late is allowed, and cheap.** You often can't tell two assertions need separate rows until you've checked them and found one true and one false. When that happens, split the row into `6a` and `6b` rather than renumbering the table — suffixed numbers are valid, they must run `a, b, c…` with no gaps, and every row sharing an ordinal must carry a suffix. `rests on claim 6a` keeps working, and nothing below row 6 has to move.
    - **Don't extract framing as fact.** Definitions ("a token is roughly a word"), scene-setting and rhetorical asides are not claims the content is staking anything on; listing them pads the denominator and makes the content look better-sourced than it is.
    - **Rank by load-bearing weight, not order of appearance.** The reader needs to know which claims the thesis dies without.
@@ -107,12 +112,19 @@ Separate what's verifiably true from what's hype in any piece of content.
     "source": "<url or file>", "report": "<report path>",
     "started": "<ISO time from step 1>", "finished": "<ISO time now>", "wall_seconds": 722,
     "claims": {"extracted": 28, "checked": 23, "dropped_ambiguous": 2},
-    "fetches": 1, "coverage_checks": 0,
+    "source_words": 4445, "fetches": 1, "coverage_checks": 0,
     "queries": [{"claim": 3, "pass": "first", "q": "the query, verbatim"},
                 {"claim": 3, "pass": "follow-up", "q": "the next angle, verbatim"}],
     "unreachable": [{"claim": 7, "url": "https://example.com/study",
                      "reason": "paywall"}]}
    ```
+
+   `source_words` is the word count of the normalized text you saved in step 1 — `fetch-content`
+   prints it in the frontmatter. It exists so extraction coverage stops being invisible: claims per
+   thousand words is the only cheap signal for whether a run read the whole thing or skimmed it, and
+   two runs of one video have already differed by twelve claims with nothing in either artifact to
+   show it. `scripts/runstats.py` reports it across releases. It is a measurement, not a target —
+   dense content genuinely yields more claims per word than a rambling one.
 
    **Log every source you could not reach**, in `unreachable`. One entry per URL, with the claim it
    would have supported and a `reason` from: `paywall`, `blocked` (bot wall, 403, crawler block),

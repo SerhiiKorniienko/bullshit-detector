@@ -96,6 +96,7 @@ def row(run: dict) -> str:
             f"{c.get('extracted', '–'):>4}"
             f"{c.get('checked', '–'):>4}"
             f"{c.get('dropped_ambiguous', '–'):>4}"
+            f"{_density(run):>7}"
             f"{total:>7}"
             f"{f'{first}/{follow}':>8}"
             f"{run.get('coverage_checks', 0):>5}"
@@ -104,7 +105,20 @@ def row(run: dict) -> str:
             f"{(f'{pc:.0f}s' if pc else '–'):>10}")
 
 
-HEADER = (f"{'date':<11}{'version':<8}{'N':>4}{'M':>4}{'J':>4}"
+def _density(run: dict) -> str:
+    """Claims per 1,000 source words — the cheap signal for extraction coverage.
+
+    Two blind runs of one video extracted 42 claims and 30, and nothing in either
+    artifact showed it. Not a target: dense content genuinely yields more claims per
+    word than a rambling one. It is here so the next argument about coverage is made
+    from a series instead of two anecdotes.
+    """
+    words = run.get("source_words") or 0
+    n = (run.get("claims") or {}).get("extracted") or 0
+    return f"{n / words * 1000:.1f}" if words and n else "–"
+
+
+HEADER = (f"{'date':<11}{'version':<8}{'N':>4}{'M':>4}{'J':>4}{'N/kw':>7}"
           f"{'search':>7}{'1st/fu':>8}{'cov':>5}{'fetch':>7}{'wall':>9}{'per claim':>10}")
 
 
