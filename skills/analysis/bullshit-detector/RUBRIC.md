@@ -294,7 +294,7 @@ verdict `⚪ not checked` and an empty evidence cell, never a substantive verdic
 neighbouring search or from memory. Close with a tally that separates the two:
 
 > **Tally: N claims extracted, M individually source-checked** — a confirmed, b plausible,
-> c misleading, d false, e unverifiable. K claims were not checked; P were opinion or anecdote and
+> c misleading, d false, e unverifiable. K claims were not checked; P were opinion or prediction and
 > are not rateable.
 >
 > **Ambiguous: J claims dropped before verification; K checked under every reading** — what the
@@ -325,13 +325,19 @@ whose own arithmetic doesn't reconcile discredits every number above it, and thi
 easiest error for a reader to catch.
 
 **`M` must be countable from the table too.** A reader who disagrees with your total needs to be able
-to recount it, so ❓ rows must say which kind they are:
+to recount it, so every ❓ row declares its kind **in the verdict cell**, as a parenthetical:
 
-- *"searched; nothing found"* — a search ran, so it **counts toward `M`**. Name the gap that stopped
-  you rather than leaving it at "nothing found": *"searched three angles; the underlying study was
-  never located"* tells the reader what kind of hole this is, and tells a later run where to start
-- *"unverifiable by construction — private financials / unnamed subject / no record can exist"* —
-  nothing was searched, so it **does not count toward `M`**
+- `❓ unverifiable (searched)` — a search ran, so it **counts toward `M`**. Name the gap in the
+  evidence cell rather than leaving it at "nothing found": *"searched three angles; the underlying
+  study was never located"* tells the reader what kind of hole this is, and tells a later run where
+  to start
+- `❓ unverifiable (by construction)` — private financials, an unnamed subject, an anecdote, no
+  record that could exist. Nothing was searched, so it **does not count toward `M`**
+
+**The parenthetical is the declaration; prose does not count.** It used to be enough to mention
+"searched" anywhere in the row, which meant a validator asking for the word got the word — and the
+same word silently decided `M`. Putting it in the verdict cell makes the choice deliberate, visible
+to a reader, and impossible to satisfy by accident.
 
 Both are legitimate ❓ verdicts and the difference matters: one says the evidence is missing, the
 other says the claim was built so that no evidence could ever exist. Never assert a summary number

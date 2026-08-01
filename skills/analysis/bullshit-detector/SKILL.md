@@ -210,8 +210,17 @@ For transcripts over ~10,000 words (feature-length videos, podcasts, long interv
 | 🟡 plausible | Consistent with evidence, not directly confirmed |
 | 🟠 misleading | Kernel of truth, framed to deceive (cherry-picked, outdated, exaggerated) |
 | ❌ false | Contradicted by evidence |
-| ❓ unverifiable | No way to check (private data, anecdote, vague) |
+| ❓ unverifiable *(searched)* | A search ran and found nothing that settles it — **counts toward `M`** |
+| ❓ unverifiable *(by construction)* | No evidence could exist: private data, an unnamed subject, an anecdote — **does not count toward `M`** |
 | ⚪ not checked | Extracted but outside the verification cap — **no verdict claimed** |
+
+**Write the parenthetical in the verdict cell, not in the evidence prose.** `❓ unverifiable (by
+construction)` is the whole requirement — `tally.py` reads that cell and nothing else to decide
+whether the row counts toward `M`. A row that leaves it out is rejected.
+
+**An anecdote is ❓ by construction, not "not rateable".** It is an assertion about the world with a
+truth value that nobody outside the story can reach — different from an opinion or a prediction,
+which have no truth value to check and carry an em-dash instead.
 
 ## Judgment rules
 

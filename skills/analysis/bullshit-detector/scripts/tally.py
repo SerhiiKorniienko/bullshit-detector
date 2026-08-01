@@ -52,6 +52,7 @@ LINKED_EVIDENCE_SINCE = (0, 6, 1)
 RUN_LINE_SINCE = (0, 7, 0)
 AMBIG_READINGS_SINCE = (0, 8, 0)
 SPONSORED_SINCE = (0, 9, 0)
+UNVERIFIABLE_TOKEN_SINCE = (0, 11, 0)
 
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
@@ -121,12 +122,54 @@ def scan(text: str):
     return counts, numbers, unmarked
 
 
+UNVERIFIABLE_KIND = re.compile(r"\(\s*(searched|by construction)\s*\)", re.I)
+
+
+def unverifiable_kind(line: str):
+    """Which kind of ❓ this row declares: 'searched', 'by construction', or None.
+
+    One parse, used by BOTH the M count and the declaration check. They used to be
+    two regexes over the same text pulling opposite ways: the declaration check
+    rejected a ❓ row unless the word "searched" or "by construction" appeared
+    anywhere in it, and the M count then keyed on those same words. So a validator
+    that demanded a word got the word — and the word silently decided M, which is
+    the number RUBRIC tells readers to judge the report by. A real 0.10.0 run hit
+    exactly that and reported having to "insert the exact keywords".
+
+    Since 0.11.0 the declaration lives in the *verdict cell* as a parenthetical, so
+    it cannot be satisfied by evidence prose that happens to mention searching.
+    Older reports fall back to the prose scan they were written under.
+    """
+    for cell in (c.strip() for c in line.split("|")):
+        if cell.startswith("❓"):
+            m = UNVERIFIABLE_KIND.search(cell)
+            return m.group(1).lower() if m else None
+    return None
+
+
+def unverifiable_kind_legacy(line: str):
+    """Pre-0.11.0 behaviour: grep the whole row."""
+    if re.search(r"by construction", line, re.I):
+        return "by construction"
+    if re.search(r"searched", line, re.I):
+        return "searched"
+    return None
+
+
+def kind_of(line: str, strict: bool):
+    return unverifiable_kind(line) if strict else unverifiable_kind_legacy(line)
+
+
 def searched_count(text: str) -> int:
     """M — rows where a search actually ran.
 
-    Every rated row except ⚪ not checked, minus ❓ rows declared unverifiable by
-    construction (nothing was searched because nothing could be).
+    Every rated row except ⚪ not checked, minus ❓ rows declared `by construction`
+    (nothing was searched because nothing could be). An undeclared ❓ row is counted
+    the cautious way — it does *not* inflate M — and is reported separately by
+    `undeclared_unverifiable`, so a missing declaration can never quietly raise the
+    number the report is judged by.
     """
+    strict = check_applies(text, UNVERIFIABLE_TOKEN_SINCE)
     m = 0
     for line in text.splitlines():
         if not CLAIM_ROW.match(line):
@@ -134,7 +177,7 @@ def searched_count(text: str) -> int:
         v = classify(line)
         if v is None or v == "not checked":
             continue
-        if v == "unverifiable" and re.search(r"by construction", line, re.I):
+        if v == "unverifiable" and kind_of(line, strict) != "searched":
             continue
         m += 1
     return m
@@ -166,17 +209,16 @@ def breadth_without_origin(text: str) -> list:
 
 
 def undeclared_unverifiable(text: str) -> list:
-    """❓ rows that don't say whether a search actually ran.
+    """❓ rows that don't say which kind they are.
 
-    "Searched, found nothing" counts toward M; "unverifiable by construction" does not.
-    The script will not guess from prose — the row has to declare it, which is exactly
-    what RUBRIC.md asks for.
+    Shares `kind_of` with `searched_count` on purpose — one parse decides both, so
+    the two can no longer disagree about the same row. See `unverifiable_kind`.
     """
+    strict = check_applies(text, UNVERIFIABLE_TOKEN_SINCE)
     bad = []
     for line in text.splitlines():
         m = CLAIM_ROW.match(line)
-        if m and classify(line) == "unverifiable" and not re.search(
-                r"by construction|searched", line, re.I):
+        if m and classify(line) == "unverifiable" and kind_of(line, strict) is None:
             bad.append(int(m.group(1)))
     return bad
 
@@ -506,8 +548,9 @@ def main() -> None:
     undeclared = undeclared_unverifiable(text)
     if undeclared:
         problems.append(
-            f"❓ rows {undeclared} don't say whether a search ran — each must state "
-            f'"searched; nothing found" or "unverifiable by construction" so M is recountable')
+            f"❓ rows {undeclared} don't declare their kind — the verdict cell must read "
+            f"`❓ unverifiable (searched)` or `❓ unverifiable (by construction)`, so M is "
+            f"recountable from the table and can't be moved by wording in the evidence cell")
 
     if not VERSION_STAMP.search(text):
         problems.append("no version stamp — header must carry `bullshit-detector <version>`")
