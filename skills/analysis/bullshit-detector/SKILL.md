@@ -23,6 +23,7 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    - **Don't split** one assertion into parts that would share a search. "$3–4T poured in, mostly debt" is *two* claims only because the spend figure and the debt share need different sources — "$3–4T poured in during 2020–2026" is one, not three.
    - **Don't merge** two facts that need separate sources just because they share a sentence.
+   - **Splitting late is allowed, and cheap.** You often can't tell two assertions need separate rows until you've checked them and found one true and one false. When that happens, split the row into `6a` and `6b` rather than renumbering the table — suffixed numbers are valid, they must run `a, b, c…` with no gaps, and every row sharing an ordinal must carry a suffix. `rests on claim 6a` keeps working, and nothing below row 6 has to move.
    - **Don't extract framing as fact.** Definitions ("a token is roughly a word"), scene-setting and rhetorical asides are not claims the content is staking anything on; listing them pads the denominator and makes the content look better-sourced than it is.
    - **Rank by load-bearing weight, not order of appearance.** The reader needs to know which claims the thesis dies without.
 
@@ -108,8 +109,27 @@ Separate what's verifiably true from what's hype in any piece of content.
     "claims": {"extracted": 28, "checked": 23, "dropped_ambiguous": 2},
     "fetches": 1, "coverage_checks": 0,
     "queries": [{"claim": 3, "pass": "first", "q": "the query, verbatim"},
-                {"claim": 3, "pass": "follow-up", "q": "the next angle, verbatim"}]}
+                {"claim": 3, "pass": "follow-up", "q": "the next angle, verbatim"}],
+    "unreachable": [{"claim": 7, "url": "https://example.com/study",
+                     "reason": "paywall"}]}
    ```
+
+   **Log every source you could not reach**, in `unreachable`. One entry per URL, with the claim it
+   would have supported and a `reason` from: `paywall`, `blocked` (bot wall, 403, crawler block),
+   `dead` (404, domain gone), `timeout`, `login`. Omit the field when nothing was blocked.
+
+   RUBRIC already says unreachable ≠ unverifiable and asks the row to say the evidence exists but
+   couldn't be reached. That fires per row and then the information dies: nothing aggregates it, so
+   a reader can't see that six claims dead-ended at the same paywalled outlet, and nobody can tell
+   whether it is getting worse over time. This is the cheapest possible fix — the agent already knows
+   which fetches failed at the moment they fail.
+
+   **When the list is non-empty, say so in the report**, as one line under the tally:
+
+   > **Unreachable: 4 sources** — 3 paywalled, 1 blocked. Named in the rows that needed them.
+
+   `tally.py` cross-checks the two: a run record listing unreachable sources against a report that
+   never mentions them is the same failure as a run line disagreeing with its record.
 
    `queries` holds **search queries only** — one entry per search you issue. Fetching a page you found is not a search; it belongs in `fetches`. The two got mixed in a real run and the record ended up claiming eight more searches than the report did.
 

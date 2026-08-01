@@ -35,7 +35,13 @@ VERDICTS = [
 # Order the tally line reports them in.
 RATED = ["confirmed", "plausible", "misleading", "false"]
 
-CLAIM_ROW = re.compile(r"^\|\s*(\d+)\s*\|")
+# A claim number is an integer, optionally with a letter suffix: 6, 6a, 6b.
+# Suffixes exist so that discovering mid-verification that one row holds a true
+# and a false assertion can be fixed locally — split 6 into 6a/6b — instead of
+# renumbering every row below it and rewriting every `rests on claim N`. A real
+# run hit that and had to renumber fifteen rows. See #34, and #16 which asks for
+# more splitting, not less.
+CLAIM_ROW = re.compile(r"^\|\s*(\d+)([a-z]?)\s*\|", re.I)
 TALLY_LINE = re.compile(r"^>?\s*\*\*Tally:.*", re.M)
 VERSION_STAMP = re.compile(r"bullshit-detector\s+v?(\d+)\.(\d+)\.(\d+)")
 AMBIG_LINE = re.compile(
@@ -53,6 +59,7 @@ RUN_LINE_SINCE = (0, 7, 0)
 AMBIG_READINGS_SINCE = (0, 8, 0)
 SPONSORED_SINCE = (0, 9, 0)
 UNVERIFIABLE_TOKEN_SINCE = (0, 11, 0)
+UNREACHABLE_SINCE = (0, 12, 0)
 
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
@@ -109,7 +116,7 @@ def scan(text: str):
         m = CLAIM_ROW.match(line)
         if not m:
             continue
-        numbers.append(int(m.group(1)))
+        numbers.append((int(m.group(1)), (m.group(2) or "").lower()))
         verdict = classify(line)
         if verdict:
             counts[verdict] += 1
@@ -118,7 +125,7 @@ def scan(text: str):
         counts["not rateable"] += 1
         cells = [c.strip() for c in line.split("|")]
         if not any(c in {"—", "-", "–"} for c in cells):
-            unmarked.append(int(m.group(1)))
+            unmarked.append(m.group(1) + (m.group(2) or ""))
     return counts, numbers, unmarked
 
 
@@ -158,6 +165,52 @@ def unverifiable_kind_legacy(line: str):
 
 def kind_of(line: str, strict: bool):
     return unverifiable_kind(line) if strict else unverifiable_kind_legacy(line)
+
+
+def numbering_problems(numbers: list) -> list:
+    """Claim numbers must be gapless by ordinal, and unique once the suffix counts.
+
+    `numbers` is [(ordinal, suffix)], so 6a/6b share ordinal 6. A split row is
+    therefore legal and local; a bare 6 repeated is still a duplicate, and a
+    missing ordinal is still a gap.
+    """
+    if not numbers:
+        return []
+    problems = []
+    label = lambda n, sfx: f"{n}{sfx}"
+
+    dupes = sorted({label(*k) for k, c in Counter(numbers).items() if c > 1})
+    if dupes:
+        problems.append(f"duplicate claim numbers: {dupes}")
+
+    ordinals = {n for n, _ in numbers}
+    gaps = sorted(set(range(1, max(ordinals) + 1)) - ordinals)
+    if gaps:
+        problems.append(f"missing claim numbers: {gaps}")
+
+    # A suffix only means anything as part of a set. A lone 6a says a 6b was
+    # meant to exist and reads as a numbering slip, not a deliberate split.
+    by_ordinal = {}
+    for n, sfx in numbers:
+        by_ordinal.setdefault(n, []).append(sfx)
+    for n, sfxs in sorted(by_ordinal.items()):
+        marked = [x for x in sfxs if x]
+        if not marked:
+            continue
+        if len(sfxs) == 1:
+            problems.append(
+                f"claim {n}{marked[0]} is the only row with that number — a suffix marks "
+                f"a split, so it needs at least {n}a and {n}b, or drop the suffix")
+        elif len(marked) != len(sfxs):
+            problems.append(
+                f"claim {n} mixes suffixed and bare rows — suffix all of them or none")
+        else:
+            want = [chr(ord('a') + i) for i in range(len(marked))]
+            if sorted(marked) != want:
+                problems.append(
+                    f"claim {n} suffixes are {sorted(marked)}, expected {want} — "
+                    f"split rows run a, b, c… with no gaps")
+    return problems
 
 
 def searched_count(text: str) -> int:
@@ -399,6 +452,41 @@ def run_line_problems(text: str, m: int) -> list:
     return problems
 
 
+UNREACHABLE_MENTION = re.compile(r"\*\*Unreachable:\s*(\d+)\s+sources?\*\*", re.I)
+
+
+def unreachable_problems(record: dict, text: str) -> list:
+    """A run that logged blocked sources must say so in the report.
+
+    RUBRIC already tells a row to say the evidence exists but couldn't be reached.
+    That fires per row and then dies — nothing aggregates it, so a reader can't see
+    that six claims dead-ended at the same paywalled outlet. Same shape as the
+    run-line/run-record check: two places describing the same events must agree.
+    """
+    entries = record.get("unreachable")
+    if not entries:
+        return []
+    if not isinstance(entries, list):
+        return ["run record `unreachable` must be a list of {claim, url, reason}"]
+    problems = []
+    bad = [e for e in entries if not isinstance(e, dict) or not e.get("url")
+           or not e.get("reason")]
+    if bad:
+        problems.append(
+            f"{len(bad)} `unreachable` entr{'y' if len(bad) == 1 else 'ies'} missing url or "
+            f"reason — each needs both, so a reader can tell a paywall from a dead link")
+    m = UNREACHABLE_MENTION.search(text)
+    if not m:
+        problems.append(
+            f"run record lists {len(entries)} unreachable source(s), the report mentions none — "
+            f"add `**Unreachable: N sources**` under the tally, or a reader cannot tell blocked "
+            f"evidence from evidence that never existed")
+    elif int(m.group(1)) != len(entries):
+        problems.append(
+            f"report says {m.group(1)} unreachable sources, the run record lists {len(entries)}")
+    return problems
+
+
 def run_record_problems(report_path: str, text: str, m: int) -> list:
     """Cross-check the report's footer against the run record beside it.
 
@@ -418,10 +506,15 @@ def run_record_problems(report_path: str, text: str, m: int) -> list:
     except (OSError, json.JSONDecodeError) as e:
         return [f"run record beside the report is unreadable: {e}"]
 
+    # Runs before the unreachable check — it is about the record's own contents and
+    # must not be skipped just because the report has no run line.
+    early = (unreachable_problems(record, text)
+             if check_applies(text, UNREACHABLE_SINCE) else [])
+
     line = RUN_LINE.search(text)
     if not line:
-        return []
-    problems, body = [], line.group(0)
+        return early
+    problems, body = list(early), line.group(0)
 
     queries = record.get("queries") or []
     searches = SEARCH_QUERIES(queries)
@@ -535,12 +628,7 @@ def main() -> None:
 
     problems = []
 
-    dupes = [n for n, c in Counter(numbers).items() if c > 1]
-    if dupes:
-        problems.append(f"duplicate claim numbers: {sorted(dupes)}")
-    gaps = sorted(set(range(1, max(numbers) + 1)) - set(numbers))
-    if gaps:
-        problems.append(f"missing claim numbers: {gaps}")
+    problems.extend(numbering_problems(numbers))
     if unmarked:
         problems.append(
             f"rows {unmarked} have no verdict at all — use a verdict glyph, or an "
@@ -548,9 +636,16 @@ def main() -> None:
     undeclared = undeclared_unverifiable(text)
     if undeclared:
         problems.append(
-            f"❓ rows {undeclared} don't declare their kind — the verdict cell must read "
-            f"`❓ unverifiable (searched)` or `❓ unverifiable (by construction)`, so M is "
-            f"recountable from the table and can't be moved by wording in the evidence cell")
+            f"❓ rows {undeclared} don't declare their kind — "
+            + (f"the verdict cell must read `❓ unverifiable (searched)` or "
+               f"`❓ unverifiable (by construction)`, so M is recountable from the table and "
+               f"can't be moved by wording in the evidence cell"
+               if check_applies(text, UNVERIFIABLE_TOKEN_SINCE) else
+               # An older report is judged by the rule it was written under, so it must
+               # also be told about that rule. Quoting the current format at a 0.5.0
+               # report describes a requirement that did not exist when it was written.
+               f'each must say "searched; nothing found" or "unverifiable by '
+               f'construction" so M is recountable'))
 
     if not VERSION_STAMP.search(text):
         problems.append("no version stamp — header must carry `bullshit-detector <version>`")
