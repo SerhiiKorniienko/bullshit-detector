@@ -9,6 +9,15 @@ Every skill in `analysis/`, `ingestion/`, or `publishing/` (the **promoted** buc
 
 The repo is also its own single-plugin Claude Code marketplace: `.claude-plugin/marketplace.json` lists the one `bullshit-detector` plugin. When releasing, bump `.claude-plugin/plugin.json`'s `version` — Claude uses it to decide when installed users see an update. Run `claude plugin validate . --strict` after touching either manifest.
 
+**The version is the serial number of a measuring instrument, not a marketing number.** It is stamped into every report and printed as-is, `tally.py` gates its checks on it, and `examples/` is filed by it precisely because two reports from different releases are two instruments rather than two readings. Nothing else in the repo can carry that meaning, so the bump rule follows from it and not from how the change felt to write:
+
+- **MINOR when the instrument changes** — the same content, run before and after, could produce a different report. Different verdicts, different claim counts, a different score, a different set of rows the gate accepts. Rule changes, rubric changes, new or altered `tally.py` checks, anything that moves what gets searched.
+- **PATCH when it cannot** — crashes, rendering, docs, tooling, packaging, and performance work that leaves the output identical.
+
+Ask "could this move a verdict?", never "is this a feature or a fix?". Under this rule most releases here are minors, and that is the instrument honestly changing rather than version creep: batching two verdict-moving rules into one release makes a moved score unattributable, which defeats the reason reports are filed by version at all.
+
+Two consequences worth knowing. Gated constants make the *next* release number load-bearing before you have shipped it — `SPONSORED_SINCE = (0, 9, 0)` has to be written while 0.8.1 is current — so the number cannot be decided after the fact, which is a second reason batching does not work here. And 1.0 is a statement about the public surface (skill names, report format, `slides.json`, the separately-versioned `bullshit-detector/run@1` record), not about the rules being finished; the rules are expected to keep moving as minors well past it.
+
 Architecture rule: analysis skills never fetch — they receive normalized text + metadata and reference the `fetch-content` skill for URLs. New sources are new adapters inside `skills/ingestion/fetch-content/scripts/fetch.py`; analysis skills must not change when a source is added. Keep skills portable: no agent-specific tool names in SKILL.md bodies ("use your web search tool", not "use WebSearch").
 
 The detector's core integrity rule — verdicts require sources, never confirm/refute a claim from model memory — is load-bearing; don't weaken it when editing `skills/analysis/bullshit-detector/`.
