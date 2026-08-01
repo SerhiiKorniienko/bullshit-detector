@@ -30,7 +30,11 @@ and the page it produces makes no network requests. That combination is what let
 code-execution sandbox, where the HTML is the only thing the user can take away.
 
 - `--open` shows the page in the default browser. Where there is no browser — a sandbox, a headless
-  host — it says so and the file is still written. Never treat that as a failure.
+  host — it says so and the file is still written. **It is skipped when the page already exists**,
+  because re-rendering is normal (the run line gets finalised after a first pass) and every open
+  spawns another tab — three consecutive real runs left the user with two. The file updates in
+  place; reload the tab you have.
+- `--reopen` opens even when the page existed — for picking a report back up in a later session. Never treat that as a failure.
 - `--quiet` prints only the output path, for scripting.
 
 ## The handoff block

@@ -735,7 +735,10 @@ def main() -> None:
     ap.add_argument("--force", action="store_true",
                     help="render even when the report fails the gate; failures print as warnings")
     ap.add_argument("--open", action="store_true", dest="open_",
-                    help="open the rendered page in the default browser")
+                    help="open the rendered page in the default browser (skipped when the "
+                         "page already exists, so a re-render doesn't spawn a second tab)")
+    ap.add_argument("--reopen", action="store_true",
+                    help="open even if the page already existed — for a later session")
     ap.add_argument("--quiet", action="store_true",
                     help="print only the output path, not the summary block")
     args = ap.parse_args()
@@ -771,12 +774,23 @@ def main() -> None:
                       f"compliance.\n{output.rstrip()}", file=sys.stderr)
 
     out = Path(args.out) if args.out else src.with_suffix(".html")
+    existed = out.exists()
     meta, page = build(md, args.og_image)
     out.write_text(page, encoding="utf-8")
 
-    opened = open_in_browser(out) if args.open_ else False
-    if args.open_ and not opened:
+    # Don't reopen a tab the user already has. Re-rendering is normal — the run
+    # line gets finalised after a first pass — but every --open spawns another
+    # window, and three consecutive real runs left the user with two. If the page
+    # was already on disk, refresh it silently and say so.
+    want_open = args.open_ or args.reopen
+    fresh = not existed or args.reopen
+    reopened = want_open and not fresh
+    opened = open_in_browser(out) if (want_open and fresh) else False
+    if want_open and fresh and not opened:
         print("NOTE: could not open a browser here; the file is written.", file=sys.stderr)
+    if reopened:
+        print(f"NOTE: {out.name} already existed — updated in place, not reopened. "
+              f"Reload the tab you have, or pass --reopen.", file=sys.stderr)
 
     print(out if args.quiet else summary(meta, src.resolve(), out.resolve(), opened))
 

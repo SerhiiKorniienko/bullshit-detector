@@ -157,7 +157,7 @@ Separate what's verifiably true from what's hype in any piece of content.
 
    If you can't write it, skip it silently. It is diagnostic, and no part of the report depends on it.
 
-8. **Render the page, once the markdown passes.** If the `report-card` skill is installed:
+8. **Render the page — last, and exactly once.** If the `report-card` skill is installed:
 
    ```bash
    uv run <report-card-skill-dir>/scripts/render_report.py <the-report.md> --open
@@ -166,6 +166,19 @@ Separate what's verifiably true from what's hype in any piece of content.
    One self-contained HTML file beside the markdown — readable on a phone, printable, no network
    requests in it. `--open` shows it in the default browser; where there is no browser (a sandbox,
    a headless host) the script says so and the file is still written.
+
+   **Finish the markdown before you render it.** The run line and the run record are part of the
+   report, so they must be final — `tally.py` at exit 0 — before this step. Rendering a report you
+   then edit means rendering twice, and every `--open` is another browser tab in the user's face.
+   Three runs in a row did exactly this: render, notice the run line had gone stale, fix it, render
+   again. If you genuinely must re-render, **drop `--open`** — the file updates in place and the
+   tab the user already has will show it on reload.
+
+   **The run line does not count this step, and that ends the regress.** Finalising the footer takes
+   tool calls, which would change the tool count, which would need another edit — three separate runs
+   reported chasing that and stopping at a good-faith estimate. So the rule is: the counts describe
+   the work up to and including the last `tally.py` pass. Rendering and handing off are not in them.
+   Nothing downstream depends on the difference, and a stated cutoff beats an infinite regress.
 
    The script re-runs `tally.py` itself and **refuses to render a report that fails it**. Treat a
    refusal as the report not being finished: fix what it names, rewrite the markdown, run again.
