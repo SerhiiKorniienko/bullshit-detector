@@ -160,11 +160,10 @@ Count how many apply. Each is a signal, not proof — the report should name the
 - A public figure or statistic presented as the speaker's own result
 - Precision that rises as checkability falls: exact numbers about things nobody else can see
 
-**An invented term is a fabrication tell, not an ambiguous claim.** A claim built on a construct that
-denotes nothing — "algorithm authority", a proprietary-sounding metric no one else uses — reads as
-unpinnable, and step 3's disambiguation gate will drop it unless told otherwise. It must not: the
-absent referent is the finding, and dropping the row means the invention is why the invention goes
-unreported. Keep the row, and say the term has no definition outside this content.
+**An invented term is a fabrication tell, not an ambiguous claim** — a construct that denotes nothing,
+typically a proprietary-sounding metric no one else uses. SKILL.md step 3 owns the rule that keeps
+such a row rather than dropping it as unpinnable; what belongs here is that it scores as a tell, and
+the row should say the term has no definition outside this content.
 
 This group inverts the usual reading of specificity. "Our TrustFrame™ methodology, used by 340+
 organisations, delivered a 340% improvement under reference NHS-2024-AI-0891" sounds more rigorous
@@ -330,23 +329,15 @@ whose own arithmetic doesn't reconcile discredits every number above it, and thi
 easiest error for a reader to catch.
 
 **`M` must be countable from the table too.** A reader who disagrees with your total needs to be able
-to recount it, so every ❓ row declares its kind **in the verdict cell**, as a parenthetical:
+to recount it, so every ❓ row declares its kind in the verdict cell — `(searched)` counts toward `M`,
+`(by construction)` does not. SKILL.md's verdict scale defines both and says why the declaration
+lives in that cell and nowhere else.
 
-- `❓ unverifiable (searched)` — a search ran, so it **counts toward `M`**. Name the gap in the
-  evidence cell rather than leaving it at "nothing found": *"searched three angles; the underlying
-  study was never located"* tells the reader what kind of hole this is, and tells a later run where
-  to start
-- `❓ unverifiable (by construction)` — private financials, an unnamed subject, an anecdote, no
-  record that could exist. Nothing was searched, so it **does not count toward `M`**
-
-**The parenthetical is the declaration; prose does not count.** It used to be enough to mention
-"searched" anywhere in the row, which meant a validator asking for the word got the word — and the
-same word silently decided `M`. Putting it in the verdict cell makes the choice deliberate, visible
-to a reader, and impossible to satisfy by accident.
-
-Both are legitimate ❓ verdicts and the difference matters: one says the evidence is missing, the
-other says the claim was built so that no evidence could ever exist. Never assert a summary number
-the table doesn't support — that is the same failure as an unsourced verdict, one level up.
+What this section adds is the evidence-cell requirement: a `(searched)` row must **name the gap**
+rather than stop at "nothing found". *"Searched three angles; the underlying study was never
+located"* tells a reader what kind of hole this is, and tells a later run where to start. Never
+assert a summary number the table doesn't support — that is the same failure as an unsourced
+verdict, one level up.
 
 **The two header fields are not decoration.**
 

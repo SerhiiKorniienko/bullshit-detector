@@ -36,7 +36,7 @@ Separate what's verifiably true from what's hype in any piece of content.
    - **Vagueness is not ambiguity.** "Some experts", "involved in", "the early days" are vague but unambiguous. They stay, and they get checked as stated. Do not "resolve" a vague claim into a sharper one the speaker didn't make — that is the same error in the other direction.
    - **If the content doesn't resolve it, drop the claim** — even when the rest of the sentence is checkable. The test: would readers given this same content converge on one reading? If they wouldn't, you are about to pick one and attribute it to the speaker. Dropping loses a row; guessing invents a claim and then fact-checks it, which is the worse failure by a distance.
    - **Unless every reading reaches the same verdict — then keep it and show the readings.** Enumerate them in the evidence cell, check each one, and say the verdict is invariant: *"15 h/wk = 780 h/yr → ~$15K. Read as 15 h/wk each (1,560 h) → ~$30K. 2–4× over the wage data either way."* The reason to drop an ambiguous claim is that you would otherwise check one reading and attribute it to the speaker; when you check all of them and show your work, there is nothing attributed and nothing hidden. This is not licence to *pick* a reading — the moment two readings would earn different verdicts, the claim drops as above. The test stays strict: the readings must be **enumerable**, each **actually checked**, and each **shown**. One reading you didn't enumerate, or didn't check, and it drops.
-   - **Undefined is not ambiguous — never drop a claim for inventing its own terms.** "Consistency builds algorithm authority over time" can't be pinned down, but not because the content left something unsaid: "algorithm authority" denotes nothing. Ambiguity means the content has a meaning you can't determine; invention means there is no meaning to determine. Dropping the second makes the invention the reason the invention goes unreported, which is backwards — it keeps a row, and the missing referent *is* the evidence. See the fabrication tells in [RUBRIC.md](RUBRIC.md). Same for a claim that is simply false: unpinnable and untrue are different findings, and only one of them is a reason to stop looking.
+   - **Undefined is not ambiguous — never drop a claim for inventing its own terms.** "Consistency builds a reach compounding coefficient over time" can't be pinned down, but not because the content left something unsaid: "reach compounding coefficient" denotes nothing. Ambiguity means the content has a meaning you can't determine; invention means there is no meaning to determine. Dropping the second makes the invention the reason the invention goes unreported, which is backwards — it keeps a row, and the missing referent *is* the evidence. It scores as a fabrication tell ([RUBRIC.md](RUBRIC.md)). Same for a claim that is simply false: unpinnable and untrue are different findings, and only one of them is a reason to stop looking.
    - **Write every surviving claim so it stands alone**, with the missing context in square brackets: `The [Boston] council expects its law [banning plastic bags] to pass in January 2025`. A reader must be able to re-check row 7 without having read rows 1–6 or watched the video. This is what makes the claims table independently checkable rather than a set of notes about the content.
    - **Dropped claims are not table rows and do not count toward `N`.** They are reported as a count next to the tally, with a word on what they were. A content full of assertions nobody can pin down is itself a finding — say so in the bottom line when the count is high. Claims *kept* under every reading are ordinary table rows and do count toward `N` — they are reported separately on the same line, because "nobody could pin this down" and "this means two things and both are wrong" are different findings about the content.
 4. **Verify.** First split the factual claims into **load-bearing** (the thesis collapses without them, including any claim *derived* from them) and **incidental**. Then:
@@ -45,7 +45,7 @@ Separate what's verifiably true from what's hype in any piece of content.
    - **Verify incidental claims as budget allows**, most consequential first. Anything you don't reach is `⚪ not checked` — never a guess.
    - **If you cannot verify a load-bearing claim**, say so prominently in the bottom line. A thesis with an unchecked load-bearing premise has not been audited, and the report must not imply otherwise.
 
-   For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md) — empirical and primary sources first, interested parties last. **Tier the document, not the domain**: a `/sponsored/`, `/partnercontent/` or `/paid-post/` URL under a reputable masthead is the advertiser talking about itself and is tier 4, which caps the claim at 🟡. Say so in the cell — `tally.py` rejects a row that cites one without naming it. Before calling a claim corroborated, **collapse syndicated results to their origin and count origins, not URLs** (RUBRIC.md has the tells).
+   For each claim you do check, web-search for independent evidence and rank what you find against the source hierarchy in [RUBRIC.md](RUBRIC.md), applying its two rules that decide most real cases: **tier the document, not the domain**, and **collapse syndicated results to their origin before counting corroboration**. Both are specified there, with the tells. What this step adds is the enforcement: `tally.py` rejects a row that cites sponsored content without naming it, or that claims breadth with no origin marker.
 
    **One search is a first attempt, not a verdict.** When what came back doesn't clear the bar in [RUBRIC.md](RUBRIC.md) ("When is the evidence enough?"), don't settle for it — say what's missing and go get that:
 
@@ -60,7 +60,7 @@ Separate what's verifiably true from what's hype in any piece of content.
 
      Then stop. A claim that exhausts the budget is ❓ unverifiable **with the gap named** — "searched three angles; the underlying study was never located" tells a reader something a bare ❓ doesn't, and tells the next run where to start.
 
-   **Counting origins is the normal path; running `coverage-check` is not.** Every claim backed by more than one URL needs an origin count in its evidence cell (RUBRIC.md) — and you can nearly always produce one from the results already in hand: read them, see that all four trace to the same press release, and write `[4 URLs → 1 origin: the vendor's release]`. That costs nothing and names the origin, which is worth more than a number.
+   **Counting origins is the normal path; running `coverage-check` is not.** You can nearly always produce the count from results already in hand, by RUBRIC.md's tells, and it costs nothing.
 
    Reach for the `coverage-check` skill only when that fails: the claim rests on *breadth you cannot inspect* — "widely reported", "every outlet covered it" — and the results in front of you can't settle whether that breadth is real. **Run it on the single claim whose verdict most depends on the answer, two at the very most.**
 
@@ -99,63 +99,31 @@ Separate what's verifiably true from what's hype in any piece of content.
    under the usual layouts. The bare `scripts/tally.py` written here previously resolved from
    nowhere and cost a real run a failed invocation.
 
-   **Let the script write the tally line.** `--fix` rewrites it in place, and that is the shortest
-   path to a compliant one: the script omits zero-count buckets, so a hand-written line carrying
-   "0 false" or a trailing "0 not checked" is rejected even though it is arithmetically correct.
-
-   It recounts every row, rebuilds the tally line, and verifies the version stamp, the linked source, the origin markers and the claim numbering. Exit 2 means the report is non-compliant: fix what it names and re-run until it exits 0. `--fix` rewrites the tally line in place.
+   **Let the script write the tally line** — `--fix` rewrites it in place, which is the shortest path
+   to a compliant one and the reason not to hand-assemble it (the format, including which buckets are
+   omitted, is RUBRIC.md's). It also recounts every row and verifies the version stamp, the linked
+   source, the origin markers and the claim numbering. Exit 2 means the report is non-compliant: fix
+   what it names and re-run until it exits 0.
 
    This is not belt-and-braces. Counting a 40-row table by eye failed in three consecutive real runs — off by 2, then by 8 — while the analysis itself was sound. Attention goes to the argument and the bookkeeping silently rots, so the bookkeeping is the script's job now.
 
    **Count the searches from the query log you kept in step 4, never from memory.** One run reported 35 searches in its footer against 40 logged; another said 21 against 29. Recalling a number you already wrote down produces a different number, every time — the log is the source of truth, the footer is derived from it, and `tally.py` rejects the report when they disagree.
 
-   End the report with the run line from [RUBRIC.md](RUBRIC.md) — one italic line, counting the searches you issued, the tool calls you made, the `coverage-check` runs (the `coverage` field), the wall time since step 1, and the wall time divided by `M`. It is the only cost figure a reader sees.
+   End the report with the run line specified in [RUBRIC.md](RUBRIC.md). Its inputs all come from this step: the query log, the wall clock you started in step 1, and `M` from the tally the script just wrote.
 
-   Then write a run record beside it — same path with `.md` swapped for `.run.json`:
+   Then write a run record beside it — same path with `.md` swapped for `.run.json`. The schema and
+   the fields that are easy to get wrong are in **[RUN-RECORD.md](RUN-RECORD.md)**; read it when you
+   write the record, not before. Two things you need while still running, because they shape what you
+   must have kept: **log every search query as you issue it** (a list rebuilt from memory at the end
+   is wrong in the direction that flatters the run), and **log every source you could not reach**,
+   with the claim it would have supported.
 
-   ```json
-   {"schema": "bullshit-detector/run@1", "version": "<same stamp the report carries>",
-    "source": "<url or file>", "report": "<report path>",
-    "started": "<ISO time from step 1>", "finished": "<ISO time now>", "wall_seconds": 722,
-    "claims": {"extracted": 28, "checked": 23, "dropped_ambiguous": 2},
-    "source_words": 4445, "fetches": 1, "coverage_checks": 0,
-    "queries": [{"claim": 3, "pass": "first", "q": "the query, verbatim"},
-                {"claim": 3, "pass": "follow-up", "q": "the next angle, verbatim"}],
-    "unreachable": [{"claim": 7, "url": "https://example.com/study",
-                     "reason": "paywall"}]}
-   ```
-
-   `source_words` is the word count of the normalized text you saved in step 1 — `fetch-content`
-   prints it in the frontmatter. It exists so extraction coverage stops being invisible: claims per
-   thousand words is the only cheap signal for whether a run read the whole thing or skimmed it, and
-   two runs of one video have already differed by twelve claims with nothing in either artifact to
-   show it. `scripts/runstats.py` reports it across releases. It is a measurement, not a target —
-   dense content genuinely yields more claims per word than a rambling one.
-
-   **Log every source you could not reach**, in `unreachable`. One entry per URL, with the claim it
-   would have supported and a `reason` from: `paywall`, `blocked` (bot wall, 403, crawler block),
-   `dead` (404, domain gone), `timeout`, `login`. Omit the field when nothing was blocked.
-
-   RUBRIC already says unreachable ≠ unverifiable and asks the row to say the evidence exists but
-   couldn't be reached. That fires per row and then the information dies: nothing aggregates it, so
-   a reader can't see that six claims dead-ended at the same paywalled outlet, and nobody can tell
-   whether it is getting worse over time. This is the cheapest possible fix — the agent already knows
-   which fetches failed at the moment they fail.
-
-   **When the list is non-empty, say so in the report**, as one line under the tally:
+   **When anything was unreachable, say so in the report** too, as one line under the tally —
+   `tally.py` rejects a record that lists unreachable sources against a report that never mentions them:
 
    > **Unreachable: 4 sources** — 3 paywalled, 1 blocked. Named in the rows that needed them.
 
-   `tally.py` cross-checks the two: a run record listing unreachable sources against a report that
-   never mentions them is the same failure as a run line disagreeing with its record.
-
-   `queries` holds **search queries only** — one entry per search you issue. Fetching a page you found is not a search; it belongs in `fetches`. The two got mixed in a real run and the record ended up claiming eight more searches than the report did.
-
-   **The counts in the record and the run line describe the same events and must agree.** `tally.py` compares them when both exist.
-
-   **This never appears in the report.** A reader wants to know whether the content is true, not what it cost to find out. The record exists so runs can be compared across releases — `scripts/runstats.py` reads them — and so the follow-up searches in step 4 can be checked afterwards for whether they genuinely changed angle or just reworded. Log each query as you issue it, including the ones that return nothing; a list rebuilt from memory at the end is wrong in the direction that flatters the run.
-
-   If you can't write it, skip it silently. It is diagnostic, and no part of the report depends on it.
+   If you can't write the record, skip it silently. It is diagnostic, and no part of the report depends on it.
 
 8. **Render the page — last, and exactly once.** If the `report-card` skill is installed:
 
@@ -280,8 +248,9 @@ which have no truth value to check and carry an em-dash instead.
 - **Checking arithmetic is not confirming a claim.** If a figure follows correctly from inputs the content supplied, you have verified its calculator, not the world. Rate it on whether the *inputs* survive: sound inputs and sound arithmetic is ✅; sound arithmetic on inflated inputs is 🟠 misleading, however clean the sum. Never award ✅ for internal consistency alone — say "arithmetic checks out" in the evidence cell and let the input's verdict carry the row.
 - **Show the sum.** When a claim asserts a computed figure, put the computation in the evidence cell — inputs, operation, result — so a reader can redo it in seconds: `1,850 × 3 = 5,550, not "almost 6,000"`. "Arithmetic checks out" without the arithmetic is an unsourced verdict about a number, which is the one kind of claim this report has no excuse for. It applies to figures that are *correct* as much as to ones that aren't: a visible sum is what lets a reader see you rated the inputs rather than the calculator. It also catches rounding dressed as approximation — printing the real product is the whole rebuttal.
 - **Carry the range; never pick a point inside it.** A figure whose inputs span a range keeps that range in the evidence cell, whether the range was *inherited* or *never supplied*. Inherited: a row that rests on claim 4, checked under `~$15K` and `~$30K`, says `the fee equals six months to a year of the savings` — not whichever end makes the sharper sentence. Never supplied: the content omits a number the answer depends on ("a needle at light speed"), which is not ambiguity and not unverifiability but *underspecification*, so report where the claim holds and where it fails — *"at 0.4 g the impact yields 0.18 Mt; 1 Mt needs 2.2 g — the claim holds only at the top of the plausible range."* Collapsing either kind of range is clean arithmetic on a selected input: the same error this file calls 🟠 in the content, one step downstream. Three runs of one video silently chose 0.4 g, 1 g and 2.2 g for the same unstated needle and landed on 🟠, 🟡 and 🟡 — the verdict was an artefact of an assumption no reader could see.
-- **A specific claim with no footprint is not the same as a private one.** "Our internal revenue tripled" is unverifiable because the data is private, which is expected. A named framework, award, certification, case number, study or affiliation that returns *nothing* is a different finding — the content chose a checkable referent and there is no trace of it. Both are ❓, but the second says "no record found", counts as the fabrication tell in [RUBRIC.md](RUBRIC.md), and gets called out by name in the bottom line. Only fire it when your searches are demonstrably working — a search returning nothing at all is broken, not evidence.
-- **Unreachable ≠ unverifiable.** If the evidence trail dead-ends at a paywall, a blocked domain, or a dead link, rate the claim ❓ unverifiable *and say the evidence exists but you couldn't reach it*. That is a different failure from a claim nobody has ever checked, and the reader needs to tell them apart.
+- **Name the measurement basis, or you are checking a different claim.** A claim about change over time — "up 500%", "at one point", "at its peak", "since 2019" — is only checkable against a stated series, window and method, and **trough-to-peak and trailing point-to-point returns routinely differ by 2–3×**. Where the wording fixes the basis, use that one: "at one point this year" means trough-to-peak, not the trailing twelve months. Where it doesn't, carry both, exactly as with an unsupplied input above. Then put the basis in the evidence cell, not just the result — `52-week range 245,000 → 2,987,000 KRW = +1,119%`, never a bare `+1,119%`. Two runs of one video checked the same peak-return claim about a chipmaker against different bases and returned ❌ false and ✅ confirmed; the ❌ had measured a trailing return against a claim about a peak, which is a different question. **A basis you didn't state is an assumption no reader can see, which is the same failure as the needle above, one level up.**
+- **A specific claim with no footprint is not the same as a private one.** "Our internal revenue tripled" is unverifiable because the data is private, which is expected. A named framework, award, certification, case number, study or affiliation that returns *nothing* is a different finding — the content chose a checkable referent and there is no trace of it. Both are ❓; only the second is the fabrication tell, and [RUBRIC.md](RUBRIC.md) carries its two guards and how it scores.
+- **Unreachable ≠ unverifiable.** A trail that dead-ends at a paywall, a bot wall or a dead link is still ❓ — but the row says the evidence exists and wasn't reached, and the URL goes in the run record's `unreachable` list (step 7). [RUBRIC.md](RUBRIC.md) has why absence from your results is not absence from the world.
 - Predictions are not lies; judge them on whether the stated reasoning holds and whether the speaker hedges honestly.
 - An anecdote used as proof of a general pattern is a hype signal even when the anecdote itself is true.
 - High production value, confidence, and view counts are not evidence of anything.
