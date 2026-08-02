@@ -544,19 +544,34 @@ One italic line, last thing in the report, and deliberately dull. A reader came 
 whether the content is true, not what it cost to find out — so this stays a footnote, and
 anything longer belongs in the run record beside the file rather than in the report.
 
-It earns its place by being checkable. `per claim` is the wall time over `M`, not a fresh
-number, so it cannot drift from the tally. And `searches` against `tools` is a reconciliation
-a reader can do at a glance: **every search is at least one tool call, so searches can never
-exceed tools.** A report claiming 31 searches from 15 tool calls is claiming work it did not
-do, and that is now visible on the face of it rather than buried in a transcript nobody reads.
+**Don't write this line — `tally.py --fix` generates it** from the run record and the claims
+table, the same way it generates the tally line. Every figure in it is derived from something
+already written down, so typing it by hand only creates a second place for the number to be
+wrong. See SKILL.md step 7.
+
+It earns its place by being *internally* checkable. `per claim` is the wall time over `M`,
+not a fresh number, so it cannot drift from the tally. And `searches` against `tools` is a
+reconciliation the script performs: **every search is at least one tool call, so searches can
+never exceed tools.** A report claiming 31 searches from 15 tool calls is claiming work it did
+not do, and the gate now says so.
+
+**A reader cannot verify any of this independently, and the line should not pretend otherwise.**
+Both figures are self-reported; the wall clock is the only one anchored to anything outside the
+report, via the two timestamps in the run record. The footer is a disclosure, not a proof.
 
 **`tools` is a good-faith count, not an exact one, and that is by construction** — finalising the
 footer takes tool calls, which would change the count, which would need another edit. The cutoff is
 the rule above: everything up to and including the last `tally.py` pass. Unlike `searches`, there is
 no live log to keep, and none is asked for; a blind run reasonably read the searches-logging rule as
 implying one and reconstructed `tools` from its own transcript afterwards. Don't. Count it once, at
-the same moment you finalise the tally, and treat it as the upper bound it exists to be — its only
-job is that `searches` cannot exceed it. If the two are close, say so honestly rather than padding.
+the same moment you write the run record, and give the honest number you can see.
+
+**Do not round it upward to make room.** Its only job is that `searches` cannot exceed it, so a
+generous estimate is the one way to satisfy that check while emptying it of meaning — the check
+would then be measuring your padding, not your work. If the honest count comes out below `searches`,
+that is a finding about the count, and the right response is to say so, not to raise it. This is the
+weakest field in the record precisely because nothing outside it can be checked against, which is
+why the instruction is to be conservative rather than safe.
 
 `coverage` counts `coverage-check` runs — the expensive call, and the one worth watching.
 It is spelled out rather than shortened to `checks`, because a report that already says

@@ -9,6 +9,13 @@ Separate what's verifiably true from what's hype in any piece of content.
 
 ## Workflow
 
+**Start at step 1 now. The steps below are the plan** — they are already ordered, and each one says
+what it needs. There is nothing to work out in advance, and working it out anyway is measurably
+expensive: across 35 instrumented runs the phase before the first tool call is almost entirely
+deliberation, 15% of all the thinking a run does, and the single longest uninterrupted block on
+record — 421 seconds — sits there, before a claim had been read or a search issued. Read step 1,
+do step 1.
+
 1. **Get the text.** If the input is a URL and the `fetch-content` skill is installed, use its script. Otherwise use your web fetch tool or ask the user to paste the content. Keep the metadata (views, author, date) — it feeds step 5.
 
    **Note the wall-clock time before you fetch.** The report ends with what the run cost, and the clock can only start here. Read the actual time; don't reconstruct it at the end.
@@ -129,31 +136,54 @@ Separate what's verifiably true from what's hype in any piece of content.
    under the usual layouts. The bare `scripts/tally.py` written here previously resolved from
    nowhere and cost a real run a failed invocation.
 
-   **Let the script write the tally line** — `--fix` rewrites it in place, which is the shortest path
-   to a compliant one and the reason not to hand-assemble it (the format, including which buckets are
-   omitted, is RUBRIC.md's). It also recounts every row and verifies the version stamp, the linked
-   source, the origin markers and the claim numbering. Exit 2 means the report is non-compliant: fix
-   what it names and re-run until it exits 0.
+   **Write the run record first, then let the script write both derived lines.** The record is the
+   raw material: the two timestamps, the query log, the counts only you can know. Everything the
+   report *states* about the run is computed from it.
 
-   This is not belt-and-braces. Counting a 40-row table by eye failed in three consecutive real runs — off by 2, then by 8 — while the analysis itself was sound. Attention goes to the argument and the bookkeeping silently rots, so the bookkeeping is the script's job now.
+   1. **Write the run record** beside the report — same path with `.md` swapped for `.run.json`. The
+      schema and the fields that are easy to get wrong are in **[RUN-RECORD.md](RUN-RECORD.md)**;
+      read it when you write the record, not before. Two things you need while still running,
+      because they shape what you must have kept: **log every search query as you issue it** (a list
+      rebuilt from memory at the end is wrong in the direction that flatters the run), and **log
+      every source you could not reach**, with the claim it would have supported.
+   2. **Run `tally.py --fix`.** It writes the tally line *and* the run line, recounts every row, and
+      verifies the version stamp, the linked source, the origin markers and the claim numbering.
+      Exit 2 means the report is non-compliant: fix what it names and re-run until it exits 0.
 
-   **Count the searches from the query log you kept in step 4, never from memory.** One run reported 35 searches in its footer against 40 logged; another said 21 against 29. Recalling a number you already wrote down produces a different number, every time — the log is the source of truth, the footer is derived from it, and `tally.py` rejects the report when they disagree.
+   **Run it the moment the table and the record exist, and let its output be the first time the
+   count is checked at all.** Do not audit the table yourself first. The script is not confirming a
+   number you already worked out — it *is* the number, and a hand recount before the call is work
+   the call was built to make unnecessary. Instrumented across 35 runs: 16 of them passed the gate
+   with **zero** rejections and still spent a median 52 seconds — up to 257 — deliberating before
+   asking, 1,173 seconds in total across the corpus, all of it spent re-deriving what the script
+   returns for free.
 
-   End the report with the run line specified in [RUBRIC.md](RUBRIC.md). Its inputs all come from this step: the query log, the wall clock you started in step 1, and `M` from the tally the script just wrote.
+   **If the same rejection comes back twice, stop re-running and go read the line it names.** Six
+   runs on record re-ran the gate against rejections that repeated *verbatim* — one burned 525
+   seconds, 89% of it deliberating, on three rejections it had already been given once. A repeated
+   rejection means the edit did not land, or landed somewhere else; the script will keep saying so
+   as long as you keep asking. Open the file at that line, read what is actually there, and fix
+   that.
 
-   Then write a run record beside it — same path with `.md` swapped for `.run.json`. The schema and
-   the fields that are easy to get wrong are in **[RUN-RECORD.md](RUN-RECORD.md)**; read it when you
-   write the record, not before. Two things you need while still running, because they shape what you
-   must have kept: **log every search query as you issue it** (a list rebuilt from memory at the end
-   is wrong in the direction that flatters the run), and **log every source you could not reach**,
-   with the claim it would have supported.
+   `--fix` also corrects the record's own derived counts — `claims.extracted`, `claims.checked`,
+   `claims.dropped_ambiguous` and `wall_seconds` — from the table and your two timestamps, so those
+   four are not worth getting exactly right by hand either. See [RUN-RECORD.md](RUN-RECORD.md).
+
+   **Do not hand-write either line.** Both are pure functions of the claims table and the record —
+   the tally line's buckets and the footer's `searches`, `tools`, `coverage`, wall clock and
+   `per claim` arithmetic. Every one of those has been typed wrong in a shipped run: 35 searches
+   against 40 logged, 21 against 29, a 40-row table miscounted by 2 and then by 8 while the analysis
+   in those same runs was sound. Attention goes to the argument and the bookkeeping rots behind it,
+   so **a number that can be computed is never typed.** If the script declines to write the footer it
+   says which field the record is missing — supply the field, don't write the line yourself.
+
+   If you cannot write the record, skip it: the footer then has no source, and a footer you invent
+   is worse than one that is absent.
 
    **When anything was unreachable, say so in the report** too, as one line under the tally —
    `tally.py` rejects a record that lists unreachable sources against a report that never mentions them:
 
    > **Unreachable: 4 sources** — 3 paywalled, 1 blocked. Named in the rows that needed them.
-
-   If you can't write the record, skip it silently. It is diagnostic, and no part of the report depends on it.
 
 8. **Render the page — last, and exactly once.** If the `report-card` skill is installed:
 
