@@ -47,6 +47,12 @@ RATED = ["confirmed", "plausible", "misleading", "false"]
 CLAIM_ROW = re.compile(r"^\|\s*(\d+)([a-z]?)\s*\|", re.I)
 TALLY_LINE = re.compile(r"^>?\s*\*\*Tally:.*", re.M)
 VERSION_STAMP = re.compile(r"bullshit-detector\s+v?(\d+)\.(\d+)\.(\d+)")
+# RUBRIC tells a manifest-less install to write `version unknown` rather than guess.
+# The stamp check used to reject exactly that, so every report from an `npx skills add`
+# install was non-compliant and could not be made compliant — the manifest lives three
+# levels above the skill directory and does not travel with it. Found by a blind run
+# that followed the instruction and was refused for it.
+VERSION_UNKNOWN = re.compile(r"bullshit-detector\s+version unknown", re.I)
 AMBIG_LINE = re.compile(
     r"\*\*Ambiguous:\s*(\d+)\s+claims?\s+dropped"               # J — could not be pinned down
     r"(?:[^*]*?;\s*(\d+)\s+checked under every reading)?"       # K — kept, invariant verdict
@@ -544,7 +550,9 @@ def verdict_integrity_warnings(text: str) -> list:
             out.append(
                 f"claim {num} is rated {classify(line)} but its evidence says "
                 f"\"{hit.group(0)}\" — if one part of the row is contradicted, the row "
-                f"takes that verdict, or splits into {num}a/{num}b")
+                f"takes that verdict, or splits into {num}a/{num}b. If the wording is "
+                f"honest and the verdict is right, leave both alone: never reword "
+                f"evidence to silence this.")
     return out
 
 
@@ -970,8 +978,11 @@ def main() -> None:
                f'each must say "searched; nothing found" or "unverifiable by '
                f'construction" so M is recountable'))
 
-    if not VERSION_STAMP.search(text):
-        problems.append("no version stamp — header must carry `bullshit-detector <version>`")
+    if not VERSION_STAMP.search(text) and not VERSION_UNKNOWN.search(text):
+        problems.append(
+            "no version stamp — header must carry `bullshit-detector <version>`, or "
+            "`bullshit-detector version unknown` if the manifest is not reachable from "
+            "this install")
     ambiguous = ambiguous_line_problem(text)
     if ambiguous:
         problems.append(ambiguous)
