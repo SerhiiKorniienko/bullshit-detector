@@ -75,7 +75,31 @@ UNREACHABLE_REASON_SINCE = (0, 13, 0)
 QUOTE_INTEGRITY_SINCE = (0, 13, 0)
 CLAIM_QUOTE_SINCE = (0, 13, 0)
 
-RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
+# Anchored to a whole line, and the *last* one wins. Unanchored, this matched any
+# italic sentence beginning "Run:" — and the RUBRIC template puts a prose section
+# above the footer, so `*Run: the numbers again and the debt figure doesn't survive.*`
+# is an ordinary thing for a report to say. That was harmless while this pattern was
+# only ever read. The moment `--fix` began writing through it, the leftmost match got
+# overwritten with the generated footer: the sentence was destroyed, the real footer
+# was left uncorrected, and the re-check passed on the line it had just written.
+# Verified end to end before this fix — the report kept a fabricated `99m99s` footer
+# and exited 0.
+RUN_LINE = re.compile(r"^\*run:[^*\n]*\*\s*$", re.I | re.M)
+
+
+def find_run_line(text: str):
+    """The footer is the last line of the report, so take the last match.
+
+    One parse for all three call sites — the checks and the writer must agree on
+    which line is the footer, or the writer fixes one line and the check reads
+    another.
+    """
+    found = None
+    for found in RUN_LINE.finditer(text):
+        pass
+    return found
+
+
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
 RUN_FIELD = {name: re.compile(rf"{name}\s+(\d+)", re.I)
              for name in ("searches", "tools", "coverage")}
@@ -444,7 +468,7 @@ def run_line_problems(text: str, m: int) -> list:
     """
     if not check_applies(text, RUN_LINE_SINCE):
         return []
-    line = RUN_LINE.search(text)
+    line = find_run_line(text)
     if not line:
         return ["no run line — end the report with "
                 "`*run: 16m55s, searches 24, tools 30, coverage 1, per claim 44s*`"]
@@ -841,7 +865,7 @@ def run_record_problems(report_path: str, text: str, m: int) -> list:
     if check_applies(text, RUN_CLOCK_SINCE):
         early += clock_problems(record)
 
-    line = RUN_LINE.search(text)
+    line = find_run_line(text)
     if not line:
         return early
     problems, body = list(early), line.group(0)
@@ -906,6 +930,410 @@ def ambiguous_line_problem(text: str):
     return None
 
 
+def build_run_line(record: dict, m: int):
+    """Compose the run footer from the record and the table, or say what is missing.
+
+    Every figure in the footer is derived from something else — the wall clock from the
+    two timestamps, `per claim` from the wall over M, `searches` from the query log,
+    `coverage` from the count of coverage-check calls. Until this existed the agent
+    retyped all of them into a second artifact, and the census of gate rejections says
+    how that went: of 46 mechanical rejections across the corpus, 12 were a missing
+    count, 7 a missing wall time, 4 the per-claim arithmetic, and 3 the footer and the
+    record disagreeing about searches. None of those are judgement. A number that can be
+    computed should never be typed.
+
+    `tools` is the one figure nothing here can derive — only the agent can count its own
+    calls — so it comes from the record and is copied, not recomputed. It has never been
+    exact by construction (fixing it requires edits that add tool calls) and it is not
+    treated as though it were.
+
+    The duration is recomputed from `started`/`finished` rather than read from
+    `wall_seconds`, so the footer cannot inherit a fabricated duration; `clock_problems`
+    separately holds the record to its own arithmetic.
+    """
+    missing = []
+    started, finished = _iso(record.get("started")), _iso(record.get("finished"))
+    seconds = None
+    if started and finished:
+        seconds = int((finished - started).total_seconds())
+    elif isinstance(record.get("wall_seconds"), int):
+        seconds = record["wall_seconds"]
+    if seconds is None or seconds < 0:
+        missing.append("started/finished (or wall_seconds)")
+
+    # `(int, float)` rather than `int` alone, matching `clock_problems` — a record
+    # written programmatically can carry `30.0` and mean thirty.
+    tools = record.get("tools")
+    if not isinstance(tools, (int, float)) or isinstance(tools, bool):
+        missing.append("tools")
+    # `coverage` is echoed, never cross-checked against anything. Nothing counts
+    # coverage-check invocations independently, so generating this figure makes it
+    # look computed when it is exactly as self-reported as it was when typed by hand.
+    # Kept because the field is cheap and the expensive call is worth watching;
+    # flagged here so nobody later mistakes it for a measurement.
+    coverage = record.get("coverage_checks")
+    if not isinstance(coverage, (int, float)) or isinstance(coverage, bool):
+        missing.append("coverage_checks")
+    if missing:
+        return None, missing
+
+    searches = SEARCH_QUERIES(record.get("queries") or [])
+    hours, rest = divmod(seconds, 3600)
+    minutes, sec = divmod(rest, 60)
+    wall = f"{hours}h{minutes}m{sec}s" if hours else f"{minutes}m{sec}s"
+    per = f", per claim {round(seconds / m)}s" if m else ""
+    return (f"*run: {wall}, searches {searches}, tools {int(tools)}, "
+            f"coverage {int(coverage)}{per}*"), []
+
+
+# ---------------------------------------------------------------- claims@1 compose
+#
+# The report's claims table, generated from a structured file instead of typed.
+# Motivation, measured: the same quantity is currently parsed out of prose three
+# times — by this script, by `render_report.py`, and by the model writing the tally
+# line — and the three disagreed on a published page (a `24a`/`24b` split row the
+# renderer's row pattern silently dropped, so the page showed 24 claims and no ❌
+# chip against a tally line reading 26 claims and 1 false).
+#
+# Scope here is deliberately stage one: render and validate against *exactly*
+# today's rules. No new enforcement lives in this path — the tier cap on ✅ and
+# mandatory origin counts are real gaps this schema would make cheap to close, and
+# each one can move a verdict, so each ships alone and later.
+
+CLAIM_SCHEMA = "bullshit-detector/claim@1"
+CLAIM_SECTIONS = ("load_bearing", "incidental")
+CLAIM_TYPES = ("factual", "prediction", "opinion", "anecdote")
+CLAIM_VERDICTS = {name for _, name in VERDICTS}
+CLAIM_MARKERS = {
+    "load_bearing": "<!-- CLAIMS: load_bearing -->",
+    "incidental": "<!-- CLAIMS: incidental -->",
+    "tally": "<!-- TALLY -->",
+    "run": "<!-- RUN -->",
+}
+
+
+def sibling(report: Path, suffix: str) -> Path:
+    """`bs-report-x.md` → `bs-report-x.claims.jsonl`.
+
+    `Path.with_suffix` is wrong here: report slugs contain dots (dates, version
+    fragments), so it would truncate at the last one rather than at `.md`.
+    """
+    name = report.name[:-3] if report.name.endswith(".md") else report.name
+    return report.with_name(name + suffix)
+
+
+def load_claims(path: Path):
+    """Parse claims.jsonl line by line. One bad line costs one claim, never the run.
+
+    This is the whole reason the format is JSONL rather than a single JSON array —
+    a parser that raises on the first malformed line has thrown that away, so the
+    per-line try/except is load-bearing rather than defensive habit.
+    """
+    claims, problems = [], []
+    for lineno, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not raw.strip():
+            continue
+        try:
+            obj = json.loads(raw)
+        except json.JSONDecodeError as e:
+            problems.append(f"claims line {lineno} is not valid JSON ({e.msg}) — skipped")
+            continue
+        if not isinstance(obj, dict):
+            problems.append(f"claims line {lineno} is not an object — skipped")
+            continue
+        problems.extend(validate_claim(obj, lineno))
+        claims.append(obj)
+    return claims, problems
+
+
+def validate_claim(c: dict, lineno: int) -> list:
+    """Today's rules, expressed against fields instead of recovered from prose."""
+    out = []
+    where = f"claim {c.get('n', '?')} (line {lineno})"
+    if c.get("schema") != CLAIM_SCHEMA:
+        out.append(f"{where}: schema must be `{CLAIM_SCHEMA}`")
+    if not re.fullmatch(r"\d+[a-z]?", str(c.get("n", ""))):
+        out.append(f"{where}: `n` must be a number with an optional letter suffix")
+    if c.get("section") not in CLAIM_SECTIONS:
+        out.append(f"{where}: `section` must be one of {', '.join(CLAIM_SECTIONS)}")
+    if c.get("type") not in CLAIM_TYPES:
+        out.append(f"{where}: `type` must be one of {', '.join(CLAIM_TYPES)}")
+    if not str(c.get("claim", "")).strip():
+        out.append(f"{where}: `claim` is empty")
+
+    verdict = c.get("verdict")
+    if verdict is not None and verdict not in CLAIM_VERDICTS:
+        out.append(f"{where}: unknown verdict `{verdict}`")
+    # The em-dash rule, as a conditional instead of a character hunt.
+    if verdict is None and c.get("type") not in ("opinion", "prediction"):
+        out.append(f"{where}: only opinion and prediction rows may have no verdict")
+
+    kind = c.get("unverifiable_kind")
+    if verdict == "unverifiable" and kind not in ("searched", "by_construction"):
+        out.append(f"{where}: an unverifiable row must declare `searched` or `by_construction`")
+    if verdict != "unverifiable" and kind is not None:
+        out.append(f"{where}: `unverifiable_kind` is set on a row that is not unverifiable")
+
+    sources = c.get("sources") or []
+    if not isinstance(sources, list):
+        out.append(f"{where}: `sources` must be a list")
+        sources = []
+    for s in sources:
+        if not isinstance(s, dict) or not str(s.get("url", "")).startswith("http"):
+            out.append(f"{where}: every source needs a `url`")
+        elif not isinstance(s.get("tier"), int) or not 1 <= s["tier"] <= 5:
+            out.append(f"{where}: source {s.get('url')} needs a tier from 1 to 5")
+    # An opinion or prediction row carries no verdict and was never searched, so it
+    # cannot owe a source — same exemption the prose check already makes for the
+    # em-dash rows it can see.
+    exempt = (verdict is None
+              or verdict == "not checked"
+              or (verdict == "unverifiable" and kind == "by_construction")
+              or c.get("derived_from"))
+    if not sources and not exempt:
+        out.append(f"{where}: a row carrying a searched verdict needs a source to click")
+
+    if len(sources) > 1:
+        if not isinstance(c.get("origin_count"), int):
+            out.append(f"{where}: more than one source, so `origin_count` is required")
+        elif c.get("origin_kind") not in ("measured", "judged"):
+            out.append(f"{where}: `origin_kind` must say whether the count was measured or judged")
+
+    readings = c.get("readings")
+    if readings is not None and (not isinstance(readings, list) or len(readings) < 2):
+        out.append(f"{where}: `readings` means two or more, each checked and shown")
+    return out
+
+
+def claim_sort_key(c: dict):
+    m = re.fullmatch(r"(\d+)([a-z]?)", str(c.get("n", "0")))
+    return (int(m.group(1)), m.group(2)) if m else (0, "")
+
+
+def render_claims_table(claims: list, section: str) -> str:
+    """The markdown table, from the data. Row order is by claim number, not file
+    order — a row split late is appended out of sequence and must not land there."""
+    rows = sorted((c for c in claims if c.get("section") == section), key=claim_sort_key)
+    if not rows:
+        return ""
+    out = ["| # | Claim | Type | Verdict | Evidence |",
+           "|---|---|---|---|---|"]
+    for c in rows:
+        glyph = next((g for g, name in VERDICTS if name == c.get("verdict")), "—")
+        verdict = glyph
+        if c.get("verdict") == "unverifiable":
+            verdict = f"{glyph} unverifiable ({str(c.get('unverifiable_kind')).replace('_', ' ')})"
+        elif c.get("verdict"):
+            verdict = f"{glyph} {c['verdict']}"
+        evidence = str(c.get("evidence") or "").replace("|", "\\|").replace("\n", " ")
+        if c.get("origin_count") is not None and len(c.get("sources") or []) > 1:
+            origins = "origin" if c["origin_count"] == 1 else "origins"
+            evidence = (f"[{len(c['sources'])} URLs → {c['origin_count']} {origins}"
+                        f"{'' if c.get('origin_kind') == 'measured' else ', judged'}] {evidence}")
+        links = " ".join(f"([source]({s['url']}))" for s in (c.get("sources") or [])[:1])
+        # The verbatim span goes into the claim cell in quotation marks, because that
+        # is where every existing quote check looks for it — `quote` being its own
+        # field removes the guesswork about *which* quoted span is verbatim, it does
+        # not move where the span is published.
+        claim_text = str(c.get("claim", "")).replace("|", "\\|")
+        if c.get("quote"):
+            quote = str(c["quote"]).replace("|", "\\|")
+            if quote not in claim_text:
+                claim_text = f'{claim_text} — "{quote}"'
+        out.append(f"| {c['n']} | {claim_text} | {c.get('type')} | {verdict} | "
+                   f"{evidence} {links} |".replace("  ", " "))
+    return "\n".join(out)
+
+
+def compose_report(report_path: str, shell_path: str) -> int:
+    """Build the report from the shell, the claims file and the run record."""
+    report, shell = Path(report_path), Path(shell_path)
+    claims_path = sibling(report, ".claims.jsonl")
+    if not claims_path.exists():
+        print(f"ERROR: no claims file at {claims_path}", file=sys.stderr)
+        return 1
+    try:
+        text = shell.read_text(encoding="utf-8")
+    except OSError as e:
+        print(f"ERROR: cannot read shell {shell}: {e}", file=sys.stderr)
+        return 1
+
+    claims, problems = load_claims(claims_path)
+    if not claims:
+        print("ERROR: no usable claims", file=sys.stderr)
+        return 1
+
+    for section in CLAIM_SECTIONS:
+        text = text.replace(CLAIM_MARKERS[section], render_claims_table(claims, section))
+
+    # Count the *rendered* rows with the same parse the gate uses, so the tally line
+    # cannot disagree with the table printed above it. One parse, one home.
+    counts, numbers, _ = scan(text)
+    m = searched_count(text)
+    text = text.replace(CLAIM_MARKERS["tally"], build_line(counts, len(numbers), m))
+
+    record_path = sibling(report, ".run.json")
+    if CLAIM_MARKERS["run"] in text:
+        line = ""
+        if record_path.exists():
+            try:
+                line, missing = build_run_line(
+                    json.loads(record_path.read_text(encoding="utf-8")), m)
+                if missing:
+                    print(f"note: run line not written — record has no "
+                          f"{', '.join(missing)}", file=sys.stderr)
+                    line = ""
+            except (OSError, json.JSONDecodeError) as e:
+                print(f"note: run record unreadable: {e}", file=sys.stderr)
+        text = text.replace(CLAIM_MARKERS["run"], line or "")
+
+    report.write_text(text, encoding="utf-8")
+    print(f"composed {len(claims)} claims → {report}", file=sys.stderr)
+    for p in problems:
+        print(f"  ! {p}", file=sys.stderr)
+    return 2 if problems else 0
+
+
+def sync_record(report_path: str, text: str, total: int, m: int) -> list:
+    """Write the run record's derived counts from the report, under `--fix` only.
+
+    #44 was deferred on the grounds that a validator mutating its own oracle deserves
+    its own decision, and the specific hazard named was `render_report.py` calling
+    tally internally — an "attempts" counter would then count renders. Two things make
+    this safe where that was not:
+
+    - **Only derived, idempotent fields.** `extracted` and `checked` are recounted from
+      the claims table, `dropped_ambiguous` is read off the Ambiguous line the report
+      publishes, and `wall_seconds` is `finished − started`. Same inputs, same output,
+      forever; re-running changes nothing. A counter of attempts is stateful and is
+      exactly what this must not become.
+    - **`--fix` only.** The renderer runs the gate without it (`render_report.py`
+      invokes `[python, tally, report]`), so rendering can never reach this code.
+
+    What it does *not* do: create a record, invent a field it cannot derive, or touch
+    `started`, `finished`, `queries`, `tools`, `fetches`, `coverage_checks` or
+    `unreachable` — everything the model alone can know stays the model's to write.
+
+    Two real runs argued for this within an hour of the footer generator shipping: one
+    reported 22 claims checked against a table of 20, and the mismatch was a typo in a
+    number the script had already counted correctly for the tally line.
+    """
+    record_path = sibling(Path(report_path), ".run.json")
+    if not record_path.exists():
+        return []
+    try:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    if not isinstance(record, dict):
+        return []
+
+    changed = []
+    # Create the block when it is missing entirely, not only correct it when wrong.
+    # A real run omitted `claims` altogether: the report was fine, the gate passed,
+    # and the record was silently useless to `runstats.py`, which reads exactly this
+    # field to compare runs across releases. Being able to fix a value but not to
+    # supply it is the same asymmetry that let a report ship with no tally line.
+    if not isinstance(record.get("claims"), dict):
+        record["claims"] = {}
+        changed.append("claims: added (the record had none)")
+    claims = record.get("claims")
+    if isinstance(claims, dict):
+        for field, value in (("extracted", total), ("checked", m)):
+            if claims.get(field) != value:
+                changed.append(f"claims.{field}: {claims.get(field)} → {value}")
+                claims[field] = value
+        ambiguous = AMBIG_LINE.search(text)
+        if ambiguous:
+            dropped = int(ambiguous.group(1))
+            if claims.get("dropped_ambiguous") != dropped:
+                changed.append(
+                    f"claims.dropped_ambiguous: {claims.get('dropped_ambiguous')} → {dropped}")
+                claims["dropped_ambiguous"] = dropped
+
+    started, finished = _iso(record.get("started")), _iso(record.get("finished"))
+    if started and finished:
+        span = int((finished - started).total_seconds())
+        # A negative span is a real defect the clock check must still report, not
+        # something to normalise away by writing it down.
+        if span >= 0 and record.get("wall_seconds") != span:
+            changed.append(f"wall_seconds: {record.get('wall_seconds')} → {span}")
+            record["wall_seconds"] = span
+
+    if changed:
+        record_path.write_text(json.dumps(record, indent=1, ensure_ascii=False) + "\n",
+                               encoding="utf-8")
+    return changed
+
+
+def apply_fixes(report_path: str, text: str, existing, correct: str, m: int):
+    """Write the two lines the script can derive, and report what it wrote.
+
+    Scope is deliberate: the tally line and the run footer, both of which are pure
+    functions of the claims table and the run record. Nothing here touches a verdict, an
+    evidence cell, a version stamp or the run record itself — the report is the artifact
+    this script already edits, and widening that to the record it validates is a separate
+    decision (#44), not a side effect of a bookkeeping fix.
+
+    It never invents. If the record is missing or short of a field, the line is left
+    alone and the check fails as before — a fabricated footer is worse than an absent one.
+    """
+    written = []
+
+    if existing:
+        prefix = "> " if existing.group(0).lstrip().startswith(">") else ""
+        replacement = prefix + correct
+        if existing.group(0).strip() != replacement.strip():
+            text = text[:existing.start()] + replacement + text[existing.end():]
+            written.append("Tally line rewritten from the table")
+    else:
+        # Create it, rather than only ever rewriting one that already exists. That
+        # asymmetry was invisible until a real run shipped a report with no tally
+        # line at all: `--fix` had nothing to rewrite, said nothing, and the gate
+        # rejected a line the script was perfectly able to write. The run line has
+        # been creatable from nothing since it was generated; this closes the gap.
+        anchor = AMBIG_LINE.search(text)
+        if anchor:
+            text = text[:anchor.start()] + correct + "\n\n" + text[anchor.start():]
+        else:
+            rows = [i for i, line in enumerate(text.splitlines())
+                    if CLAIM_ROW.match(line)]
+            lines = text.splitlines()
+            at = rows[-1] + 1 if rows else len(lines)
+            lines.insert(at, "\n" + correct)
+            text = "\n".join(lines)
+        written.append("Tally line written from the table")
+
+    record_path = Path(report_path).with_suffix(".run.json")
+    record = None
+    if record_path.exists():
+        try:
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            record = None
+
+    if record is not None and check_applies(text, RUN_LINE_SINCE):
+        line, missing = build_run_line(record, m)
+        if line:
+            found = find_run_line(text)
+            if found and found.group(0).strip() != line:
+                text = text[:found.start()] + line + text[found.end():]
+                written.append("run line rewritten from the run record")
+            elif not found:
+                text = text.rstrip("\n") + "\n\n" + line + "\n"
+                written.append("run line written from the run record")
+        elif missing:
+            print(f"note: run line not written — the run record has no "
+                  f"{', '.join(missing)}", file=sys.stderr)
+    elif record is None and check_applies(text, RUN_LINE_SINCE):
+        print("note: run line not written — no run record beside the report",
+              file=sys.stderr)
+
+    if written:
+        open(report_path, "w", encoding="utf-8").write(text)
+    return text, written
+
+
 def build_line(counts: Counter, total: int, m: int) -> str:
     rated = ", ".join(f"{counts[k]} {k}" for k in RATED if counts[k])
     tail = []
@@ -924,7 +1352,10 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Check a BS report's tally against its own table")
     ap.add_argument("report", nargs="?", help="path to the report markdown")
     ap.add_argument("--source", help="cached normalized source text, for quote integrity")
-    ap.add_argument("--fix", action="store_true", help="rewrite the Tally line in place")
+    ap.add_argument("--fix", action="store_true",
+                    help="write the tally line and the run footer from the table and the record")
+    ap.add_argument("--compose", metavar="SHELL",
+                    help="build the report from <report>.claims.jsonl and a markdown shell")
     ap.add_argument("--self-test", action="store_true",
                     help="check this script's own version gates against the manifest")
     args = ap.parse_args()
@@ -940,6 +1371,9 @@ def main() -> None:
 
     if not args.report:
         ap.error("a report path is required (or use --self-test)")
+
+    if args.compose:
+        sys.exit(compose_report(args.report, args.compose))
 
     try:
         text = open(args.report, encoding="utf-8").read()
@@ -1026,12 +1460,27 @@ def main() -> None:
     print()
     print(correct)
 
-    if args.fix and existing:
-        prefix = "> " if existing.group(0).lstrip().startswith(">") else ""
-        open(args.report, "w", encoding="utf-8").write(
-            text[:existing.start()] + prefix + correct + text[existing.end():])
-        print("\n✔ Tally line rewritten", file=sys.stderr)
-        problems = [p for p in problems if not p.startswith("Tally line")]
+    if args.fix:
+        # The record first: the footer is built from it, so a stale count there would
+        # otherwise be copied into the report and then checked against itself.
+        synced = sync_record(args.report, text, total, m)
+        text, written = apply_fixes(args.report, text, existing, correct, m)
+        for s in synced:
+            print(f"✔ run record {s}", file=sys.stderr)
+        for w in written:
+            print(f"✔ {w}", file=sys.stderr)
+        written = written + [f"run record {s}" for s in synced]
+        if written:
+            # Re-derive against what is now on disk rather than filtering the old list:
+            # a fix that silences its own complaint without changing the file is the
+            # failure mode this whole script exists to prevent.
+            problems = [p for p in problems
+                        if not p.startswith(("Tally line", "no Tally line",
+                                             "run line", "no run line",
+                                             "run record"))]
+            problems.extend(run_line_problems(text, m))
+            problems.extend(run_record_problems(args.report, text, m))
+            problems = list(dict.fromkeys(problems))
 
     source = load_source(args.report, args.source)
     if check_applies(text, QUOTE_INTEGRITY_SINCE):

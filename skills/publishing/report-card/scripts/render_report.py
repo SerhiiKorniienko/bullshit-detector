@@ -81,7 +81,14 @@ RUN_LINE = re.compile(r"^\*(run:[^*]*)\*\s*$", re.M | re.I)
 VERSION_STAMP = re.compile(r"bullshit-detector\s+v?(\d+\.\d+\.\d+|unknown)", re.I)
 REPORT_PREFIX = re.compile(r"^BS Report:\s*")
 
-CLAIM_ROW = re.compile(r"^\|\s*(\d+)\s*\|")
+# Claim numbers carry a letter suffix when a row splits late — the don't-merge rule
+# turns row 24 into `24a` and `24b` rather than renumbering the table under it. A
+# bare `\d+` silently dropped both halves, so a report with one split row rendered
+# two claims short and lost a verdict bucket entirely: the published page showed
+# 24 claims and no ❌ chip against a tally line reading 26 claims and 1 false.
+# The page disagreeing with the report's own arithmetic is the one failure this
+# tool cannot ship.
+CLAIM_ROW = re.compile(r"^\|\s*(\d+[a-z]?)\s*\|")
 TABLE_SEP = re.compile(r"^\|[\s:|-]+\|\s*$")
 
 
@@ -145,6 +152,47 @@ def inline(text: str) -> str:
 # so this handles that template's shapes and passes anything else through as a
 # paragraph rather than guessing.
 # ---------------------------------------------------------------------------
+
+TALLY_TOTAL = re.compile(r"(\d+)\s+claims?\s+extracted", re.I)
+TALLY_BUCKET = re.compile(r"(\d+)\s+(confirmed|plausible|misleading|false|unverifiable)", re.I)
+
+
+def reconcile_chips(claim_counter: dict, tally_match) -> None:
+    """Say so when the filter chips disagree with the report's own tally line.
+
+    The header of this file claims this script does not recount. That was never
+    quite true — the chips are a recount, because the filters need a per-row verdict
+    anyway — and the gap between the claim and the code is where a real defect hid:
+    a `\\d+` row pattern dropped the `24a`/`24b` halves of a late-split row, so a
+    published page showed 24 claims and no ❌ chip while the tally line under it read
+    26 claims and 1 false.
+
+    A viewer must not become a validator, so this refuses nothing and blocks nothing.
+    It prints. A fact-checking tool publishing a page whose own two counts disagree is
+    the failure that cannot be allowed to be silent — and silence is exactly what it
+    was, until someone noticed the header numbers looked wrong.
+    """
+    if not tally_match:
+        return
+    text = tally_match.group(1)
+    stated_total = TALLY_TOTAL.search(text)
+    counted_total = sum(claim_counter.values())
+    complaints = []
+    if stated_total and int(stated_total.group(1)) != counted_total:
+        complaints.append(f"tally line says {stated_total.group(1)} claims extracted, "
+                          f"the rows on the page count {counted_total}")
+    for found in TALLY_BUCKET.finditer(text):
+        n, bucket = int(found.group(1)), found.group(2).lower()
+        if claim_counter.get(bucket, 0) != n:
+            complaints.append(f"tally line says {n} {bucket}, "
+                              f"the rows count {claim_counter.get(bucket, 0)}")
+    for c in complaints:
+        print(f"warning: {c}", file=sys.stderr)
+    if complaints:
+        print("warning: the page and the report disagree — the row parser missed rows, "
+              "or the tally line is stale. The markdown is the artifact; fix it there.",
+              file=sys.stderr)
+
 
 def render_blocks(lines: list[str], claim_counter: dict) -> str:
     out: list[str] = []
@@ -371,6 +419,8 @@ def build(md: str, og_image: str | None) -> tuple[dict, str]:
                      '<div class="score-band">no score</div></div>'
         og_desc = "BS report"
         og_title = strip_markdown(title)
+
+    reconcile_chips(claim_counter, tally_m)
 
     chips = []
     present = [k for k in VERDICTS if claim_counter.get(k)]
