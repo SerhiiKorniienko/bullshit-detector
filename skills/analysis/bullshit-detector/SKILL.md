@@ -92,8 +92,14 @@ Separate what's verifiably true from what's hype in any piece of content.
    Then **check it with the script — do not count the table by hand**:
 
    ```bash
-   uv run <detector-skill-dir>/scripts/tally.py <the-file-you-just-wrote>
+   uv run <detector-skill-dir>/scripts/tally.py <the-file-you-just-wrote> \
+     --source /tmp/bs-source-<slug>-<YYYY-MM-DD>.md
    ```
+
+   **Pass `--source`** — it is the file you saved in step 1, and it lets the script check
+   that every span you put in quotation marks is words the content actually contains. Omit
+   it and that check silently does not run, which is the one failure a fact-checking tool
+   cannot survive: a verdict rendered against words the speaker never said.
 
    `<detector-skill-dir>` is wherever this skill is installed — `~/.claude/skills/bullshit-detector`
    under the usual layouts. The bare `scripts/tally.py` written here previously resolved from

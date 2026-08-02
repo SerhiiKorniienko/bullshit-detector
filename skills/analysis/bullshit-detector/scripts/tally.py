@@ -20,7 +20,9 @@ Exit codes: 0 all checks pass · 1 bad input · 2 report is non-compliant.
 import argparse
 import json
 import re
+import os
 import sys
+import unicodedata
 from pathlib import Path
 from collections import Counter
 from datetime import datetime, timezone, timedelta
@@ -64,6 +66,7 @@ UNREACHABLE_SINCE = (0, 12, 0)
 DERIVED_M_SINCE = (0, 13, 0)
 RUN_CLOCK_SINCE = (0, 13, 0)
 UNREACHABLE_REASON_SINCE = (0, 13, 0)
+QUOTE_INTEGRITY_SINCE = (0, 13, 0)
 
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
@@ -471,6 +474,13 @@ def run_line_problems(text: str, m: int) -> list:
     return problems
 
 
+# Substantive figures only: decimals, 4+ digit integers, percentages (symbol OR
+# spelled out — the needle report writes "20 percent" in evidence against "20%" in
+# the claim, and matching only the symbol made the strongest report in the corpus
+# the one that cried wolf), and money. Not "3 weeks", not "two employees".
+SUBSTANTIVE_NUMBER = re.compile(
+    r"\d[\d,]*\.\d+\s*%?|\d[\d,]{3,}\s*%?|\d[\d,]*\s*(?:%|percent|per cent)"
+    r"|[$£€]\s?\d|\d[\d,]*\s*(?:million|billion|trillion|bn|tn)", re.I)
 UNREACHABLE_MENTION = re.compile(r"\*\*Unreachable:\s*(\d+)\s+sources?\*\*", re.I)
 
 # Closed set, because the point of the field is counting causes across runs — six claims
@@ -534,6 +544,141 @@ def verdict_integrity_warnings(text: str) -> list:
                 f"claim {num} is rated {classify(line)} but its evidence says "
                 f"\"{hit.group(0)}\" — if one part of the row is contradicted, the row "
                 f"takes that verdict, or splits into {num}a/{num}b")
+    return out
+
+
+QUOTED_SPAN = re.compile(r'"([^"\n]{10,300})"')
+ELLIPSIS = re.compile(r"\s*(?:\.\.\.|…)\s*")
+
+
+def quote_norm(s: str) -> str:
+    """Fold everything that varies between a transcript and a quotation of it.
+
+    Smart quotes, dash flavours, casing, `[bracketed]` insertions the
+    decontextualisation rule actively encourages, and punctuation the speaker never
+    pronounced. What survives is the words.
+    """
+    s = unicodedata.normalize("NFKC", s)
+    for a, b in (("’", "'"), ("‘", "'"), ("“", '"'), ("”", '"')):
+        s = s.replace(a, b)
+    s = re.sub(r"\[[^\]]*\]", " ", s)
+    s = re.sub(r"[‐-―]", "-", s)
+    s = re.sub(r"[^a-z0-9%$. ]", " ", s.lower())
+    return " ".join(s.split())
+
+
+def load_source(report_path: str, explicit: str | None):
+    """The cached normalized text this report was written from, if it can be found.
+
+    Explicit path wins, then $BULLSHIT_DETECTOR_SOURCE, then the convention in SKILL.md
+    step 1 — `/tmp/bs-source-<slug>-<date>.md` beside a `bs-report-<slug>-<date>.md`.
+    Returns None when nothing is found, and the caller skips rather than fails: the cache
+    lives in a temp directory by design and a report checked a week later must not start
+    failing because the machine swept it.
+    """
+    for cand in (explicit, os.environ.get("BULLSHIT_DETECTOR_SOURCE")):
+        if cand and Path(cand).exists():
+            return Path(cand).read_text(encoding="utf-8", errors="ignore")
+    stem = Path(report_path).stem
+    if stem.startswith("bs-report-"):
+        guess = Path("/tmp") / f"bs-source-{stem[len('bs-report-'):]}.md"
+        if guess.exists():
+            return guess.read_text(encoding="utf-8", errors="ignore")
+    return None
+
+
+def quoted_spans(text: str):
+    """Quotes that claim to be the content's own words: claim column + hype signals.
+
+    Deliberately NOT the evidence column. Measuring the published 0.12.1 example found
+    **0 of 13** evidence-cell quotes in the transcript — every one was a source headline
+    or an outlet quoting a third party, which is what an evidence cell is *for*. The
+    original design note had this backwards; checking evidence cells would fail every
+    report while catching nothing.
+    """
+    out = []
+    for i, line in enumerate(text.splitlines(), 1):
+        if CLAIM_ROW.match(line):
+            cells = line.split("|")
+            if len(cells) > 2:
+                for m in QUOTED_SPAN.finditer(cells[2]):
+                    out.append((i, f"claim {CLAIM_ROW.match(line).group(1)}", m.group(1)))
+    if "## Hype signals observed" in text:
+        section = text.split("## Hype signals observed", 1)[1].split("\n## ", 1)[0]
+        base = text[: text.index("## Hype signals observed")].count("\n") + 1
+        for m in QUOTED_SPAN.finditer(section):
+            out.append((base + section[: m.start()].count("\n"), "hype signals", m.group(1)))
+    return out
+
+
+def quote_integrity_problems(text: str, source: str) -> list:
+    """A quoted span must be words the content actually contains.
+
+    The failure a fact-checking tool cannot survive is a verdict rendered against words
+    the speaker never said, and until the source cache landed there was nothing on disk
+    to check against.
+
+    An ellipsis marks elision, so `"A ... B"` is satisfied when A and B both appear, in
+    order. Everything else must be present verbatim once normalized.
+    """
+    nsrc = quote_norm(source)
+    problems = []
+    for line_no, where, quote in quoted_spans(text):
+        if len(quote.split()) < 5:
+            continue
+        parts = [p for p in ELLIPSIS.split(quote) if len(p.split()) >= 3]
+        if not parts:
+            continue
+        pos, ok = 0, True
+        for part in parts:
+            np = quote_norm(part)
+            if not np:
+                continue
+            found = nsrc.find(np, pos)
+            if found < 0:
+                ok = False
+                break
+            pos = found + len(np)
+        if not ok:
+            problems.append(
+                f'{where} (line {line_no}) quotes "{quote[:70]}" — not in the source text. '
+                f"Quote the content verbatim, mark elision with an ellipsis, and don't put "
+                f"your own paraphrase in quotation marks")
+    return problems
+
+
+def numeric_consistency_warnings(text: str) -> list:
+    """A row asserting a figure whose evidence engages no figure at all. WARNING.
+
+    Severity is the whole design, per the rule this file already follows: quotes are
+    binary and mechanically decidable, numbers are not. Legitimate derived arithmetic
+    exists — this project's own rules *require* it — so erroring here would make the gate
+    hostile to the sums it mandates. This flags candidates; it never blocks.
+    """
+    out = []
+    for line in text.splitlines():
+        if not CLAIM_ROW.match(line):
+            continue
+        v = classify(line)
+        if v is None or v == "not checked":
+            continue
+        # A claim nobody outside the story could ever check has no figure to engage —
+        # that is the finding, not a gap. Flagging it would fire hardest on exactly the
+        # reports that handled unauditable numbers correctly.
+        if v == "unverifiable" and kind_of(line, True) == "by construction":
+            continue
+        cells = line.split("|")
+        if len(cells) < 6:
+            continue
+        claim, evidence = cells[2], cells[5]
+        if not SUBSTANTIVE_NUMBER.search(claim):
+            continue
+        if SUBSTANTIVE_NUMBER.search(evidence) or RESTS_ON_ROW.search(evidence):
+            continue
+        out.append(
+            f"claim {CLAIM_ROW.match(line).group(1)} asserts a figure but its evidence "
+            f"cell contains no figure and names no row it rests on — the number was rated "
+            f"without being engaged")
     return out
 
 
@@ -738,6 +883,7 @@ def build_line(counts: Counter, total: int, m: int) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser(description="Check a BS report's tally against its own table")
     ap.add_argument("report", nargs="?", help="path to the report markdown")
+    ap.add_argument("--source", help="cached normalized source text, for quote integrity")
     ap.add_argument("--fix", action="store_true", help="rewrite the Tally line in place")
     ap.add_argument("--self-test", action="store_true",
                     help="check this script's own version gates against the manifest")
@@ -844,7 +990,15 @@ def main() -> None:
         print("\n✔ Tally line rewritten", file=sys.stderr)
         problems = [p for p in problems if not p.startswith("Tally line")]
 
-    warnings = verdict_integrity_warnings(text)
+    source = load_source(args.report, args.source)
+    if check_applies(text, QUOTE_INTEGRITY_SINCE):
+        if source:
+            problems.extend(quote_integrity_problems(text, source))
+        else:
+            print("note: source text not found — quote integrity not checked. Pass "
+                  "--source or set $BULLSHIT_DETECTOR_SOURCE.", file=sys.stderr)
+
+    warnings = verdict_integrity_warnings(text) + numeric_consistency_warnings(text)
     if warnings:
         print("\nWARNINGS (not blocking):", file=sys.stderr)
         for w in warnings:

@@ -103,6 +103,32 @@ distinction could matter: a measured origin count and one judged from the tells 
 evidence, and a report that presents the second as the first is doing the thing this tool exists to
 catch.
 
+## Quoting the content
+
+A quoted span in the claim column or the hype-signal list is a promise that the content
+said those words. `tally.py --source` checks it against the cached text and **refuses the
+report** when it doesn't match, because a verdict rendered against words the speaker never
+said is the one failure this tool cannot survive.
+
+- **Quote verbatim, or don't use quotation marks.** Paraphrase freely — just unquoted.
+  Putting your own characterisation of the argument inside quotation marks reads as
+  evidence and isn't; it is the most common way this check is failed.
+- **Mark elision with an ellipsis.** Given a speaker who said *"the figures are solid, we
+  checked them twice, and the trend is clear"*, the span `"the figures are solid… the
+  trend is clear"` passes: each side of the ellipsis is matched, in order.
+- **`[Bracketed]` insertions are free.** Decontextualisation asks for them, so they are
+  stripped before matching — as are smart quotes, dashes and casing.
+- **This does not apply to the evidence column.** Evidence quotes *sources*: headlines,
+  filings, an outlet quoting a third party. Measuring the 0.12.1 example found 0 of 13
+  evidence-cell quotes in the transcript, all correctly so. Checking them would fail every
+  report and catch nothing.
+
+The companion check is a warning, not a refusal: **a row asserting a figure whose evidence
+cell contains no figure and names no row it rests on.** Numbers, unlike quotes, are not
+binary — derived arithmetic is legitimate and this file mandates it — so this flags a
+candidate and never blocks. Rows rated ❓ *by construction* are exempt: a number nobody
+outside the story could check has no figure to engage, and that is the finding.
+
 ## When is the evidence enough?
 
 Before assigning a verdict, check what you have against these. They are the bar SKILL.md step 4
