@@ -36,8 +36,24 @@ Log each query **as you issue it**. A list rebuilt from memory at the end is wro
 that flatters the run — the same failure as the tally and the search count, one level up.
 
 **`unreachable`** — one entry per URL you could not reach, with the claim it would have supported
-and a `reason` from: `paywall`, `blocked` (bot wall, 403, crawler block), `dead` (404, domain gone),
-`timeout`, `login`. Omit the field entirely when nothing was blocked.
+and a `reason` from the closed set below. Omit the field entirely when nothing was blocked.
+`tally.py` rejects a reason outside the set: free text cannot be counted across runs, and counting
+causes is the only thing this field is for.
+
+| reason | when |
+|---|---|
+| `paywall` | a subscription wall stands between you and the text |
+| `blocked` | a bot wall, 403, or crawler block — something refused you |
+| `dead` | 404, domain gone, link rotted |
+| `timeout` | the request never came back |
+| `login` | an account is required; never auto-solve one |
+| `empty` | **the fetch succeeded and there was nothing behind it** |
+
+`empty` is the case the original five missed. A JS-only shell, a video page with no transcript, a
+PDF that extracts to zero characters — the request returned 200 and yielded no readable content.
+That is not `blocked`, because nothing refused you, and not `dead`, because the URL resolves.
+Logging it as either loses the one thing a later run needs to know: whether a different fetcher
+would have got the text.
 
 RUBRIC's unreachable ≠ unverifiable rule fires per row and then the information dies: nothing
 aggregates it, so a reader cannot see that six claims dead-ended at the same paywalled outlet, and
@@ -46,6 +62,11 @@ agent already knows which fetches failed at the moment they fail.
 
 ## What `tally.py` cross-checks
 
+- **`wall_seconds` must equal `finished` − `started`**, exactly. Every other run-line check is
+  internal — per-claim equals wall over `M`, searches never exceed tools — and all of them are
+  satisfied by an invented duration used consistently. One real run drafted a plausible "27m40s"
+  before it had finished and passed cleanly on the first try. The timestamps are the only anchor
+  outside the report, and `finished` must not be in the future.
 - **The counts in the record and the run line describe the same events and must agree.** The script
   compares them whenever both exist.
 - **A record listing unreachable sources against a report that never mentions them** is rejected —

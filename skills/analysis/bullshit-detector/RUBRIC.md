@@ -313,6 +313,14 @@ content: nobody can tell what this means, versus this means two things and both 
 `M` is the number a reader should judge the report by. A table of 20 verdicts built on 14 searches
 overstates the work, and this tool cannot afford to overstate anything.
 
+**A derived row does not count toward `M`.** A row whose basis is another row — an arithmetic
+check, a figure computed from an earlier claim — is already exempt from carrying a link of its own,
+because its basis is a claim rather than a source. A row exempted from needing its own evidence
+cannot also be counted as individually evidenced. Such rows stay in `N`, stay rated, and stay in the
+table; they simply stop inflating the number a reader is told to judge the report by. The test is
+the pair, not the phrase: a row that names an earlier claim *and* links nothing is derived, while
+one that cites "claim 8" in passing but sources its own figure ran a search and still counts.
+
 **The ambiguous line is required, and `0` is a real answer.** Step 3 drops claims whose meaning the
 content never fixes, so `N` is a filtered number — and a filtered number that doesn't say it was
 filtered reads as a complete inventory. Without the line a reader cannot tell a content with four

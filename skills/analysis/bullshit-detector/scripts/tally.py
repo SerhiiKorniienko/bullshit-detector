@@ -23,6 +23,7 @@ import re
 import sys
 from pathlib import Path
 from collections import Counter
+from datetime import datetime, timezone, timedelta
 
 VERDICTS = [
     ("✅", "confirmed"),
@@ -60,6 +61,9 @@ AMBIG_READINGS_SINCE = (0, 8, 0)
 SPONSORED_SINCE = (0, 9, 0)
 UNVERIFIABLE_TOKEN_SINCE = (0, 11, 0)
 UNREACHABLE_SINCE = (0, 12, 0)
+DERIVED_M_SINCE = (0, 13, 0)
+RUN_CLOCK_SINCE = (0, 13, 0)
+UNREACHABLE_REASON_SINCE = (0, 13, 0)
 
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
@@ -221,8 +225,21 @@ def searched_count(text: str) -> int:
     the cautious way — it does *not* inflate M — and is reported separately by
     `undeclared_unverifiable`, so a missing declaration can never quietly raise the
     number the report is judged by.
+
+    Since 0.13.0, **derived rows are out too**. `unlinked_evidence` already exempts a row
+    that rests on another row from carrying a link of its own, on the grounds that its
+    basis is a claim rather than a source — and a row exempted from needing its own
+    evidence cannot also be counted as individually evidenced. Counting them inflated the
+    one number RUBRIC tells a reader to judge the report by, and raised the bar on the
+    `searches >= M` check, so the cheapest way to pass was to issue searches for rows the
+    rules say cannot have one.
+
+    The discriminator is the pair, not the phrase: a row is derived only when it rests on
+    another claim *and* links nothing. A row that cites "claim 8" in passing while also
+    sourcing its own figure did run a search, and still counts.
     """
     strict = check_applies(text, UNVERIFIABLE_TOKEN_SINCE)
+    drop_derived = check_applies(text, DERIVED_M_SINCE)
     m = 0
     for line in text.splitlines():
         if not CLAIM_ROW.match(line):
@@ -231,6 +248,8 @@ def searched_count(text: str) -> int:
         if v is None or v == "not checked":
             continue
         if v == "unverifiable" and kind_of(line, strict) != "searched":
+            continue
+        if drop_derived and RESTS_ON_ROW.search(line) and not EVIDENCE_LINK.search(line):
             continue
         m += 1
     return m
@@ -454,6 +473,121 @@ def run_line_problems(text: str, m: int) -> list:
 
 UNREACHABLE_MENTION = re.compile(r"\*\*Unreachable:\s*(\d+)\s+sources?\*\*", re.I)
 
+# Closed set, because the point of the field is counting causes across runs — six claims
+# dead-ending at the same paywall is a finding, and free text cannot be aggregated.
+# `empty` covers the case the original five missed: the fetch succeeded, the page returned
+# 200, and there was no readable content behind it (a JS-only shell, a video page with no
+# transcript, a PDF that extracted to nothing). That is not `blocked` — nothing refused
+# us — and not `dead` — the URL resolves. Logging it as either loses the distinction that
+# tells a later run whether a different fetcher would have helped.
+UNREACHABLE_REASONS = {"paywall", "blocked", "dead", "timeout", "login", "empty"}
+
+
+# Phrases that say the evidence went against the claim. Deliberately narrow: each one
+# asserts a *finding*, not a hedge, so "unclear" and "not directly confirmed" are absent —
+# those are what 🟡 is for.
+CONTRADICTS = re.compile(
+    r"\b(contradicted|contradicts|refuted|refutes|no record found|reverses the|"
+    r"the opposite|is false|are false|does not hold|not supported by)\b", re.I)
+# Anything gentler than ❌. The merge rule's floor is the harshest part, so a row with a
+# contradicted half cannot settle at 🟠 either — 🟠 is exactly where claim 16 laundered it.
+SOFT_VERDICTS = {"confirmed", "plausible", "misleading"}
+
+# "so the claim isn't refuted" says the opposite of "refuted", and a warning that fires on
+# it is the kind of noise that teaches people to ignore the channel. Checked against the
+# text immediately before the marker; caught a real false positive in report-own-readme.
+NEGATED = re.compile(
+    r"\b(is|are|was|were|does|do|did|has|have|had|can|could|would)?n[’']?t\s+\w*\s*$"
+    r"|\b(not|never|nothing|hardly|far from)\s+\w*\s*$", re.I)
+
+
+def verdict_integrity_warnings(text: str) -> list:
+    """Rows whose evidence leans harder than the verdict they carry. WARNING, never error.
+
+    `examples/0.12.1/report-south-korea-ai-bubble.md` claim 16 merges two companies into
+    one 🟠 row whose evidence says the second half is "contradicted" outright. Under the
+    merge rule v0.12.1 itself shipped — a merged row is never gentler than its harshest
+    part — that row is ❌. It passed every gate.
+
+    Detecting a *merge* is not mechanically decidable, and a keyword list demanding one
+    would be the magic-word failure of #33 over again. What is decidable is the mismatch:
+    an evidence cell asserting the claim was contradicted, on a row rated ✅ or 🟡.
+
+    This is a warning for the reason #28 puts numeric-consistency in the same tier — the
+    exceptions are legitimate and reasonably common (an evidence cell may quote the
+    content contradicting *itself*, or describe what a source refuted about a rival
+    claim). Error severity may only test things that are binary. Nothing is rejected, `M`
+    does not move, and the author resolves the row or splits it late into `16a`/`16b`.
+    A warning also creates no incentive to game it: there is no gate to satisfy.
+    """
+    out = []
+    for i, line in enumerate(text.splitlines(), 1):
+        if not CLAIM_ROW.match(line):
+            continue
+        if classify(line) not in SOFT_VERDICTS:
+            continue
+        hit = next((h for h in CONTRADICTS.finditer(line)
+                    if not NEGATED.search(line[max(0, h.start() - 40):h.start()])), None)
+        if hit:
+            num = CLAIM_ROW.match(line).group(1)
+            out.append(
+                f"claim {num} is rated {classify(line)} but its evidence says "
+                f"\"{hit.group(0)}\" — if one part of the row is contradicted, the row "
+                f"takes that verdict, or splits into {num}a/{num}b")
+    return out
+
+
+def _iso(value):
+    """Parse an ISO-8601 stamp from a run record, tolerating a trailing Z."""
+    if not isinstance(value, str):
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def clock_problems(record: dict) -> list:
+    """Anchor the reported duration to timestamps a reader can sanity-check.
+
+    Everything else about the run line is checked for *internal* consistency: per-claim
+    equals wall over M, searches never exceed tools, the line agrees with the record. A
+    fabricated wall time satisfies all of it as long as the invented number is used
+    consistently — which a real run did, drafting a plausible "27m40s" before it had
+    finished and passing cleanly on the first try. Nothing tied the clock to anything
+    outside the report.
+
+    `wall_seconds` is fully derivable from `started` and `finished`, and auditing every
+    record on disk found the constraint already holds everywhere but one shipped file
+    (1080 recorded against a 1063-second span, undetected since 0.7.0). Exact, mechanical,
+    no tolerance needed: a fabricated duration now requires inventing three fields in
+    mutual agreement, and unlike a bare duration, timestamps are falsifiable against the
+    report's own date.
+    """
+    started, finished = _iso(record.get("started")), _iso(record.get("finished"))
+    recorded = record.get("wall_seconds")
+    problems = []
+
+    if started and finished:
+        span = (finished - started).total_seconds()
+        if span < 0:
+            problems.append(
+                f"run record `finished` precedes `started` by {abs(span):.0f}s")
+        elif isinstance(recorded, (int, float)) and abs(span - recorded) > 1:
+            problems.append(
+                f"run record `wall_seconds` is {recorded:.0f} but `finished` − `started` "
+                f"is {span:.0f} — the duration is derivable from the timestamps and must "
+                f"match them, or the clock is anchored to nothing")
+        if finished > datetime.now(timezone.utc) + timedelta(minutes=5):
+            problems.append(
+                f"run record `finished` ({record['finished']}) is in the future")
+    elif recorded and not (started and finished):
+        missing = [k for k in ("started", "finished") if not _iso(record.get(k))]
+        problems.append(
+            f"run record has `wall_seconds` but no parseable {' or '.join(missing)} — "
+            f"a duration with no timestamps behind it cannot be checked against anything")
+    return problems
+
 
 def unreachable_problems(record: dict, text: str) -> list:
     """A run that logged blocked sources must say so in the report.
@@ -475,6 +609,15 @@ def unreachable_problems(record: dict, text: str) -> list:
         problems.append(
             f"{len(bad)} `unreachable` entr{'y' if len(bad) == 1 else 'ies'} missing url or "
             f"reason — each needs both, so a reader can tell a paywall from a dead link")
+    if check_applies(text, UNREACHABLE_REASON_SINCE):
+        unknown = sorted({e["reason"] for e in entries
+                          if isinstance(e, dict) and e.get("reason")
+                          and e["reason"] not in UNREACHABLE_REASONS})
+        if unknown:
+            problems.append(
+                f"`unreachable` reason(s) {', '.join(unknown)} are not in the set "
+                f"{', '.join(sorted(UNREACHABLE_REASONS))} — a free-text reason cannot be "
+                f"counted across runs, which is the only thing this field is for")
     m = UNREACHABLE_MENTION.search(text)
     if not m:
         problems.append(
@@ -510,6 +653,8 @@ def run_record_problems(report_path: str, text: str, m: int) -> list:
     # must not be skipped just because the report has no run line.
     early = (unreachable_problems(record, text)
              if check_applies(text, UNREACHABLE_SINCE) else [])
+    if check_applies(text, RUN_CLOCK_SINCE):
+        early += clock_problems(record)
 
     line = RUN_LINE.search(text)
     if not line:
@@ -698,6 +843,12 @@ def main() -> None:
             text[:existing.start()] + prefix + correct + text[existing.end():])
         print("\n✔ Tally line rewritten", file=sys.stderr)
         problems = [p for p in problems if not p.startswith("Tally line")]
+
+    warnings = verdict_integrity_warnings(text)
+    if warnings:
+        print("\nWARNINGS (not blocking):", file=sys.stderr)
+        for w in warnings:
+            print(f"  ! {w}", file=sys.stderr)
 
     if problems:
         print("\nNON-COMPLIANT:", file=sys.stderr)
