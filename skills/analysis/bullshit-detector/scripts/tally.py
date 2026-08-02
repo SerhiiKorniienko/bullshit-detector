@@ -67,6 +67,7 @@ DERIVED_M_SINCE = (0, 13, 0)
 RUN_CLOCK_SINCE = (0, 13, 0)
 UNREACHABLE_REASON_SINCE = (0, 13, 0)
 QUOTE_INTEGRITY_SINCE = (0, 13, 0)
+CLAIM_QUOTE_SINCE = (0, 13, 0)
 
 RUN_LINE = re.compile(r"\*run:[^*]*\*", re.I)
 RUN_WALL = re.compile(r"(?:(\d+)h)?(\d+)m(\d+)s")
@@ -647,6 +648,37 @@ def quote_integrity_problems(text: str, source: str) -> list:
     return problems
 
 
+def unquoted_claim_warnings(text: str) -> list:
+    """Factual rows that record no words the content actually used. WARNING.
+
+    A paraphrase can sharpen a hedged statement into an absolute one, and the report then
+    fact-checks a claim the speaker never made — a verdict that is perfectly sourced and
+    about the wrong thing. Measured across the published examples this sits at 46%, from
+    0% to 100%; two reports manage 100%, so it is a habit, not a constraint.
+
+    Warning rather than refusal because the exceptions are real: a claim read off a chart,
+    an assertion spread over several sentences, pasted content with no source file, and
+    translated material whose quote must stay in the original language.
+    """
+    out = []
+    for line in text.splitlines():
+        m = CLAIM_ROW.match(line)
+        if not m:
+            continue
+        cells = line.split("|")
+        if len(cells) < 4 or "factual" not in cells[3]:
+            continue
+        if classify(line) in (None, "not checked"):
+            continue
+        if any(len(q.group(1).split()) >= 5 for q in QUOTED_SPAN.finditer(cells[2])):
+            continue
+        out.append(
+            f"claim {m.group(1)}{m.group(2) or ''} records no verbatim words from the "
+            f"content — quote the load-bearing fragment so a reader can see the claim was "
+            f"not sharpened in the paraphrasing")
+    return out
+
+
 def numeric_consistency_warnings(text: str) -> list:
     """A row asserting a figure whose evidence engages no figure at all. WARNING.
 
@@ -999,10 +1031,17 @@ def main() -> None:
                   "--source or set $BULLSHIT_DETECTOR_SOURCE.", file=sys.stderr)
 
     warnings = verdict_integrity_warnings(text) + numeric_consistency_warnings(text)
+    if check_applies(text, CLAIM_QUOTE_SINCE):
+        warnings += unquoted_claim_warnings(text)
     if warnings:
-        print("\nWARNINGS (not blocking):", file=sys.stderr)
-        for w in warnings:
+        # A report missing quotes on 36 rows produces 36 identical nudges, which is a wall
+        # rather than a message. Show enough to act on, count the rest.
+        shown, rest = warnings[:6], len(warnings) - 6
+        print(f"\nWARNINGS ({len(warnings)}, not blocking):", file=sys.stderr)
+        for w in shown:
             print(f"  ! {w}", file=sys.stderr)
+        if rest > 0:
+            print(f"  … and {rest} more", file=sys.stderr)
 
     if problems:
         print("\nNON-COMPLIANT:", file=sys.stderr)

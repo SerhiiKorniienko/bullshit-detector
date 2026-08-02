@@ -58,6 +58,53 @@ factually correct, and the tier is about who is accountable for it, not whether 
 does not apply to ordinary journalism that merely quotes a company; that is already covered by
 "a source about itself", one row up.
 
+### Tier is topical, not global
+
+A tier travels with the *pair* — source and subject — never with the masthead alone. A national
+newspaper with a corrections desk is tier 2 on what a minister said and tier 4 on what a preprint
+means; a specialist journal is tier 1 on its own subject and irrelevant one field over. Reaching for
+"reputable outlet" without asking *reputable at what* is how a science claim gets settled by a
+science correspondent's summary of a press release.
+
+So before ranking, ask **who would have to be wrong** for this source to be wrong. If the answer is
+"the people who did the measurement", it is high tier for this claim. If it is "a journalist who
+read the abstract", it is not, however good the paper.
+
+**Primary settles what; secondary settles what it means.** A filing establishes that the number is
+$520K. It does not establish that $520K is unusual, improper, or a decline — that is
+interpretation, and interpretation wants a source with the field's context. Citing a primary
+document for a claim about *significance* is the same error as citing a columnist for a figure.
+
+### When same-tier sources conflict
+
+Do not average them, and do not reach straight for 🟠 — a disagreement between two tier-2 sources is
+not evidence the content is misleading, it is evidence you have not finished. In order:
+
+1. **Topical authority**, per the rule above.
+2. **Currency with respect to the claim** — the next section.
+3. **Outlier or consensus.** One source against a body of work is an outlier and says so; two
+   sources of equal standing genuinely disagreeing is a live dispute.
+
+If it still doesn't resolve: 🟡, **both linked, and the disagreement named in the cell**. "Sources
+conflict" with one link is not a finding, it is a shrug.
+
+### The recency axis
+
+The hierarchy ranks *accountability*, not *freshness*, and the two come apart constantly: a
+regulatory filing is tier 1 and up to two years stale, while the subject's own website is tier 4 and
+current to this morning. Nothing above says which wins, and the honest answer is that it depends on
+what the claim is about:
+
+- **A claim about a fixed past fact** — what a filing reported, what was said on a date — takes the
+  primary record however old it is. Age is irrelevant to a claim that fixes its own moment.
+- **A claim in the present tense about a changing quantity** — headcount, price, "we now serve" —
+  the stale primary source does not answer it. Use the current lower-tier source, **cap the verdict
+  at 🟡**, and say which figure is which age: `the last audited figure (FY2024 filing) is $520K; the
+  company's site currently claims $610K`.
+- **Never let a fresh tier-4 source silently overwrite a stale tier-1 one.** Carry both dates. A
+  reader who can see "primary, two years old" next to "self-reported, today" can weigh it; a reader
+  given one number cannot.
+
 ### Reachability is not credibility
 
 Some high-reputation outlets block agent crawlers, so they never appear in your results — their
@@ -103,7 +150,45 @@ distinction could matter: a measured origin count and one judged from the tells 
 evidence, and a report that presents the second as the first is doing the thing this tool exists to
 catch.
 
+## Disclose the conflicts you cannot remove
+
+**When it fires:** the content's subject is the maker of the model doing the checking, this tool
+itself, or any party the report's author has a stated relationship with.
+
+**What it requires:**
+
+- A named **Disclosure** section in the report, saying plainly what the conflict is.
+- Every source **named**, not summarised — a reader checking a conflicted verdict needs to be able
+  to go and look.
+- For any verdict that runs in the *favourable* direction, **the contrary case stated in the same
+  cell**, so a reader can weigh it without redoing the work.
+
+**What it must not do: compensate.** Rating a claim harshly to look independent is the same failure
+mirrored, and it produces a worse report. The rule is disclosure and traceability, never a thumb on
+the other side of the scale.
+
+This one stays a rule. "Is this content about the model's maker" is not mechanically decidable, and
+a keyword list for it would be the magic-word failure this file warns about elsewhere — the gate
+demands a word, the word appears, nothing improves. It was already the practice in a published
+0.5.0 report and nowhere in the instructions, which meant anyone reading the examples would
+reasonably infer an enforcement that did not exist.
+
 ## Quoting the content
+
+**Every factual claim row should carry the content's own words**, verbatim, alongside the
+decontextualised claim — the load-bearing fragment, not the whole passage. Between reading
+a transcript and writing a table row the claim gets paraphrased, usually harmlessly and
+sometimes not: a paraphrase can sharpen a hedged statement into an absolute one, and then
+the report fact-checks a claim the speaker never made. The verdict can be perfectly
+sourced and still be about the wrong claim, and a reader cannot catch it without
+re-fetching the source — which is the work the report exists to save.
+
+Measured across the published examples this sits at **46%**, ranging from 0% to 100%. Two
+reports manage 100%, so it is a habit rather than a constraint. `tally.py` warns on a
+factual row with no quoted span; it does not refuse one, because the legitimate exceptions
+are real — a claim drawn from a chart, an assertion spread over several sentences, content
+pasted in with no source file, and translated material where the quote must stay in the
+original language.
 
 A quoted span in the claim column or the hype-signal list is a promise that the content
 said those words. `tally.py --source` checks it against the cached text and **refuses the
