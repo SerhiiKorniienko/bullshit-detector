@@ -1,0 +1,290 @@
+{
+  "schema": "bullshit-detector/run@1",
+  "version": "0.12.1",
+  "source": "https://www.youtube.com/watch?v=hy90LdpEUvQ",
+  "report": "examples/0.12.1/report-south-korea-ai-bubble.md",
+  "started": "2026-08-02T10:23:37Z",
+  "finished": "2026-08-02T10:52:00Z",
+  "wall_seconds": 1703,
+  "claims": {
+    "extracted": 46,
+    "checked": 43,
+    "dropped_ambiguous": 0
+  },
+  "source_words": 4023,
+  "fetches": 1,
+  "coverage_checks": 0,
+  "queries": [
+    {
+      "claim": 12,
+      "pass": "first",
+      "q": "FINRA margin debt June 2026 record high percent GDP"
+    },
+    {
+      "claim": 11,
+      "pass": "first",
+      "q": "US margin debt as percent of GDP historical chart 1987 2000 2007 crash"
+    },
+    {
+      "claim": 6,
+      "pass": "first",
+      "q": "Microsoft Google Amazon Meta 2025 capital expenditure AI $376 billion"
+    },
+    {
+      "claim": 7,
+      "pass": "first",
+      "q": "hyperscaler capex 2026 forecast $725 billion Microsoft Google Amazon Meta AI"
+    },
+    {
+      "claim": 6,
+      "pass": "follow-up",
+      "q": "Microsoft Google Amazon Meta full year 2025 capital expenditure actual total earnings"
+    },
+    {
+      "claim": 11,
+      "pass": "follow-up",
+      "q": "margin debt percent GDP 2021 meme stock peak record"
+    },
+    {
+      "claim": 3,
+      "pass": "first",
+      "q": "KOSPI crash 2026 25 percent drop three weeks retail investors margin call"
+    },
+    {
+      "claim": 1,
+      "pass": "first",
+      "q": "Samsung SK Hynix percentage KOSPI market capitalization 2026"
+    },
+    {
+      "claim": 4,
+      "pass": "first",
+      "q": "\"1.2 million\" accounts margin call Korea Kospi crash 2026"
+    },
+    {
+      "claim": 5,
+      "pass": "first",
+      "q": "\"3 trillion won\" liquidated Kospi crash margin call 2026"
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "Samsung SK Hynix \"56%\" KOSPI market cap combined"
+    },
+    {
+      "claim": 9,
+      "pass": "first",
+      "q": "KOSPI \"Black Tuesday\" 10 percent drop worst day history 2026"
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "Samsung SK Hynix KOSPI market cap weight July 2026 percent record concentration"
+    },
+    {
+      "claim": 5,
+      "pass": "follow-up",
+      "q": "Korea Kospi total forced liquidation won amount Reuters Yonhap July 2026"
+    },
+    {
+      "claim": 4,
+      "pass": "follow-up",
+      "q": "South Korea working age population 15-64 million 2026"
+    },
+    {
+      "claim": 10,
+      "pass": "first",
+      "q": "Korea margin account force liquidation rate normal 2 percent 10 percent crash 2026"
+    },
+    {
+      "claim": 33,
+      "pass": "first",
+      "q": "Micron \"biggest chip maker\" America largest semiconductor company revenue 2026"
+    },
+    {
+      "claim": 14,
+      "pass": "first",
+      "q": "Jim Chanos hyperscaler operating income incremental dollar invested 40 cents 20 cents 10 cents"
+    },
+    {
+      "claim": 15,
+      "pass": "first",
+      "q": "OpenAI Anthropic share of AI compute demand percent 2026"
+    },
+    {
+      "claim": 16,
+      "pass": "first",
+      "q": "OpenAI Anthropic annual losses billions 2026 report"
+    },
+    {
+      "claim": 16,
+      "pass": "follow-up",
+      "q": "Anthropic 2026 profitability loss billions internal projections operating profit"
+    },
+    {
+      "claim": 15,
+      "pass": "follow-up",
+      "q": "OpenAI Anthropic percent AI compute demand \"70%\" OR \"80%\" frontier labs"
+    },
+    {
+      "claim": 17,
+      "pass": "first",
+      "q": "IPO post-IPO market cap 2026 percent GDP record dot-com 1999 5 percent"
+    },
+    {
+      "claim": 44,
+      "pass": "first",
+      "q": "NASDAQ decline percent dot-com bubble peak to trough 2000 2002"
+    },
+    {
+      "claim": 17,
+      "pass": "follow-up",
+      "q": "\"post-IPO market cap\" percent GDP 2026 record 12%"
+    },
+    {
+      "claim": 18,
+      "pass": "first",
+      "q": "KOSPI best performing stock market world 2026 200 percent 12 months"
+    },
+    {
+      "claim": 20,
+      "pass": "first",
+      "q": "S&P 500 return 2025 2026 trailing 12 months 24 percent"
+    },
+    {
+      "claim": 21,
+      "pass": "first",
+      "q": "Samsung Electronics stock up 500 percent SK Hynix up 1000 percent 2026"
+    },
+    {
+      "claim": 19,
+      "pass": "first",
+      "q": "KOSPI trailing 12 month gain percent June 2026 all-time high 9385"
+    },
+    {
+      "claim": 21,
+      "pass": "follow-up",
+      "q": "Samsung Electronics SK Hynix stock 52-week gain percent 2026 all-time high peak"
+    },
+    {
+      "claim": 32,
+      "pass": "first",
+      "q": "Wirecutter best data removal service DeleteMe number one"
+    },
+    {
+      "claim": 45,
+      "pass": "first",
+      "q": "Titanic \"unsinkable\" quote Philip Franklin White Star Line after iceberg"
+    },
+    {
+      "claim": 19,
+      "pass": "follow-up",
+      "q": "KOSPI index level July 2025 points value one year ago"
+    },
+    {
+      "claim": 23,
+      "pass": "first",
+      "q": "S&P 500 top 10 stocks concentration percent index 2026 historically high"
+    },
+    {
+      "claim": 38,
+      "pass": "first",
+      "q": "Korea stock market holiday closed July 2026 Kospi trading halt"
+    },
+    {
+      "claim": 39,
+      "pass": "first",
+      "q": "Lee Jae-myung president South Korea encourage stock market investment 2025 2026"
+    },
+    {
+      "claim": 37,
+      "pass": "first",
+      "q": "Asian markets $600 billion erased two days Japan Nikkei down percent Korea chip selloff 2026"
+    },
+    {
+      "claim": 31,
+      "pass": "first",
+      "q": "Korea leveraged ETF \"10 trillion won\" single company Samsung SK Hynix bet"
+    },
+    {
+      "claim": 40,
+      "pass": "first",
+      "q": "zero-day options 0DTE trading record volume 2026"
+    },
+    {
+      "claim": 30,
+      "pass": "first",
+      "q": "South Korea documentary retail investor leveraged ETF anonymous hid family portfolio"
+    },
+    {
+      "claim": 37,
+      "pass": "follow-up",
+      "q": "Nikkei Taiwan Hong Kong stocks fall late June 2026 after Kospi Black Tuesday billions wiped"
+    },
+    {
+      "claim": 46,
+      "pass": "first",
+      "q": "\"some analysts\" AI bubble growth \"6 to 12 months\" OR \"6-12 months\" 2026"
+    },
+    {
+      "claim": 43,
+      "pass": "first",
+      "q": "Coca-Cola Cisco routers 10000 2000 order cut 2001 Nasdaq crash anecdote"
+    },
+    {
+      "claim": 13,
+      "pass": "first",
+      "q": "FINRA margin statistics methodology excludes leveraged ETFs options portfolio margin"
+    },
+    {
+      "claim": 28,
+      "pass": "first",
+      "q": "South Korea housing prices young people unable afford home price to income ratio Seoul"
+    },
+    {
+      "claim": 29,
+      "pass": "first",
+      "q": "Korea finance influencer \"last chance\" stock market wealth generation quote"
+    },
+    {
+      "claim": 41,
+      "pass": "first",
+      "q": "Nvidia Micron 2026 annual revenue combined AI trade total"
+    },
+    {
+      "claim": 17,
+      "pass": "follow-up",
+      "q": "IPO market cap GDP ratio 2026 record chart Renaissance Capital analyst dot-com comparison"
+    },
+    {
+      "claim": 8,
+      "pass": "first",
+      "q": "Micron earnings date June 2026 stock selloff chip stocks nervous ahead of report"
+    },
+    {
+      "claim": 2,
+      "pass": "first",
+      "q": "South Korea \"14 million\" retail investors stock market number registered"
+    },
+    {
+      "claim": 36,
+      "pass": "first",
+      "q": "worst one day percentage drops US stock market history 1987 1929 ranked list"
+    },
+    {
+      "claim": 42,
+      "pass": "first",
+      "q": "Jim Chanos AI bubble timing prediction \"late 2026\" OR \"2027\" reckoning when will it pop"
+    },
+    {
+      "claim": 35,
+      "pass": "first",
+      "q": "Samsung Electronics SK Hynix shares fall more than 9 percent single day July 2026"
+    },
+    {
+      "claim": 24,
+      "pass": "first",
+      "q": "South Korea 320,000 retail accounts wiped out overnight stock crash 2026"
+    }
+  ],
+  "unreachable": []
+}

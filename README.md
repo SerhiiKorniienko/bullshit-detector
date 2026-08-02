@@ -7,7 +7,7 @@
   <img src="./assets/banner-light.png" alt="BS REPORT — bullshit-detector. Point your agent at a video, article, tweet or PDF. Get every claim back, checked, scored, and sourced. Verdicts: confirmed, plausible, misleading, false, unverifiable. No source, no verdict — not even when the model is sure." width="900">
 </picture>
 
-**[Read a real report →](https://serhiikorniienko.github.io/bullshit-detector/examples/0.8.0/report-needle-at-the-speed-of-light.html)** — 42 claims from a 906K-view physics video, every one searched, 69 sources linked.
+**[Read a real report →](https://serhiikorniienko.github.io/bullshit-detector/examples/0.12.1/report-south-korea-ai-bubble.html)** — 46 claims from a 2.7M-view "the AI bubble is popping" video, 43 of them individually searched, every verdict linked.
 
 Agent skills that fact-check the internet. Point your agent at a viral YouTube video, article, tweet, or PDF — get a claim-by-claim verification report with sources and a **BS score (0–10)** instead of taking "10 WAYS TO MAKE MONEY WITH AI 🤯" at face value.
 

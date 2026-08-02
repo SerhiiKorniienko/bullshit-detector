@@ -17,7 +17,7 @@ Every report ships as **markdown** — that is the artifact `tally.py` validates
 against a later run. From 0.8.0 a **`.html`** sits beside it: the same report rendered as a
 self-contained page, produced by the [`report-card`](../skills/publishing/report-card/SKILL.md)
 skill. GitHub shows `.html` as source rather than rendering it, so the pages are also served from
-GitHub Pages — **[read the latest one in your browser](https://serhiikorniienko.github.io/bullshit-detector/examples/0.8.0/report-needle-at-the-speed-of-light.html)**.
+GitHub Pages — **[read the latest one in your browser](https://serhiikorniienko.github.io/bullshit-detector/examples/0.12.1/report-south-korea-ai-bubble.html)**.
 The file itself is self-contained: no network requests in it, so a downloaded copy keeps working
 offline forever.
 
@@ -41,6 +41,38 @@ of the warning above:
 - **"How to Build a $1M YouTube Channel in 1 Hour a Day"** — [0.5.0](./0.5.0/report-1m-youtube-channel.md)
   → [0.6.0](./0.6.0/report-1m-youtube-channel.md). 7/10 to 6/10, and the later run **drops four
   claims as ambiguous** — the first release that could.
+
+## [0.12.1](./0.12.1/)
+
+Verdicts that don't depend on an invisible assumption: a claim whose inputs span a range carries the
+range instead of quietly picking an end, and a merged row can never come out gentler than its
+harshest part.
+
+- [report-south-korea-ai-bubble.md](./0.12.1/report-south-korea-ai-bubble.md) ·
+  [page](./0.12.1/report-south-korea-ai-bubble.html) — "South Korea's AI Bubble Just Popped",
+  Andrei Jikh, 2.71M views — **5/10**
+
+  The most thoroughly verified report here: **43 of 46 claims individually searched** (93%, against
+  54 searches), with one row left `⚪ not checked` and nothing dropped as ambiguous. It is also the
+  clearest example of the tool splitting a video in half rather than scoring it whole — Korea's
+  crash, the margin-call mechanics and the record US margin-debt figure all check out, while the
+  claims bridging the two markets do not. Three findings worth the click: the "OpenAI and Anthropic
+  are 70–80% of AI compute" figure against Epoch AI's measured 20–30%; a "one in every 30 people in
+  the country" ratio that only works against the working-age population; and a specific, named
+  Coca-Cola/Cisco anecdote with no footprint anywhere, next to exhaustively documented coverage of
+  the same event.
+
+  One caveat, since this folder is where the rules are supposed to be visible: claim 16 merges
+  OpenAI and Anthropic into a single 🟠 row when the Anthropic half is contradicted outright. Under
+  the rule this very release shipped, that row should be ❌. It is left as written — a report is a
+  dated reading, and editing one to fix a flaw found later is how a fact-checking artifact stops
+  being evidence.
+
+## 0.9.0 – 0.12.0
+
+No examples. Five releases of bookkeeping and rule work — run records, unreachable-source logging,
+late splits, range-carrying — shipped without a published report between them, which is a gap in
+this folder rather than a gap in the releases.
 
 ## [0.8.0](./0.8.0/)
 
