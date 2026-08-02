@@ -1229,6 +1229,14 @@ def sync_record(report_path: str, text: str, total: int, m: int) -> list:
         return []
 
     changed = []
+    # Create the block when it is missing entirely, not only correct it when wrong.
+    # A real run omitted `claims` altogether: the report was fine, the gate passed,
+    # and the record was silently useless to `runstats.py`, which reads exactly this
+    # field to compare runs across releases. Being able to fix a value but not to
+    # supply it is the same asymmetry that let a report ship with no tally line.
+    if not isinstance(record.get("claims"), dict):
+        record["claims"] = {}
+        changed.append("claims: added (the record had none)")
     claims = record.get("claims")
     if isinstance(claims, dict):
         for field, value in (("extracted", total), ("checked", m)):
