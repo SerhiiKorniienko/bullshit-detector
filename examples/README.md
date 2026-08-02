@@ -17,7 +17,7 @@ Every report ships as **markdown** — that is the artifact `tally.py` validates
 against a later run. From 0.8.0 a **`.html`** sits beside it: the same report rendered as a
 self-contained page, produced by the [`report-card`](../skills/publishing/report-card/SKILL.md)
 skill. GitHub shows `.html` as source rather than rendering it, so the pages are also served from
-GitHub Pages — **[read the latest one in your browser](https://serhiikorniienko.github.io/bullshit-detector/examples/0.12.1/report-south-korea-ai-bubble.html)**.
+GitHub Pages — **[read the latest one in your browser](https://serhiikorniienko.github.io/bullshit-detector/examples/0.13.0/report-south-korea-ai-bubble.html)**.
 The file itself is self-contained: no network requests in it, so a downloaded copy keeps working
 offline forever.
 
@@ -41,6 +41,27 @@ of the warning above:
 - **"How to Build a $1M YouTube Channel in 1 Hour a Day"** — [0.5.0](./0.5.0/report-1m-youtube-channel.md)
   → [0.6.0](./0.6.0/report-1m-youtube-channel.md). 7/10 to 6/10, and the later run **drops four
   claims as ambiguous** — the first release that could.
+
+## [0.13.0](./0.13.0/)
+
+Untrusted-content fencing, quote integrity checked against the cached source, a recency axis in the
+source hierarchy, and a warning tier that prints without blocking.
+
+- [report-south-korea-ai-bubble.md](./0.13.0/report-south-korea-ai-bubble.md) ·
+  [page](./0.13.0/report-south-korea-ai-bubble.html) — "South Korea's AI Bubble Just Popped",
+  Andrei Jikh, 2.71M views — **4/10**
+
+  The same video as the 0.12.1 report below, which makes the pair the clearest illustration of why
+  this folder is filed by release. **60 claims extracted against 46, and 35 confirmed against 23** —
+  it found more of the video to be true *and* more of it to be wrong (7 misleading and 3 false,
+  against 4 and 2), so the lower score is a fuller reading rather than a softer one.
+
+  Where it earns the release: claims 23 and 24 rate *"Samsung was up over 500%"* and *"SK Hynix was
+  up over 1,000%"* 🟠 misleading, and the evidence cell shows **all three measurement bases** —
+  calendar year to the June peak (+202% and +348%), trailing twelve months (+506% and +1,025%), and
+  52-week trough to peak (+450% and +1,091%). The claim says *"this year"*, and only the other two
+  bases reach the stated figures. A reader who disagrees with the verdict can see exactly which
+  number they are disagreeing about, which is the whole point of naming the basis.
 
 ## [0.12.1](./0.12.1/)
 

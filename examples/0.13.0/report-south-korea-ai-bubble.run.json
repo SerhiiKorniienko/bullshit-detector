@@ -1,0 +1,262 @@
+{
+ "schema": "bullshit-detector/run@1",
+ "version": "0.13.0",
+ "source": "https://www.youtube.com/watch?v=hy90LdpEUvQ",
+ "report": "examples/0.13.0/report-south-korea-ai-bubble.md",
+ "started": "2026-08-02T19:42:06Z",
+ "finished": "2026-08-02T20:02:22Z",
+ "source_words": 4023,
+ "fetches": 12,
+ "coverage_checks": 0,
+ "tools": 70,
+ "queries": [
+  {
+   "claim": 1,
+   "pass": "first",
+   "q": "KOSPI crash July 2026 Black Tuesday 10% drop margin calls"
+  },
+  {
+   "claim": 3,
+   "pass": "first",
+   "q": "KOSPI 12-month return 2026 up 200 percent best performing stock market world"
+  },
+  {
+   "claim": 6,
+   "pass": "first",
+   "q": "KOSPI \"Black Tuesday\" date July 2026 index closed percent decline record"
+  },
+  {
+   "claim": 2,
+   "pass": "first",
+   "q": "Samsung Electronics SK Hynix combined weight KOSPI market cap percent 2026"
+  },
+  {
+   "claim": 6,
+   "pass": "follow-up",
+   "q": "KOSPI single day drop 10 percent July 7 2026 OR July 14 2026 worst day history sidecar circuit breaker"
+  },
+  {
+   "claim": 1,
+   "pass": "follow-up",
+   "q": "\"KOSPI\" July 2026 timeline record high June 22 9114 decline 25 percent 21 days"
+  },
+  {
+   "claim": 6,
+   "pass": "follow-up",
+   "q": "KOSPI July 14 2026 close percent change Seoul stocks"
+  },
+  {
+   "claim": 6,
+   "pass": "follow-up",
+   "q": "Korea \"Black Tuesday\" Kospi 검은 화요일 2026년 7월 코스피 폭락 10%"
+  },
+  {
+   "claim": 6,
+   "pass": "follow-up",
+   "q": "KOSPI June 23 2026 plunged 9.99% Samsung SK Hynix circuit breaker \"Black Tuesday\""
+  },
+  {
+   "claim": 12,
+   "pass": "first",
+   "q": "FINRA margin debt June 2026 record percentage of GDP 4.5%"
+  },
+  {
+   "claim": 10,
+   "pass": "first",
+   "q": "Microsoft Google Amazon Meta AI capex 2025 total 376 billion 2026 guidance 725 billion"
+  },
+  {
+   "claim": 18,
+   "pass": "first",
+   "q": "2026 IPO post-IPO market cap percent of GDP record dot-com 1999 5 percent"
+  },
+  {
+   "claim": 8,
+   "pass": "first",
+   "q": "South Korea retail investors 14 million number 2026 \"ants\" 개미 individual investors count"
+  },
+  {
+   "claim": 34,
+   "pass": "first",
+   "q": "largest US semiconductor companies by revenue 2026 Nvidia Intel Broadcom Micron ranking American biggest chipmaker"
+  },
+  {
+   "claim": 38,
+   "pass": "first",
+   "q": "worst single day percentage drops S&P 500 history list 1987 1929 March 16 2020 ranking"
+  },
+  {
+   "claim": 16,
+   "pass": "first",
+   "q": "OpenAI Anthropic share of AI compute demand percent 70 80 percent 2026"
+  },
+  {
+   "claim": 18,
+   "pass": "follow-up",
+   "q": "\"IPO\" 2026 \"% of GDP\" market capitalization record \"1999\" Jim Chanos OR Torsten Slok OR Goldman chart"
+  },
+  {
+   "claim": 5,
+   "pass": "first",
+   "q": "Korea forced liquidation 3 trillion won margin call July 2026 반대매매 규모"
+  },
+  {
+   "claim": 7,
+   "pass": "first",
+   "q": "Korea margin account forced liquidation rate normal 2 percent crash 10 percent 2026"
+  },
+  {
+   "claim": 18,
+   "pass": "follow-up",
+   "q": "IPO market cap 12 percent of GDP 2026 \"post-IPO\" record double 1999 level bubble signal"
+  },
+  {
+   "claim": 43,
+   "pass": "first",
+   "q": "South Korea stock market closed national holiday July 17 2026 Constitution Day trading suspended"
+  },
+  {
+   "claim": 28,
+   "pass": "first",
+   "q": "President Lee Jae-myung emergency meeting stock market July 2026 encouraged retail investors KOSPI 5000"
+  },
+  {
+   "claim": 18,
+   "pass": "follow-up",
+   "q": "SpaceX OpenAI Anthropic IPO 2026 combined market cap trillions largest listings year total"
+  },
+  {
+   "claim": 41,
+   "pass": "first",
+   "q": "\"600 billion\" wiped Asian markets June 2026 two days Japan Taiwan Hong Kong chip selloff"
+  },
+  {
+   "claim": 15,
+   "pass": "first",
+   "q": "S&P 500 top 10 companies weight 36 percent 2026 concentration record"
+  },
+  {
+   "claim": 48,
+   "pass": "first",
+   "q": "Coca-Cola Cisco routers 2000 10,000 ordered 2001 only 2,000 story capex cut"
+  },
+  {
+   "claim": 52,
+   "pass": "first",
+   "q": "Philip Franklin White Star Line \"absolute confidence in the Titanic\" \"unsinkable\" quote April 15 1912"
+  },
+  {
+   "claim": 17,
+   "pass": "first",
+   "q": "Jim Chanos hyperscaler incremental return on AI capex 40 cents 20 cents heading to 10 cents 2026"
+  },
+  {
+   "claim": 13,
+   "pass": "first",
+   "q": "margin debt as percent of GDP historical peaks 2000 2007 2021 dot-com comparison chart FINRA"
+  },
+  {
+   "claim": 9,
+   "pass": "first",
+   "q": "Samsung SK Hynix combined share global DRAM HBM memory market 2026 percent"
+  },
+  {
+   "claim": 33,
+   "pass": "first",
+   "q": "Korea 10 trillion won leveraged ETF single stock SK Hynix Samsung 2026 peak assets"
+  },
+  {
+   "claim": 46,
+   "pass": "first",
+   "q": "zero-day options 0DTE record volume 2026 share of S&P 500 options"
+  },
+  {
+   "claim": 56,
+   "pass": "first",
+   "q": "Wirecutter best data removal service DeleteMe number one pick"
+  },
+  {
+   "claim": 19,
+   "pass": "first",
+   "q": "Micron earnings late June 2026 chip stocks selloff memory stocks decline"
+  },
+  {
+   "claim": 49,
+   "pass": "first",
+   "q": "Nasdaq composite peak to trough decline 78 percent March 2000 October 2002 dot-com"
+  },
+  {
+   "claim": 56,
+   "pass": "follow-up",
+   "q": "Wirecutter data removal service review pick DeleteMe [allowed_domains=nytimes.com]"
+  },
+  {
+   "claim": 48,
+   "pass": "follow-up",
+   "q": "John Chambers Cisco customer ordered routers cut order 2001 telecom capex collapse anecdote"
+  },
+  {
+   "claim": 31,
+   "pass": "first",
+   "q": "South Korea Seoul housing price to income ratio young people give up homeownership 2026"
+  },
+  {
+   "claim": 56,
+   "pass": "follow-up",
+   "q": "\"Wirecutter\" 2026 \"DeleteMe\" best personal data removal service top pick review"
+  },
+  {
+   "claim": 41,
+   "pass": "follow-up",
+   "q": "Asian markets lost 600 billion market value June 23 24 2026 KOSPI Nikkei chip rout"
+  },
+  {
+   "claim": 51,
+   "pass": "first",
+   "q": "Shrek 5 release date June 2027 DreamWorks delayed"
+  },
+  {
+   "claim": 44,
+   "pass": "first",
+   "q": "FINRA margin statistics what it excludes leveraged ETFs options portfolio margin understates leverage"
+  },
+  {
+   "claim": 14,
+   "pass": "follow-up",
+   "q": "margin debt record high not a reliable market timing indicator false signals coincident lagging critique"
+  },
+  {
+   "claim": 40,
+   "pass": "first",
+   "q": "leveraged ETF daily rebalancing sells into falling market amplifies decline end of day mechanics SEC"
+  }
+ ],
+ "unreachable": [
+  {
+   "claim": 6,
+   "url": "https://namu.wiki/w/2026%EB%85%84%207%EC%9B%94%20%EA%B5%AD%EB%82%B4%EC%A6%9D%EC%8B%9C%20%EB%8C%80%ED%8F%AD%EB%9D%BD",
+   "reason": "blocked"
+  },
+  {
+   "claim": 14,
+   "url": "https://realinvestmentadvice.com/resources/blog/margin-debt-risk-the-ratios-that-mislead-investors/",
+   "reason": "blocked"
+  },
+  {
+   "claim": 1,
+   "url": "https://stooq.com/q/d/l/?s=^kospi",
+   "reason": "blocked"
+  },
+  {
+   "claim": 56,
+   "url": "https://www.nytimes.com/wirecutter/",
+   "reason": "blocked"
+  }
+ ],
+ "wall_seconds": 1216,
+ "claims": {
+  "extracted": 60,
+  "checked": 44,
+  "dropped_ambiguous": 2
+ }
+}
