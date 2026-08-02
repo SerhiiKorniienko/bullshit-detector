@@ -54,6 +54,13 @@ Separate what's verifiably true from what's hype in any piece of content.
    - **Dropped claims are not table rows and do not count toward `N`.** They are reported as a count next to the tally, with a word on what they were. A content full of assertions nobody can pin down is itself a finding — say so in the bottom line when the count is high. Claims *kept* under every reading are ordinary table rows and do count toward `N` — they are reported separately on the same line, because "nobody could pin this down" and "this means two things and both are wrong" are different findings about the content.
 4. **Verify.** First split the factual claims into **load-bearing** (the thesis collapses without them, including any claim *derived* from them) and **incidental**. Then:
 
+   **Know what this costs before you start.** One claim, one search is the rule, and it does not
+   bend: a normal 18-minute video with 19 checkable claims runs to roughly 25–30 searches and most
+   of the session. That is the price of the report meaning anything, and the budget rules below
+   exist to spend it where it changes conclusions — not to let you skip it. If the content is long
+   enough that this is not affordable, cap verification honestly with `⚪ not checked` rows rather
+   than checking everything thinly.
+
    - **Verify every load-bearing claim, however many there are.** There is no cap on these. If the argument rests on twelve interlocking numbers, checking ten of them produces a report that cannot support its own conclusion.
    - **Verify incidental claims as budget allows**, most consequential first. Anything you don't reach is `⚪ not checked` — never a guess.
    - **If you cannot verify a load-bearing claim**, say so prominently in the bottom line. A thesis with an unchecked load-bearing premise has not been audited, and the report must not imply otherwise.

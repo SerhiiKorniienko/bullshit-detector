@@ -550,6 +550,14 @@ a reader can do at a glance: **every search is at least one tool call, so search
 exceed tools.** A report claiming 31 searches from 15 tool calls is claiming work it did not
 do, and that is now visible on the face of it rather than buried in a transcript nobody reads.
 
+**`tools` is a good-faith count, not an exact one, and that is by construction** — finalising the
+footer takes tool calls, which would change the count, which would need another edit. The cutoff is
+the rule above: everything up to and including the last `tally.py` pass. Unlike `searches`, there is
+no live log to keep, and none is asked for; a blind run reasonably read the searches-logging rule as
+implying one and reconstructed `tools` from its own transcript afterwards. Don't. Count it once, at
+the same moment you finalise the tally, and treat it as the upper bound it exists to be — its only
+job is that `searches` cannot exceed it. If the two are close, say so honestly rather than padding.
+
 `coverage` counts `coverage-check` runs — the expensive call, and the one worth watching.
 It is spelled out rather than shortened to `checks`, because a report that already says
 "individually source-checked" and carries a `⚪ not checked` verdict cannot afford a third,
