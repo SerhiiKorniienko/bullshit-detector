@@ -36,6 +36,7 @@ import time
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta
 from difflib import SequenceMatcher
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import requests
 
@@ -124,6 +125,51 @@ def query_gdelt(query: str, timespan: str, maxrecords: int, sort: str, timeout: 
     sys.exit(3)
 
 
+# Params that identify the *visit*, not the article. Exact names plus the utm_ family —
+# stripping by prefix beyond utm_ would eat real routing params ("referrer=chapter2").
+TRACKING_PARAMS = {"fbclid", "gclid", "ref", "source", "cmpid", "ito", "ocid"}
+
+# Wire-service attributions as they appear in headlines — "(Reuters)", "- Associated
+# Press". Title-level only: GDELT returns no article bodies, so the body-head signature
+# from #30 is out of reach here, and this weaker tell is labelled as what it is.
+WIRE_MARKERS = ("prnewswire", "pr newswire", "business wire", "businesswire",
+                "globe newswire", "globenewswire", "(reuters)", "(ap)",
+                "associated press", "accesswire", "newsfile corp")
+
+
+def canonical_url(u: str) -> str:
+    """One article, one key: `example.com/x` and `example.com/x?utm_source=twitter`
+    were counted as two URLs before this. Lowercase host, drop www and the fragment,
+    strip tracking params, sort what survives, trim the trailing slash."""
+    try:
+        scheme, netloc, path, query, _ = urlsplit((u or "").strip())
+    except ValueError:
+        return (u or "").strip().lower()
+    netloc = netloc.lower().removeprefix("www.")
+    kept = sorted((k, v) for k, v in parse_qsl(query, keep_blank_values=True)
+                  if not k.lower().startswith("utm_") and k.lower() not in TRACKING_PARAMS)
+    return urlunsplit(("https", netloc, path.rstrip("/"), urlencode(kept), ""))
+
+
+def collapse_urls(articles: list) -> tuple:
+    """Dedupe articles whose URLs canonicalise to the same key, keeping the earliest
+    (input is dateasc). Mirrors and re-tagged shares collide; distinct pages do not."""
+    seen, kept, collapsed = {}, [], 0
+    for a in articles:
+        key = canonical_url(a.get("url", "")) or a.get("url", "")
+        if key in seen:
+            collapsed += 1
+            continue
+        seen[key] = True
+        kept.append(a)
+    return kept, collapsed
+
+
+def wire_attributed(title: str) -> bool:
+    t = (title or "").lower()
+    return any(m in t for m in WIRE_MARKERS)
+
+
 def norm_title(t: str) -> str:
     t = re.sub(r"[^\w\s]", " ", (t or "").lower())
     words = [w for w in t.split() if w not in STOPWORDS and len(w) > 2]
@@ -205,6 +251,7 @@ def burst_span(items: list):
 
 
 def analyse(articles: list) -> dict:
+    articles, url_dupes = collapse_urls(articles)
     clusters = cluster_stories(articles)
     domains = Counter(root_domain(a.get("domain", "")) for a in articles if a.get("domain"))
     countries = Counter(a.get("sourcecountry") or "unknown" for a in articles)
@@ -219,6 +266,7 @@ def analyse(articles: list) -> dict:
             "articles": len(items),
             "domains": doms,
             "distinct_domains": len(doms),
+            "wire_attributed": any(wire_attributed(a.get("title", "")) for a in items),
             "first_seen": first.isoformat() if first else None,
             "last_seen": last.isoformat() if last else None,
             # `span` can legitimately be timedelta(0) — simultaneous publication, the
@@ -231,6 +279,7 @@ def analyse(articles: list) -> dict:
     first, last, span = burst_span(articles)
     return {
         "articles": len(articles),
+        "url_duplicates_collapsed": url_dupes,
         "distinct_domains": len(domains),
         "story_clusters": len(clusters),
         "first_seen": first.isoformat() if first else None,
@@ -278,6 +327,8 @@ def render(query: str, a: dict) -> str:
         "| Metric | Value |",
         "|---|---|",
         f"| Articles matched | {a['articles']} |",
+        *([f"| Duplicate URLs collapsed | {a['url_duplicates_collapsed']} |"]
+          if a["url_duplicates_collapsed"] else []),
         f"| Distinct outlets | {a['distinct_domains']} |",
         f"| Distinct story clusters | {a['story_clusters']} |",
         f"| First seen | {a['first_seen'] or 'n/a'} |",
@@ -289,6 +340,8 @@ def render(query: str, a: dict) -> str:
         L += ["## Story clusters", ""]
         for i, c in enumerate(a["clusters"][:10], 1):
             flag = " ⚠️ syndicated" if c["syndicated"] else ""
+            if c.get("wire_attributed"):
+                flag += " · wire-attributed headline"
             # "all within 0.0h" is noise for a lone article — there is no window to speak of.
             window = (f", all within {c['span_hours']}h"
                       if c["span_hours"] is not None and c["articles"] > 1 else "")

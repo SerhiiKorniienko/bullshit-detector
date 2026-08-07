@@ -48,6 +48,12 @@ The first line is the verdict the detector needs. The rest supports it.
   estimate. Outlets ≫ clusters means syndication.
 - **⚠️ syndicated** on a cluster — multiple outlets published the same story inside 24h. Treat the
   whole cluster as one source.
+- **wire-attributed headline** on a cluster — a headline names a wire service or press-release
+  distributor (Reuters, AP, PR Newswire…). The strongest mechanical one-origin signal available
+  at headline level; bodies would catch more, but GDELT returns none.
+- **Duplicate URLs collapsed** — the same page counted twice behind tracking params, `www.`, or a
+  trailing slash. Collapsed before anything else is counted, so every number below it is already
+  deduplicated.
 - **Span (hours)** — a tight burst points at a press release or embargo lift; coverage developed
   over weeks is more likely independent.
 
