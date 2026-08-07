@@ -415,6 +415,15 @@ def version_files_drift(manifest: Path) -> list:
         if found != version:
             bad.append(f"{entry}/VERSION reads {found}, manifest says {version} — "
                        f"run scripts/write-version-files.py")
+    # The other direction: a VERSION file in a skill the manifest does not list — a
+    # demoted skill keeping its stamp, or a hand-planted copy. A stale stray lies with
+    # the same confidence as a stale listed one, so it is the same error.
+    listed = {(repo / entry).resolve() for entry in skills}
+    for stray in sorted((repo / "skills").glob("*/*/VERSION")):
+        if stray.parent.resolve() not in listed:
+            rel = stray.relative_to(repo)
+            bad.append(f"{rel} exists but its skill is not in the manifest — "
+                       f"delete it or promote the skill")
     return bad
 
 

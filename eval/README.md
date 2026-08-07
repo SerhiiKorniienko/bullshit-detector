@@ -62,9 +62,11 @@ when one exists (the structured `claim@1` path), else parses the markdown table 
 same row shape the gate uses.
 
 Matching: normalized token-set similarity between the curated quote/claim and the report's
-claim cell, greedy one-to-one, threshold auditable (`--min-similarity`, every match printed
-with its score so a weak match is visible rather than silent). Unmatched curated claims get
-a second pass against already-taken rows to detect merges.
+claim cell, greedy one-to-one, threshold auditable (`--min-similarity`; weak pairings under
+0.75 are printed in the default output, every match with its score under `--json`).
+Unmatched curated claims get a second pass against already-taken rows to detect merges,
+and a merged claim's label is graded against the shared row's verdict — one verdict
+claimed for two assertions is graded on both.
 
 Metrics, all rates — counts are the thing run-to-run variance destroys:
 

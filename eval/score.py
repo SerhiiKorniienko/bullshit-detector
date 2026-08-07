@@ -165,7 +165,13 @@ def qwk(pairs: list, k: int = 4):
 
 
 def score_one(case: dict, report: pathlib.Path, args):
-    rows = load_rows(report)
+    try:
+        rows = load_rows(report)
+    except OSError as e:
+        # The unattended-run failure path: claude -p exits 0 without writing the
+        # report. A clean structural error, not a traceback — run-case.sh relies on it.
+        print(f"ERROR: cannot read report {report}: {e}", file=sys.stderr)
+        return None
     if not rows:
         print(f"ERROR: no claim rows found in {report}", file=sys.stderr)
         return None
@@ -183,14 +189,17 @@ def score_one(case: dict, report: pathlib.Path, args):
     used = {i for i, _ in matched.values()}
     queue = [r for i, r in enumerate(rows) if i not in used]
 
-    # 3 — verdict agreement on matched labelled claims
+    # 3 — verdict agreement on every reachable labelled claim. Merged claims count:
+    # the run chose to give one verdict to two assertions, so that verdict is graded
+    # against both labels. Scoring only direct matches made a wrong verdict on a
+    # merged claim invisible to every metric — found by adversarial review.
     exact = tolerated = 0
     confusion = {}
     kappa_pairs = []
-    labelled = [cid for cid in matched if claims[cid].get("label")]
+    labelled = [cid for cid in reachable if claims[cid].get("label")]
     for cid in labelled:
         c = claims[cid]
-        got = rows[matched[cid][0]]["verdict"] or "not rated"
+        got = rows[reachable[cid][0]]["verdict"] or "not rated"
         want = c["label"]
         band = set(c.get("tolerance") or []) | {want}
         exact += got == want
@@ -206,12 +215,8 @@ def score_one(case: dict, report: pathlib.Path, args):
     true_ids = [cid for cid, c in claims.items() if c.get("label") == "confirmed"]
     true_hits, true_missed_extraction = 0, 0
     for cid in true_ids:
-        if cid in matched:
-            got = rows[matched[cid][0]]["verdict"]
-            band = set(claims[cid].get("tolerance") or []) | {"confirmed"}
-            true_hits += got in band
-        elif cid in merged:
-            got = rows[merged[cid][0]]["verdict"]
+        if cid in reachable:
+            got = rows[reachable[cid][0]]["verdict"]
             band = set(claims[cid].get("tolerance") or []) | {"confirmed"}
             true_hits += got in band
         else:
@@ -283,7 +288,11 @@ def stability(case: dict, reports: list, args):
     to hide."""
     per_run = []
     for r in reports:
-        rows = load_rows(pathlib.Path(r))
+        try:
+            rows = load_rows(pathlib.Path(r))
+        except OSError as e:
+            print(f"ERROR: cannot read report {r}: {e}", file=sys.stderr)
+            sys.exit(3)
         matched, merged = match(case, rows, args.min_similarity)
         reach = {**matched, **merged}
         per_run.append({cid: (rows[i]["verdict"] or "not rated")
@@ -332,6 +341,11 @@ def show(result: dict, threshold: float):
         print(f"  warning: {w}")
     for l in result["laundered_merges"]:
         print(f"  LAUNDERED MERGE: {l}")
+    weak = {cid: m for cid, m in result["matches"].items() if m["sim"] < 0.75}
+    if weak:
+        print(f"weak matches (sim < 0.75) — audit these pairings, --json for all:")
+        for cid, m in sorted(weak.items()):
+            print(f"    {cid} -> row {m['row']} (sim {m['sim']})")
     if result["review_queue"]:
         shown = result["review_queue"][:12]
         print(f"review queue — {len(result['review_queue'])} rows no curated claim "

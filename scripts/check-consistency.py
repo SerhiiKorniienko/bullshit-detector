@@ -56,6 +56,15 @@ SKILL = ROOT / "skills/analysis/bullshit-detector/SKILL.md"
 # The home must match EVERY pattern — a registry the home no longer matches is stale
 # and fails loudly rather than silently checking nothing. The other file must match
 # NONE.
+#
+# Matching runs on NORMALISED text — case-folded, all dash variants to '-', runs of
+# spaces collapsed, line structure kept — so a mundane edit (an autocorrected en-dash,
+# a doubled space, a case change) cannot smuggle a spec past the check. Adversarial
+# review demonstrated exactly that evasion against the un-normalised first version.
+# Honest limit, stated plainly: this catches a spec's *format* growing a second home.
+# A rule re-taught in genuinely different words — new phrasing, no placeholder form —
+# still evades any regex; that class is only caught by a person noticing, which is
+# what #35 was. The check shrinks the surface, it does not close it.
 ONE_HOME = [
     ("verdict scale definition table", SKILL, RUBRIC, [
         r"^\| ✅ confirmed \|",
@@ -63,27 +72,35 @@ ONE_HOME = [
         r"^\| ❓ unverifiable \*\(by construction\)\* \|",
     ]),
     ("score bands", RUBRIC, SKILL, [
-        r"^- \*\*0–2 Solid\.\*\*",
-        r"^- \*\*9–10 Fabricated\.\*\*",
+        r"^- \*\*0-2 solid\.\*\*",
+        r"^- \*\*9-10 fabricated\.\*\*",
     ]),
     ("tally line format", RUBRIC, SKILL, [
-        r"Tally: N claims extracted, M individually source-checked",
+        r"^>?\s*\*\*tally: n claims extracted, m individually source-checked",
     ]),
     ("ambiguous line format", RUBRIC, SKILL, [
-        r"Ambiguous: J claims dropped before verification; K checked under every reading",
+        r"^>?\s*\*\*ambiguous: j claims dropped before verification; k checked under every reading",
     ]),
     ("source tier table", RUBRIC, SKILL, [
-        r"^\| Tier \| What it is \| Examples \|",
+        r"^\| tier \| what it is \| examples \|",
     ]),
 ]
+
+
+def normalise(text: str) -> str:
+    """Case-fold, unify dashes, collapse horizontal whitespace. Lines survive, so ^
+    anchors still mean 'start of line' after normalisation."""
+    text = text.lower()
+    text = re.sub(r"[–—−]", "-", text)
+    return "\n".join(re.sub(r"[ \t]+", " ", line).strip() for line in text.splitlines())
 
 
 def one_home_problems() -> list:
     problems = []
     for rule, home, other, patterns in ONE_HOME:
         try:
-            home_text = home.read_text(encoding="utf-8")
-            other_text = other.read_text(encoding="utf-8")
+            home_text = normalise(home.read_text(encoding="utf-8"))
+            other_text = normalise(other.read_text(encoding="utf-8"))
         except OSError as e:
             problems.append(f"one-home: cannot read files for '{rule}': {e}")
             continue

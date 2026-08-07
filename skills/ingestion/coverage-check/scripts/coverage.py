@@ -152,15 +152,21 @@ def canonical_url(u: str) -> str:
 
 
 def collapse_urls(articles: list) -> tuple:
-    """Dedupe articles whose URLs canonicalise to the same key, keeping the earliest
-    (input is dateasc). Mirrors and re-tagged shares collide; distinct pages do not."""
-    seen, kept, collapsed = {}, [], 0
+    """Dedupe articles whose URLs canonicalise to the same key, keeping the first in
+    input order (earliest under the default dateasc sort). Mirrors and re-tagged
+    shares collide; distinct pages do not. An article with no URL is always kept —
+    collapsing the URL-less onto each other would invent syndication out of a data
+    gap, which is the one direction this whole file promises never to err in."""
+    seen, kept, collapsed = set(), [], 0
     for a in articles:
-        key = canonical_url(a.get("url", "")) or a.get("url", "")
+        if not (a.get("url") or "").strip():
+            kept.append(a)
+            continue
+        key = canonical_url(a["url"])
         if key in seen:
             collapsed += 1
             continue
-        seen[key] = True
+        seen.add(key)
         kept.append(a)
     return kept, collapsed
 
