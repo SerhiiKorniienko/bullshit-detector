@@ -41,6 +41,7 @@ INSTRUCTIONS = [
 # machine and drowns the real signal.
 DEFAULT_CORPUS = [
     (REPO / "examples", ["**/*.md"]),
+    (REPO / "eval" / "cases", ["**/transcript.md"]),
     (pathlib.Path("/tmp"), ["bs-source-*.md"]),
 ]
 
