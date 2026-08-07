@@ -16,7 +16,9 @@ OUT=$(cd "$OUT" && pwd)
 
 CASE_ID=$(basename "$CASE_DIR")
 TRANSCRIPT="$CASE_DIR/transcript.md"
-REPORT="$OUT/report-$CASE_ID.md"
+# bs-report-* naming keeps eval runs visible to scripts/runprofile.py, which anchors
+# run detection on the skill's own report naming.
+REPORT="$OUT/bs-report-$CASE_ID.md"
 SKILL="$HOME/.claude/skills/bullshit-detector"
 [ -e "$SKILL" ] || SKILL="$HOME/.agents/skills/bullshit-detector"
 [ -e "$SKILL" ] || { echo "no installed skill found — run scripts/link-skills.sh" >&2; exit 1; }
