@@ -504,14 +504,15 @@ verdict, one level up.
   is worse than an absent one, and the validator accepts the declaration but not silence.
 - **Stamp the version.** Verdicts move between releases — the rubric, the source hierarchy and the
   verdict rules all change — so a report without a version can't be reproduced or fairly compared.
-  Read it from `.claude-plugin/plugin.json` and print it as-is. If the skills were installed without
-  a manifest and no version is available, write `version unknown` rather than guessing —
-  `tally.py` accepts that stamp and applies every current check, which is right, because a
-  fresh install *is* current. **Do not reverse-engineer a number** from the `*_SINCE`
-  constants or anywhere else: a guessed serial number on a measuring instrument is worse
-  than an absent one, and it will silently exempt the report from checks it should face.
-  ⚠️ The manifest sits three directories above the skill, so it does **not** travel with an
-  `npx skills add` install — a missing manifest is the normal case there, not an error.
+  Read it from `.claude-plugin/plugin.json` and print it as-is. If the manifest is unreachable,
+  read the `VERSION` file that sits in this skill's own directory, beside this file — it is
+  generated from the manifest at release time and travels with every install path, including
+  `npx skills add`, which copies only the skill directory and leaves the manifest behind.
+  Only when *neither* exists write `version unknown` rather than guessing — `tally.py` accepts
+  that stamp and applies every current check, which is right, because a fresh install *is*
+  current. **Do not reverse-engineer a number** from the `*_SINCE` constants or anywhere else:
+  a guessed serial number on a measuring instrument is worse than an absent one, and it will
+  silently exempt the report from checks it should face.
 
 Both fields also protect the reader from search non-determinism: the same claim re-checked a week
 later can surface a different evidence base, so a report is a dated reading, not a permanent verdict.
