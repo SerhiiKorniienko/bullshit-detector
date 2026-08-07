@@ -39,6 +39,65 @@ TALLY = ROOT / "skills/analysis/bullshit-detector/scripts/tally.py"
 REPORT_CARD = ROOT / "skills/publishing/report-card/scripts/render_report.py"
 CAROUSEL = ROOT / "skills/publishing/share/scripts/render_carousel.py"
 RUBRIC = ROOT / "skills/analysis/bullshit-detector/RUBRIC.md"
+SKILL = ROOT / "skills/analysis/bullshit-detector/SKILL.md"
+
+# ---------------------------------------------------------------- one rule, one home
+#
+# #45's residue: 12 of 14 load-bearing rules were taught in both SKILL.md and RUBRIC.md
+# in different words, and #35 proved that divergent re-teaching produces divergent runs
+# that both pass the gate. The dedup happened; this stops it growing back.
+#
+# The metric the issue got stuck on — distinguishing *teaching* a rule from *pointing*
+# at it — is resolved with a bright line that is mechanically decidable, per the repo's
+# severity rule: a SPEC states a format with placeholders (`N claims extracted`, a
+# definition table's header row); a concrete worked example (`35 claims extracted`) is
+# a demonstration, not a second home, and pointers ("see RUBRIC.md") match nothing
+# below. Each entry lists the spec's home and regexes that only the spec-form matches.
+# The home must match EVERY pattern — a registry the home no longer matches is stale
+# and fails loudly rather than silently checking nothing. The other file must match
+# NONE.
+ONE_HOME = [
+    ("verdict scale definition table", SKILL, RUBRIC, [
+        r"^\| ✅ confirmed \|",
+        r"^\| ❓ unverifiable \*\(searched\)\* \|",
+        r"^\| ❓ unverifiable \*\(by construction\)\* \|",
+    ]),
+    ("score bands", RUBRIC, SKILL, [
+        r"^- \*\*0–2 Solid\.\*\*",
+        r"^- \*\*9–10 Fabricated\.\*\*",
+    ]),
+    ("tally line format", RUBRIC, SKILL, [
+        r"Tally: N claims extracted, M individually source-checked",
+    ]),
+    ("ambiguous line format", RUBRIC, SKILL, [
+        r"Ambiguous: J claims dropped before verification; K checked under every reading",
+    ]),
+    ("source tier table", RUBRIC, SKILL, [
+        r"^\| Tier \| What it is \| Examples \|",
+    ]),
+]
+
+
+def one_home_problems() -> list:
+    problems = []
+    for rule, home, other, patterns in ONE_HOME:
+        try:
+            home_text = home.read_text(encoding="utf-8")
+            other_text = other.read_text(encoding="utf-8")
+        except OSError as e:
+            problems.append(f"one-home: cannot read files for '{rule}': {e}")
+            continue
+        for p in patterns:
+            if not re.search(p, home_text, re.M):
+                problems.append(
+                    f"one-home: '{rule}' registry is stale — {home.name} no longer "
+                    f"matches {p!r}. Update the registry with the spec's new form; "
+                    f"a pattern the home cannot match checks nothing.")
+            if re.search(p, other_text, re.M):
+                problems.append(
+                    f"one-home: '{rule}' lives in {home.name}, but {other.name} "
+                    f"also matches {p!r} — a second home. Replace it with a pointer.")
+    return problems
 
 
 def literal(path: Path, name: str):
@@ -143,6 +202,9 @@ def main() -> None:
     errors += e
     problems += compare("score bands", bands)
 
+    one_home = one_home_problems()
+    problems += one_home
+
     for err in errors:
         print(f"  ! {err}", file=sys.stderr)
     if errors:
@@ -158,6 +220,8 @@ def main() -> None:
     print(f"✔ verdict scale agrees across {len(verdicts)} definitions "
           f"({', '.join(verdicts)})")
     print(f"✔ score bands agree across {len(bands)} definitions ({', '.join(bands)})")
+    print(f"✔ {len(ONE_HOME)} spec formats each live in exactly one of "
+          f"SKILL.md / RUBRIC.md")
     print("\nNote: korniienko.dev carries its own copies of the score bands "
           "(src/lib/score.ts, scripts/generate-og-images.js) and cannot be checked "
           "from this repo.")
