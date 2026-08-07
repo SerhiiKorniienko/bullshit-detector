@@ -98,8 +98,35 @@ do step 1.
    primary document, so the source hierarchy will happily rate it ✅ at tier 1 — see RUBRIC.md.
 
    If it returns exit 3, the measurement is unavailable — fall back to the tells and **say the count is an estimate**, so a reader can tell a measured origin count from a judged one. Assign a verdict (scale below) and cite what you found, naming the tier when it's doing the work. Never rate a claim `confirmed` or `false` on memory alone — verdicts need sources.
+
+   **Write each claim down as its verdict resolves — not at the end.** Decide the report's file
+   path now (step 7 names it), and append every finished claim as one JSON line to the claims
+   file beside it — same path, `.md` swapped for `.claims.jsonl`. The schema is in
+   [CLAIMS.md](CLAIMS.md); read it when you write the first line. This file is what step 6
+   renders the tables from, so a claim that never lands here never lands in the report. If your
+   harness has no shell to append with, skip the file and write the tables by hand in step 6 —
+   the report format is identical either way.
 5. **Scan for hype signals** using the checklist in [RUBRIC.md](RUBRIC.md).
-6. **Write the report card** using the template in [RUBRIC.md](RUBRIC.md), ending with the 0-10 BS score.
+6. **Write the report shell, not the tables.** Follow the template in [RUBRIC.md](RUBRIC.md) for
+   every prose section — header, source and checked lines, the 0-10 BS score, hype signals,
+   incentive analysis, bottom line, what a hostile reader would hit first, and the Ambiguous
+   line — but where the template shows the two claims tables, the tally line and the run
+   footer, put four markers instead:
+
+   ```
+   <!-- CLAIMS: load_bearing -->
+   <!-- CLAIMS: incidental -->
+   <!-- TALLY -->
+   <!-- RUN -->
+   ```
+
+   Those blocks are generated from the claims file and the run record in step 7 — the same
+   "a number that can be computed is never typed" rule that already owns the tally and run
+   lines, now owning the tables they count. Save the shell beside the report as
+   `<report>.shell.md`. **Fallback:** if you could not keep a claims file (no shell
+   available), write the full report card by hand from the template instead, tables
+   included — the finished artifact is identical, only the authorship of the mechanical
+   blocks differs.
 
 7. **Save it to a file, always.** The file is the artifact — it survives the session, it can be diffed against a later run, and it is what gets published.
 
@@ -168,6 +195,18 @@ do step 1.
    `--fix` also corrects the record's own derived counts — `claims.extracted`, `claims.checked`,
    `claims.dropped_ambiguous` and `wall_seconds` — from the table and your two timestamps, so those
    four are not worth getting exactly right by hand either. See [RUN-RECORD.md](RUN-RECORD.md).
+
+   **If you wrote a shell and a claims file, compose before you gate:**
+
+   ```bash
+   uv run <detector-skill-dir>/scripts/tally.py <report.md> --compose <report>.shell.md
+   ```
+
+   It renders the tables from the claims file, then counts the rendered rows with the same
+   parse the gate uses, so the tally line cannot disagree with the table above it. Exit 2
+   means a claim line is invalid — it names the line; fix the claims file and re-compose,
+   never the rendered report. Then run the `--fix` + `--source` gate on the composed report
+   exactly as described here.
 
    **Do not hand-write either line.** Both are pure functions of the claims table and the record —
    the tally line's buckets and the footer's `searches`, `tools`, `coverage`, wall clock and
