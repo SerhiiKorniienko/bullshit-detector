@@ -18,14 +18,18 @@ do step 1.
 
 **Two modes, and the user picks.** Default is **full** — every step below as written. Run **quick**
 only when the user asked for speed in this request ("quick check", "rough read", "gut check",
-"don't spend 20 minutes"); never choose it silently, and when in doubt, run full. Quick changes
-exactly four budgets, named at the point each applies below: one follow-up search instead of three
-on load-bearing claims, only the five most consequential incidental claims checked (the rest are
-⚪ not checked), no `coverage-check`, and no hostile-reader section. **Everything else holds — 
-especially the steelman before any ❌, because a fast false accusation is still a false
-accusation.** A quick report discloses itself: `"mode": "quick"` in the run record and the
-**Mode: quick** line specified in [RUBRIC.md](RUBRIC.md) directly under the Checked line —
-the gate rejects a quick run that hides it.
+"don't spend 20 minutes"); never choose it silently, and when in doubt, run full. Quick cuts
+**breadth, never depth** — measured on this exact corpus: capping follow-up searches bought no
+wall time at all and collapsed the confirm rate, because a claim that gets one search stalls at
+🟡 on evidence a second search would have settled. So a claim quick mode checks gets the full
+treatment, and the cuts are three, named at the point each applies below: only the five most
+consequential incidental claims are checked (the rest are ⚪ not checked), no `coverage-check`,
+and no hostile-reader section. **Everything else holds — especially the steelman before any ❌,
+because a fast false accusation is still a false accusation.** If your harness exposes a
+reasoning-effort setting, quick is the mode built to pair with a lower one — the run footer will
+carry both labels. A quick report discloses itself: `"mode": "quick"` in the run record and the
+**Mode: quick** line specified in [RUBRIC.md](RUBRIC.md) directly under the Checked line — the
+gate rejects a quick run that hides it.
 
 1. **Get the text.** If the input is a URL and the `fetch-content` skill is installed, use its script. Otherwise use your web fetch tool or ask the user to paste the content. Keep the metadata (views, author, date) — it feeds step 5.
 
@@ -92,7 +96,7 @@ the gate rejects a quick run that hides it.
    - **Search for what would refute it, not for more of what you have.** A fourth URL agreeing with the first three usually shares their origin and changes nothing. The follow-up search exists to find what would move the verdict.
    - **Cap it, and spend the budget where it changes conclusions.** Follow-up searches are the most expensive thing in a run, so they go to the claims the thesis rests on:
 
-     - **Load-bearing claims: up to three follow-ups** (quick mode: one). These are the ones a reader's conclusion depends on, and the rule that an unchecked load-bearing premise means the thesis was not audited is unchanged in both modes.
+     - **Load-bearing claims: up to three follow-ups**, in both modes — quick mode cuts which claims get checked, never how well. These are the ones a reader's conclusion depends on, and the rule that an unchecked load-bearing premise means the thesis was not audited is unchanged.
      - **Incidental claims: one search**, unless what comes back would *move the verdict* — a first result that contradicts the claim earns a second look before you rate it ❌, because the steelman rule asks for that anyway. "The first search was thin" is not a reason to spend two more on an aside. (Quick mode: check only the five most consequential incidental claims; every other incidental row is ⚪ not checked.)
      - **Promotion is allowed.** Load-bearing is judged before verification, and occasionally checking a claim reveals the argument leans on it harder than it looked. Re-classify it and give it the full budget rather than holding it to a call made in ignorance.
 

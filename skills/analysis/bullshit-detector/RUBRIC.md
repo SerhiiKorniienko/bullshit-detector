@@ -518,11 +518,12 @@ verdict, one level up.
   reader gets to know — the line goes directly under **Checked:**, starts with `**Mode: quick**`,
   and must state what was actually cut in this run and what that costs the reader. The required
   substance, in the report's own words: which claims were not checked (the ⚪ rows are unknowns,
-  not passes), that follow-up searching was capped, and that adjacent verdicts (🟡/🟠) carry a
-  softer boundary than a standard reading. Also write `"mode": "quick"` into the run record —
-  `tally.py` rejects a quick record whose report carries no Mode line, and a Mode line whose
-  record does not say quick. A full run writes neither: full is the default and does not
-  advertise itself.
+  not passes), that no coverage measurement ran, and — when the footer shows a lowered reasoning
+  effort — that the score carries a wider band than a standard reading. What quick does *not*
+  cut, and the line may say so: every claim that was checked got the full verification depth.
+  Also write `"mode": "quick"` into the run record — `tally.py` rejects a quick record whose
+  report carries no Mode line, and a Mode line whose record does not say quick. A full run
+  writes neither: full is the default and does not advertise itself.
 
 Both fields also protect the reader from search non-determinism: the same claim re-checked a week
 later can surface a different evidence base, so a report is a dated reading, not a permanent verdict.
