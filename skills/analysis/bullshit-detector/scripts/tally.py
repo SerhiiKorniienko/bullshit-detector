@@ -74,6 +74,7 @@ RUN_CLOCK_SINCE = (0, 13, 0)
 UNREACHABLE_REASON_SINCE = (0, 13, 0)
 QUOTE_INTEGRITY_SINCE = (0, 13, 0)
 CLAIM_QUOTE_SINCE = (0, 13, 0)
+MODE_SINCE = (0, 14, 0)
 
 # Anchored to a whole line, and the *last* one wins. Unanchored, this matched any
 # italic sentence beginning "Run:" — and the RUBRIC template puts a prose section
@@ -931,6 +932,40 @@ def run_record_problems(report_path: str, text: str, m: int) -> list:
     return problems
 
 
+MODE_LINE = re.compile(r"^\*\*Mode: quick\*\*", re.M)
+
+
+def mode_problems(report_path: str, text: str) -> list:
+    """A quick run must say so, and a Mode line must be backed by its record.
+
+    Quick mode trades coverage for speed on the user's request; the trade is legitimate
+    only while it is disclosed. Both directions are checked: a record that says quick
+    with no **Mode: quick** line is a fast reading passing as a standard one, and a
+    Mode line whose record does not say quick is a disclosure nothing stands behind.
+    With no record at all there is nothing to cross-check and the line is let stand —
+    a disclosure the artifact cannot verify still beats silence.
+    """
+    if not check_applies(text, MODE_SINCE):
+        return []
+    record_path = sibling(Path(report_path), ".run.json")
+    if not record_path.exists():
+        return []
+    try:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    is_quick = record.get("mode") == "quick"
+    has_line = bool(MODE_LINE.search(text))
+    if is_quick and not has_line:
+        return ["the run record says mode quick but the report has no `**Mode: quick**` "
+                "line under Checked — a quick reading must disclose what it cut "
+                "(see RUBRIC.md)"]
+    if has_line and not is_quick:
+        return ["the report carries a `**Mode: quick**` line but the run record does not "
+                "say `\"mode\": \"quick\"` — the disclosure and the record must agree"]
+    return []
+
+
 def instrument_warnings(report_path: str) -> list:
     """Nudge when the run record names no model or effort. WARNING, never error.
 
@@ -1050,7 +1085,7 @@ def build_run_line(record: dict, m: int):
     # must not pass as a standard one. Both come from the record — typed once, by the
     # agent, from what its harness actually told it; absent means unknown, never guessed.
     instrument = ""
-    for field in ("model", "effort"):
+    for field in ("mode", "model", "effort"):
         value = record.get(field)
         if isinstance(value, str) and value.strip():
             instrument += f", {field} {value.strip()}"
@@ -1494,6 +1529,7 @@ def main() -> None:
         problems.append(ambiguous)
     problems.extend(run_line_problems(text, m))
     problems.extend(run_record_problems(args.report, text, m))
+    problems.extend(mode_problems(args.report, text))
     if check_applies(text, LINKED_EVIDENCE_SINCE):
         unlinked = unlinked_evidence(text)
         if unlinked:

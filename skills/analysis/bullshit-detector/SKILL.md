@@ -16,6 +16,17 @@ deliberation, 15% of all the thinking a run does, and the single longest uninter
 record — 421 seconds — sits there, before a claim had been read or a search issued. Read step 1,
 do step 1.
 
+**Two modes, and the user picks.** Default is **full** — every step below as written. Run **quick**
+only when the user asked for speed in this request ("quick check", "rough read", "gut check",
+"don't spend 20 minutes"); never choose it silently, and when in doubt, run full. Quick changes
+exactly four budgets, named at the point each applies below: one follow-up search instead of three
+on load-bearing claims, only the five most consequential incidental claims checked (the rest are
+⚪ not checked), no `coverage-check`, and no hostile-reader section. **Everything else holds — 
+especially the steelman before any ❌, because a fast false accusation is still a false
+accusation.** A quick report discloses itself: `"mode": "quick"` in the run record and the
+**Mode: quick** line specified in [RUBRIC.md](RUBRIC.md) directly under the Checked line —
+the gate rejects a quick run that hides it.
+
 1. **Get the text.** If the input is a URL and the `fetch-content` skill is installed, use its script. Otherwise use your web fetch tool or ask the user to paste the content. Keep the metadata (views, author, date) — it feeds step 5.
 
    **Note the wall-clock time before you fetch.** The report ends with what the run cost, and the clock can only start here. Read the actual time; don't reconstruct it at the end.
@@ -81,15 +92,15 @@ do step 1.
    - **Search for what would refute it, not for more of what you have.** A fourth URL agreeing with the first three usually shares their origin and changes nothing. The follow-up search exists to find what would move the verdict.
    - **Cap it, and spend the budget where it changes conclusions.** Follow-up searches are the most expensive thing in a run, so they go to the claims the thesis rests on:
 
-     - **Load-bearing claims: up to three follow-ups.** These are the ones a reader's conclusion depends on, and the rule that an unchecked load-bearing premise means the thesis was not audited is unchanged.
-     - **Incidental claims: one search**, unless what comes back would *move the verdict* — a first result that contradicts the claim earns a second look before you rate it ❌, because the steelman rule asks for that anyway. "The first search was thin" is not a reason to spend two more on an aside.
+     - **Load-bearing claims: up to three follow-ups** (quick mode: one). These are the ones a reader's conclusion depends on, and the rule that an unchecked load-bearing premise means the thesis was not audited is unchanged in both modes.
+     - **Incidental claims: one search**, unless what comes back would *move the verdict* — a first result that contradicts the claim earns a second look before you rate it ❌, because the steelman rule asks for that anyway. "The first search was thin" is not a reason to spend two more on an aside. (Quick mode: check only the five most consequential incidental claims; every other incidental row is ⚪ not checked.)
      - **Promotion is allowed.** Load-bearing is judged before verification, and occasionally checking a claim reveals the argument leans on it harder than it looked. Re-classify it and give it the full budget rather than holding it to a call made in ignorance.
 
      Then stop. A claim that exhausts the budget is ❓ unverifiable **with the gap named** — "searched three angles; the underlying study was never located" tells a reader something a bare ❓ doesn't, and tells the next run where to start.
 
    **Counting origins is the normal path; running `coverage-check` is not.** You can nearly always produce the count from results already in hand, by RUBRIC.md's tells, and it costs nothing.
 
-   Reach for the `coverage-check` skill only when that fails: the claim rests on *breadth you cannot inspect* — "widely reported", "every outlet covered it" — and the results in front of you can't settle whether that breadth is real. **Run it on the single claim whose verdict most depends on the answer, two at the very most.**
+   Reach for the `coverage-check` skill only when that fails: the claim rests on *breadth you cannot inspect* — "widely reported", "every outlet covered it" — and the results in front of you can't settle whether that breadth is real. **Run it on the single claim whose verdict most depends on the answer, two at the very most.** (Quick mode: never — count origins from the results in hand and say the count is judged.)
 
    The reason for the cap is its cost. GDELT takes 11–15 seconds for a trivial one-day query and much longer for wide windows; the documented limit is one request per five seconds, but once tripped the throttle **persists for minutes** — four retries backing off 6s, 12s and 24s were all still refused. Five calls is a minute at best and a stalled run at worst. The tool exists to stop "everyone reported this" passing unexamined, and one measured count on the claim that matters does that.
 
@@ -108,10 +119,10 @@ do step 1.
    the report format is identical either way.
 5. **Scan for hype signals** using the checklist in [RUBRIC.md](RUBRIC.md).
 6. **Write the report shell, not the tables.** Follow the template in [RUBRIC.md](RUBRIC.md) for
-   every prose section — header, source and checked lines, the 0-10 BS score, hype signals,
-   incentive analysis, bottom line, what a hostile reader would hit first, and the Ambiguous
-   line — but where the template shows the two claims tables, the tally line and the run
-   footer, put four markers instead:
+   every prose section — header, source and checked lines (plus the Mode line on a quick run),
+   the 0-10 BS score, hype signals, incentive analysis, bottom line, what a hostile reader would
+   hit first (omitted on a quick run), and the Ambiguous line — but where the template shows the
+   two claims tables, the tally line and the run footer, put four markers instead:
 
    ```
    <!-- CLAIMS: load_bearing -->

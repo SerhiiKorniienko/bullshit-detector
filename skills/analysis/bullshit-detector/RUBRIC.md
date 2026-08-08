@@ -387,6 +387,7 @@ Anchor on verified claims first, adjust with signals:
 
 **Source:** [<title>](<url>) — <author>, <platform>, <date> · <views/engagement>
 **Checked:** <fetch date> · bullshit-detector <version>
+**Mode: quick** — <the disclosure line; quick runs only, see below>
 **BS score: N/10 — <one-line verdict>**
 
 ## What it says (neutral summary)
@@ -513,6 +514,15 @@ verdict, one level up.
   current. **Do not reverse-engineer a number** from the `*_SINCE` constants or anywhere else:
   a guessed serial number on a measuring instrument is worse than an absent one, and it will
   silently exempt the report from checks it should face.
+- **Disclose the mode when it wasn't full.** A quick run traded coverage for speed, and the
+  reader gets to know — the line goes directly under **Checked:**, starts with `**Mode: quick**`,
+  and must state what was actually cut in this run and what that costs the reader. The required
+  substance, in the report's own words: which claims were not checked (the ⚪ rows are unknowns,
+  not passes), that follow-up searching was capped, and that adjacent verdicts (🟡/🟠) carry a
+  softer boundary than a standard reading. Also write `"mode": "quick"` into the run record —
+  `tally.py` rejects a quick record whose report carries no Mode line, and a Mode line whose
+  record does not say quick. A full run writes neither: full is the default and does not
+  advertise itself.
 
 Both fields also protect the reader from search non-determinism: the same claim re-checked a week
 later can surface a different evidence base, so a report is a dated reading, not a permanent verdict.

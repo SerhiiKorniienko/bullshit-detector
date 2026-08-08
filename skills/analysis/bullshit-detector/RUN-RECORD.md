@@ -67,6 +67,12 @@ exactly as with the version stamp. `tally.py --fix` copies `model` and `effort` 
 footer so a fast reading can never pass as a standard one, and warns — never blocks — when they
 are absent.
 
+One more field belongs to the same idea: **`mode`** — write `"mode": "quick"` when the run used
+quick mode (SKILL.md names the four budgets it cuts), and omit the field entirely on a full run.
+Unlike `model` and `effort` this one is *not* optional-when-known: the gate rejects a quick
+record whose report carries no **Mode: quick** disclosure line, and a disclosure line whose
+record does not say quick. `--fix` prints it into the footer alongside model and effort.
+
 It happens under `--fix` only. A plain `tally.py <report>` never writes to the record, which is what
 keeps `render_report.py` — which runs the gate on every render — from mutating anything.
 

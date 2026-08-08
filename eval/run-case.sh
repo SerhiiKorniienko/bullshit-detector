@@ -8,6 +8,8 @@ set -euo pipefail
 # Usage:  eval/run-case.sh eval/cases/<id> <outdir>
 # Env:    EVAL_MODEL (default: the harness default) · EVAL_EFFORT (default xhigh —
 #         every baseline on record ran at xhigh; change it only in a deliberate arm)
+#         EVAL_QUICK=1 asks the runner for the skill's quick mode (a distinct arm —
+#         never compare a quick run against full-mode baselines as if same instrument)
 
 CASE_DIR=$(cd "$1" && pwd)
 OUT=$2
@@ -38,6 +40,12 @@ report to $REPORT and its run record beside it. Your session runs model
 ${EVAL_MODEL:-<the harness default>} at reasoning effort ${EVAL_EFFORT:-xhigh} in the
 claude-code harness — record these in the run record's model/effort/harness fields.
 Use the skill's scripts from their installed paths; do not modify any skill file."
+
+if [ -n "${EVAL_QUICK:-}" ]; then
+  PROMPT="$PROMPT
+This is a QUICK check — the user wants speed. Use the skill's quick mode and follow
+its disclosure rules."
+fi
 
 MODEL_ARGS=()
 [ -n "${EVAL_MODEL:-}" ] && MODEL_ARGS+=(--model "$EVAL_MODEL")
