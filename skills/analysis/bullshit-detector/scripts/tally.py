@@ -931,6 +931,31 @@ def run_record_problems(report_path: str, text: str, m: int) -> list:
     return problems
 
 
+def instrument_warnings(report_path: str) -> list:
+    """Nudge when the run record names no model or effort. WARNING, never error.
+
+    The values are self-reported and unverifiable from the artifact, so a hard gate
+    would only manufacture confident-looking strings (#33's lesson); a warning creates
+    no such incentive because there is nothing to pass. An agent whose harness never
+    told it its effort has nothing honest to write, and omission is the honest form.
+    """
+    record_path = sibling(Path(report_path), ".run.json")
+    if not record_path.exists():
+        return []
+    try:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    out = []
+    for field in ("model", "effort"):
+        value = record.get(field)
+        if not (isinstance(value, str) and value.strip()):
+            out.append(f"run record names no `{field}` — reports from different "
+                       f"{field}s are different instruments and cannot be compared "
+                       f"without the label; record it if your harness exposes it")
+    return out
+
+
 def ambiguous_line_problem(text: str):
     """The dropped-claims count next to the tally — required, and 0 is a real answer.
 
@@ -1020,8 +1045,17 @@ def build_run_line(record: dict, m: int):
     minutes, sec = divmod(rest, 60)
     wall = f"{hours}h{minutes}m{sec}s" if hours else f"{minutes}m{sec}s"
     per = f", per claim {round(seconds / m)}s" if m else ""
+    # The instrument is version + model + effort: the same release at a different
+    # reasoning effort measurably produces a different score spread, so a fast reading
+    # must not pass as a standard one. Both come from the record — typed once, by the
+    # agent, from what its harness actually told it; absent means unknown, never guessed.
+    instrument = ""
+    for field in ("model", "effort"):
+        value = record.get(field)
+        if isinstance(value, str) and value.strip():
+            instrument += f", {field} {value.strip()}"
     return (f"*run: {wall}, searches {searches}, tools {int(tools)}, "
-            f"coverage {int(coverage)}{per}*"), []
+            f"coverage {int(coverage)}{per}{instrument}*"), []
 
 
 # ---------------------------------------------------------------- claims@1 compose
@@ -1531,6 +1565,7 @@ def main() -> None:
     warnings = verdict_integrity_warnings(text) + numeric_consistency_warnings(text)
     if check_applies(text, CLAIM_QUOTE_SINCE):
         warnings += unquoted_claim_warnings(text)
+    warnings += instrument_warnings(args.report)
     if warnings:
         # A report missing quotes on 36 rows produces 36 identical nudges, which is a wall
         # rather than a message. Show enough to act on, count the rest.

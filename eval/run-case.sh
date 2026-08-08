@@ -34,8 +34,10 @@ The skill is installed at $SKILL — read its SKILL.md and follow it. The transc
 already fetched and normalized; do not fetch anything about the source video. Do not
 read any directory named examples/ and do not look at any prior report of any content:
 work only from the transcript and your own verification searches. Write the finished
-report to $REPORT and its run record beside it. Use the skill's scripts from their
-installed paths; do not modify any skill file."
+report to $REPORT and its run record beside it. Your session runs model
+${EVAL_MODEL:-<the harness default>} at reasoning effort ${EVAL_EFFORT:-xhigh} in the
+claude-code harness — record these in the run record's model/effort/harness fields.
+Use the skill's scripts from their installed paths; do not modify any skill file."
 
 MODEL_ARGS=()
 [ -n "${EVAL_MODEL:-}" ] && MODEL_ARGS+=(--model "$EVAL_MODEL")

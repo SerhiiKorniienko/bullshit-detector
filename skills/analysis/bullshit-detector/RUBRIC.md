@@ -548,7 +548,10 @@ anything longer belongs in the run record beside the file rather than in the rep
 **Don't write this line — `tally.py --fix` generates it** from the run record and the claims
 table, the same way it generates the tally line. Every figure in it is derived from something
 already written down, so typing it by hand only creates a second place for the number to be
-wrong. See SKILL.md step 7.
+wrong. See SKILL.md step 7. When the run record names the model and reasoning effort, the
+script appends them here — the instrument is version *plus* what ran it, and a reading taken
+at a lower effort must be distinguishable from a standard one. RUN-RECORD.md says how to
+record them honestly.
 
 It earns its place by being *internally* checkable. `per claim` is the wall time over `M`,
 not a fresh number, so it cannot drift from the tally. And `searches` against `tools` is a

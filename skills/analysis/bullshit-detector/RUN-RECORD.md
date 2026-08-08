@@ -48,6 +48,25 @@ This is the same rule as the tally line and the footer, applied one file further
 can be computed is never typed.** A real run reported 22 claims checked against a table of 20 — a
 typo in a figure the script had already counted correctly two lines earlier.
 
+## Three fields that name the instrument
+
+The instrument is the release *and* what ran it: the same rules at a different reasoning effort
+measurably produce a different score spread (same mean, three times the variance at `high` vs
+`xhigh`), and main-session and subagent harnesses have measured 11 vs 18 minutes on identical
+work. A reading that doesn't say which instrument produced it cannot be compared with anything.
+
+| field | what to write |
+|---|---|
+| `model` | the model id as your harness states it, e.g. `claude-sonnet-5` |
+| `effort` | the reasoning effort your harness declared, e.g. `xhigh` |
+| `harness` | what is running you, e.g. `claude-code`, `codex`, `opencode` |
+
+All three are optional strings with one rule: **write only what your harness actually told you,
+and omit what you don't know.** Omission means unknown; a guessed label is worse than none,
+exactly as with the version stamp. `tally.py --fix` copies `model` and `effort` into the run
+footer so a fast reading can never pass as a standard one, and warns — never blocks — when they
+are absent.
+
 It happens under `--fix` only. A plain `tally.py <report>` never writes to the record, which is what
 keeps `render_report.py` — which runs the gate on every render — from mutating anything.
 
