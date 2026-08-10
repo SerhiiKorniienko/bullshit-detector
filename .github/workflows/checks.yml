@@ -23,10 +23,16 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Every script is PEP 723 self-contained, so uv is the whole toolchain.
-      - uses: astral-sh/setup-uv@v5
+      # Caching is off on purpose: the cache key globs for uv.lock or
+      # requirements.txt, and this repo has neither, so it would be a cache that
+      # never invalidates. Nothing to cache either — the scripts declare no
+      # dependencies, and only the interpreter is fetched.
+      - uses: astral-sh/setup-uv@v9
+        with:
+          enable-cache: false
 
       - name: version gates can fire
         run: uv run skills/analysis/bullshit-detector/scripts/tally.py --self-test
