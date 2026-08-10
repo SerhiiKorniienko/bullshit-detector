@@ -1,0 +1,90 @@
+{
+ "schema": "bullshit-detector/run@1",
+ "source_url": "https://x.com/dr_cintas/status/2086566494561828999",
+ "source_words": 134,
+ "started": "2026-08-09T22:54:35Z",
+ "finished": "2026-08-09T23:01:37Z",
+ "model": "claude-fable-5",
+ "harness": "claude-code",
+ "tools": 24,
+ "coverage_checks": 0,
+ "queries": [
+  {
+   "claim": 1,
+   "pass": "first",
+   "q": "ClawWork AI agent earns salary bankrupt"
+  },
+  {
+   "claim": 1,
+   "pass": "first",
+   "q": "ClawWork GitHub open source AI economic survival"
+  },
+  {
+   "claim": 6,
+   "pass": "first",
+   "q": "OpenAI GDPval benchmark 220 tasks 44 occupations gold set"
+  },
+  {
+   "claim": 7,
+   "pass": "first",
+   "q": "ClawWork \"$1,500\" per hour OR \"1500/hr\" leaderboard best models"
+  },
+  {
+   "claim": 2,
+   "pass": "follow-up",
+   "q": "HKUDS ClawWork independent test replication OR criticism"
+  },
+  {
+   "claim": 8,
+   "pass": "first",
+   "q": "ClawWork agent starts $10 balance token costs deducted"
+  },
+  {
+   "claim": 11,
+   "pass": "first",
+   "q": "GDPval tasks deliverables Word Excel PDF real work products professionals"
+  },
+  {
+   "claim": 4,
+   "pass": "first",
+   "q": "ClawWork GPT-5.2 grading quality score rubrics sectors"
+  },
+  {
+   "claim": 12,
+   "pass": "first",
+   "q": "ClawWork OpenClaw Telegram Discord Slack WhatsApp coworker integration"
+  },
+  {
+   "claim": 13,
+   "pass": "first",
+   "q": "ClawWork MIT license free open source HKUDS"
+  },
+  {
+   "claim": 5,
+   "pass": "follow-up",
+   "q": "ClawWork simulated virtual earnings criticism fake money"
+  },
+  {
+   "claim": 2,
+   "pass": "follow-up",
+   "q": "Chao Huang ClawWork launch announcement February 2026 HKU"
+  },
+  {
+   "claim": 3,
+   "pass": "first",
+   "q": "\"ClawWork\" \"zero human input\" OR autonomous no human intervention"
+  },
+  {
+   "claim": 2,
+   "pass": "follow-up",
+   "q": "AI agent earned $10K GDPval wages news -site:github.com press coverage HKU benchmark"
+  }
+ ],
+ "unreachable": [],
+ "claims": {
+  "extracted": 14,
+  "checked": 14,
+  "dropped_ambiguous": 0
+ },
+ "wall_seconds": 422
+}

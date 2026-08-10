@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BS Report: &quot;Researchers built an AI that has to earn its own salary or go bankrupt&quot; — 4/10</title>
+<meta name="description" content="the specs are real, the &quot;salary&quot; is not: the money it &quot;earns&quot; is simulated; only its costs are real.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BS Report: &quot;Researchers built an AI that has to earn its own salary or go bankrupt&quot; — 4/10">
+<meta property="og:description" content="the specs are real, the &quot;salary&quot; is not: the money it &quot;earns&quot; is simulated; only its costs are real.">
+<meta name="twitter:card" content="summary">
+<meta name="generator" content="bullshit-detector 0.14.0">
+<meta name="theme-color" content="#FFF200">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --fg:#000;--bg:#fff;--yellow:#FFF200;--cyan:#00FFFF;--magenta:#FF00FF;--grey:#F5F5F5;
+  --border:4px;--pad:clamp(16px,4vw,40px);
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--grey);color:var(--fg);
+  font:400 17px/1.55 'Helvetica Neue',Helvetica,Arial,system-ui,sans-serif;
+  padding:var(--pad);
+}
+main{max-width:1180px;margin:0 auto;background:var(--bg);
+  border:var(--border) solid var(--fg);box-shadow:12px 12px 0 var(--fg);padding:var(--pad)}
+a{color:var(--fg);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:2px}
+a:hover{background:var(--yellow)}
+code{font:600 .88em/1.4 'SF Mono',Menlo,Consolas,monospace;background:var(--grey);
+  border:2px solid var(--fg);padding:1px 5px;word-break:break-word}
+pre{background:var(--grey);border:var(--border) solid var(--fg);padding:16px;overflow-x:auto;margin:20px 0}
+pre code{border:0;background:none;padding:0}
+strong{font-weight:900}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:auto;position:static;display:inline-block;background:var(--yellow);
+  border:3px solid var(--fg);padding:8px 14px;font-weight:900;margin-bottom:12px}
+
+.eyebrow{display:inline-block;background:var(--fg);color:var(--yellow);font-weight:900;
+  text-transform:uppercase;letter-spacing:3px;font-size:14px;padding:7px 14px;margin-bottom:20px}
+.hero h1{font-weight:900;font-size:clamp(28px,5.2vw,52px);line-height:1.08;
+  letter-spacing:-.02em;margin-bottom:18px;overflow-wrap:break-word}
+.source{font-size:clamp(15px,2vw,18px);font-weight:700;margin-bottom:6px}
+.checked{font-size:14px;text-transform:uppercase;letter-spacing:1px;font-weight:700;
+  color:#444;margin-bottom:24px}
+.parse-warning{margin-top:16px;border-left:8px solid var(--magenta);padding:8px 14px;
+  font-size:14px;font-weight:700;background:var(--grey)}
+
+.score{display:inline-flex;flex-direction:column;align-items:flex-start;
+  border:8px solid var(--fg);box-shadow:12px 12px 0 var(--fg);padding:18px 30px;margin:6px 0 22px}
+.score--none{background:var(--grey)}
+.score-num{font-weight:900;font-size:clamp(56px,12vw,104px);line-height:.95;letter-spacing:-.04em}
+.score-den{font-size:.42em;letter-spacing:0}
+.score-band{font-weight:900;text-transform:uppercase;letter-spacing:3px;font-size:clamp(13px,2vw,18px);margin-top:6px}
+.score-verdict{font-weight:700;font-size:clamp(17px,2.6vw,24px);line-height:1.35;
+  border-left:10px solid var(--fg);padding-left:16px}
+
+.tally-box{border:var(--border) solid var(--fg);background:var(--yellow);padding:16px 20px;margin:28px 0}
+.tally{font-size:16px;line-height:1.5}
+.tally--ambig{margin-top:8px;border-top:3px solid var(--fg);padding-top:8px}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px;
+  position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0}
+.chip{font:900 13px/1 'Helvetica Neue',Helvetica,Arial,sans-serif;text-transform:uppercase;
+  letter-spacing:1px;background:var(--bg);color:var(--fg);border:3px solid var(--fg);
+  padding:9px 12px;cursor:pointer;box-shadow:3px 3px 0 var(--fg)}
+.chip:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--fg)}
+.chip.is-on{background:var(--chip,var(--yellow));transform:translate(2px,2px);box-shadow:1px 1px 0 var(--fg)}
+.chip .n{display:inline-block;background:var(--fg);color:var(--bg);padding:2px 6px;margin-left:5px;font-size:11px}
+.chip.is-on .n{background:var(--bg);color:var(--fg)}
+
+.section{margin:0 0 40px}
+.section h2{font-weight:900;font-size:clamp(21px,3.4vw,30px);text-transform:uppercase;
+  letter-spacing:-.01em;border-bottom:8px solid var(--fg);padding-bottom:8px;margin:36px 0 18px}
+.section h3{font-weight:900;font-size:20px;margin:24px 0 10px}
+.section p{margin:0 0 14px}
+.section ul,.section ol{margin:0 0 16px;padding-left:22px}
+.section li{margin-bottom:9px}
+.section blockquote{border-left:10px solid var(--fg);background:var(--grey);
+  padding:12px 18px;margin:0 0 16px;font-weight:700}
+.callout{border-left:10px solid var(--yellow);padding-left:14px}
+.section--key{border:var(--border) solid var(--fg);background:var(--yellow);
+  padding:6px var(--pad) var(--pad);margin-bottom:40px;box-shadow:8px 8px 0 var(--fg)}
+.section--key h2{border-bottom-color:var(--fg)}
+.section--hostile{background:var(--cyan)}
+
+.table-wrap{overflow-x:auto;border:var(--border) solid var(--fg);margin-bottom:18px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--fg);color:var(--bg);font-weight:900;text-transform:uppercase;
+  letter-spacing:1px;font-size:12px;text-align:left;padding:10px;white-space:nowrap}
+td{border-top:3px solid var(--fg);padding:11px 10px;vertical-align:top;overflow-wrap:anywhere}
+tbody tr:nth-child(even){background:var(--grey)}
+/* Fixed layout: auto layout hands the Evidence column everything and wraps the
+   claim itself every three words, and the claim is the thing being judged. */
+.claims table{table-layout:fixed}
+.claims td:nth-child(1),.claims th:nth-child(1){width:3.25rem;text-align:center;font-weight:900}
+.claims th:nth-child(2){width:25%}
+.claims th:nth-child(3){width:6.5rem}
+.claims th:nth-child(4){width:8.5rem}
+/* The verdict is what a reader scans for, so the verdict carries the colour. */
+.claim-row[data-verdict] .verdict-cell{background:var(--v,transparent);color:var(--fg);
+  font-weight:900;text-transform:uppercase;font-size:.78em;letter-spacing:.5px}
+/* Hiding is a screen affordance. Print shows the whole report — a filtered PDF
+   would be a report that quietly dropped rows, which is the one thing this tool
+   cannot ship. */
+@media screen{.is-hidden{display:none!important}}
+
+footer{border-top:8px solid var(--fg);padding-top:16px;margin-top:12px}
+.run{font-style:italic;font-size:14px;color:#333;margin-bottom:8px}
+.colophon{font-size:13px;color:#444;line-height:1.5}
+
+@media (max-width:900px){
+  body{padding:10px}
+  main{box-shadow:6px 6px 0 var(--fg);padding:16px}
+  .filters{gap:6px}
+  .table-wrap{border:0;overflow-x:visible}
+  table,thead,tbody,tr,td{display:block;width:100%}
+  /* Off-screen, not left:-9999px — an absolutely positioned thead at a negative
+     offset widens the initial containing block and gives the page a horizontal
+     scrollbar on iOS. */
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  tr{border:var(--border) solid var(--fg);box-shadow:5px 5px 0 var(--fg);
+     margin-bottom:18px;background:var(--bg)!important;padding:0}
+  td{border-top:0;padding:9px 12px}
+  td+td{border-top:3px solid var(--fg)}
+  td:first-child{width:auto;text-align:left;background:var(--fg);color:var(--bg);font-size:13px;
+    text-transform:uppercase;letter-spacing:2px}
+  .claim-row td:first-child::before{content:"Claim "}
+  td:not(:first-child)::before{content:attr(data-label);display:block;font-weight:900;
+    font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#555;margin-bottom:3px}
+}
+
+@media print{
+  body{background:#fff;padding:0;font-size:11pt}
+  main{border:0;box-shadow:none;padding:0;max-width:none}
+  .filters,.skip{display:none}
+  .is-hidden{display:revert!important}
+  a{text-decoration:none}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;word-break:break-all}
+  tr,.section--key,.tally-box{break-inside:avoid}
+  .section h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#load-bearing-claims">Skip to claims</a>
+<main>
+<header class="hero">
+  <p class="eyebrow">BS Report</p>
+  <h1>&quot;Researchers built an AI that has to earn its own salary or go bankrupt&quot;</h1>
+  <p class="source"><a href="https://x.com/dr_cintas/status/2086566494561828999" rel="noopener noreferrer" target="_blank">Tweet by Alvaro Cintas (@dr_cintas)</a> — X, 2026-08-09 · 1,584 views, 15 likes, 131,562 followers</p>
+  <p class="checked">2026-08-10 · bullshit-detector 0.14.0</p>
+  <div class="score" style="background:#FFFF00;color:#000000"><div class="score-num">4<span class="score-den">/10</span></div><div class="score-band">Mostly fine</div></div><p class="score-verdict">the specs are real, the &quot;salary&quot; is not: the money it &quot;earns&quot; is simulated; only its costs are real.</p>
+  
+</header>
+<div class="tally-box"><p class="tally"><strong>Tally: 14 claims extracted, 14 individually source-checked</strong> — 10 confirmed, 3 plausible, 1 misleading.</p><p class="tally tally--ambig"><strong>Ambiguous: 0 claims dropped before verification.</strong></p></div>
+<nav class="filters" aria-label="Filter claims by verdict"><button class="chip chip--all is-on" data-filter="all">All <span class="n">14</span></button><button class="chip chip--problems" data-filter="false misleading">Problems <span class="n">1</span></button><button class="chip" data-filter="confirmed" style="--chip:#00FF00">✅ confirmed <span class="n">10</span></button><button class="chip" data-filter="plausible" style="--chip:#FFFF00">🟡 plausible <span class="n">3</span></button><button class="chip" data-filter="misleading" style="--chip:#FF8800">🟠 misleading <span class="n">1</span></button><button class="chip chip--lb" data-toggle="loadbearing">Load-bearing only</button></nav>
+<div id="claims"></div>
+<section class="section"><h2 id="what-it-says-neutral-summary">What it says (neutral summary)</h2><p>The tweet presents ClawWork: an AI agent that starts with $10, is assigned professional tasks (finance, healthcare, legal), pays for its own tokens, and goes bankrupt if its balance hits zero. It reports $10K earned in 7 hours with zero human input, work graded by GPT-5.2 against profession-specific rubrics, payment computed from BLS wages, 220 tasks across 44 professions, top models at $1,500+/hr equivalent, live coworker integrations in four messaging apps, free and open source.</p></section><section class="section"><h2 id="load-bearing-claims">Load-bearing claims</h2><p>The ones the thesis dies without. Verify all of them.</p>
+<div class="table-wrap claims"><table><thead><tr><th>#</th><th>Claim</th><th>Type</th><th>Verdict</th><th>Evidence</th></tr></thead><tbody><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">1</td><td data-label="Claim">Researchers [the HKU Data Intelligence Lab, HKUDS] built an AI agent framework [ClawWork] whose agent pays its own running costs from a balance and stops operating if the balance reaches zero [00:00] — &quot;Researchers built an AI that has to earn its own salary or go bankrupt&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">[2 URLs → 1 origin, judged] Real project: HKUDS/ClawWork on GitHub, built by the HKU Data Intelligence Lab (lead: Chao Huang, HKU Musketeers Foundation Institute of Data Science). Bankruptcy mechanic is in the README: agents pay per token and stop at zero balance. [2 URLs → 1 origin, judged — same lab] (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="plausible" style="--v:#FFFF00"><td data-label="#">2</td><td data-label="Claim">ClawWork agents earned $10,000 in 7 hours [in the project&#x27;s own live run] — &quot;$10K earned. 7 hours.&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">🟡 plausible</td><td data-label="Evidence">[2 URLs → 1 origin, judged] Matches the lab&#x27;s own launch headline verbatim (Chao Huang, 2026-02-16: &quot;earn 💰$10K+ in just 7 hours&quot;) — a ~6-month-old self-reported figure, not news. The repo headline has since moved to &quot;$19K in 8 Hours&quot; / &quot;$15K earned in 11 Hours&quot;. The dollars are computed by the payment formula (claim 5), not billed to any client; no independent replication found. Tier 4 both: the subject reporting on itself. [2 URLs → 1 origin, judged] (<a href="https://x.com/huang_chao4969/status/2023282092042580015" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="plausible" style="--v:#FFFF00"><td data-label="#">3</td><td data-label="Claim">The ClawWork earnings run involved zero human input — &quot;Zero human input.&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">🟡 plausible</td><td data-label="Evidence">Consistent with the design — tasks are auto-assigned and the agent produces deliverables autonomously — but the phrase appears nowhere in the project&#x27;s own materials that were found; it is the tweet&#x27;s addition, and no independent observation of the run exists. (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">4</td><td data-label="Claim">Work [in ClawWork] is graded by GPT-5.2 using profession-specific rubrics — &quot;Graded by GPT-5.2 using profession-specific rubrics&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">README: &quot;Quality scoring via GPT-5.2 with category-specific rubrics for each of the 44 GDPVal sectors&quot;, scored 0.0–1.0. Note the grader is itself a model — quality, and therefore pay, is model-judged, not client-judged. (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">5</td><td data-label="Claim">[In ClawWork] payment = quality × estimated hours × actual BLS wage — &quot;Payment = quality × estimated hours × actual BLS wage&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">README, verbatim: &quot;Payment = quality_score × (estimated_hours × BLS_hourly_wage)&quot;. This formula is the tell the tweet buries: the income side is simulated dollars computed from US Bureau of Labor Statistics wages — no client pays anything. Only the cost side (API tokens) is real money. (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">6</td><td data-label="Claim">[The task set is] 220 tasks across 44 professions — &quot;220 tasks across 44 professions.&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">[2 URLs → 2 origins] Exact: ClawWork uses OpenAI&#x27;s GDPval gold subset — 220 open-sourced tasks across 44 occupations from the top 9 US GDP sectors (full set is 1,320). [2 URLs → 2 origins — OpenAI and HKUDS state it independently] (<a href="https://openai.com/index/gdpval/" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="plausible" style="--v:#FFFF00"><td data-label="#">7</td><td data-label="Claim">The best models [in ClawWork] hit $1,500+/hr equivalent [simulated wage] — &quot;The best models hit $1,500+/hr equivalent.&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">🟡 plausible</td><td data-label="Evidence">The README&#x27;s own line (&quot;strongest models achieve $1,500+/hr equivalent salary&quot;). Same basis as claim 2: &#x27;equivalent&#x27; means the BLS-wage formula, and the figure is the project&#x27;s self-report with no independent check. All third-party mentions found are restatements of the README. (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr></tbody></table></div></section><section class="section section--incidental"><h2 id="incidental-claims">Incidental claims</h2><div class="table-wrap claims"><table><thead><tr><th>#</th><th>Claim</th><th>Type</th><th>Verdict</th><th>Evidence</th></tr></thead><tbody><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">8</td><td data-label="Claim">[A ClawWork agent] starts with $10 — &quot;Starts with $10&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">README: &quot;Agents start with just $10 and pay for every token generated.&quot; (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">9</td><td data-label="Claim">[The agent] pays for every token it uses out of its balance, on every API call and every chat message — &quot;pays for every token it uses out of that balance&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">README: &quot;Token costs: deducted automatically after each LLM call&quot;; the coworker mode charges every conversation the same way. This is the real-money side of the system — and the only one. (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">10</td><td data-label="Claim">[The agent] gets tasks of the kind: finance reports, healthcare docs, legal analysis — &quot;Gets real tasks: finance reports, healthcare docs, legal analysis&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">GDPval tasks are constructed from real work products (legal briefs, care plans, financial reports) by professionals averaging 14 years&#x27; experience, and finance, healthcare and law are among the 44 occupations. &quot;Real&quot; holds for the task content — these are benchmark items, not client engagements. (<a href="https://openai.com/index/gdpval/" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">11</td><td data-label="Claim">[The agent] creates full deliverables from scratch — &quot;Creates full deliverables from scratch&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">GDPval deliverables are actual files — .docx, .xlsx, .pdf, .pptx; PDF, Excel and &quot;other&quot; formats are over 80% of deliverables — produced from task briefs with reference files. (<a href="https://cdn.openai.com/pdf/d5eb7428-c4e9-4a33-bd86-86dd4bcf12ce/GDPval.pdf" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">12</td><td data-label="Claim">[ClawWork] works as a live coworker inside Telegram, Discord, Slack, and WhatsApp</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">[2 URLs → 2 origins] README lists all four plus Email, Feishu, DingTalk, MoChat and QQ; the underlying OpenClaw channel gateway documents the same integrations independently. [2 URLs → 2 origins] (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="confirmed" style="--v:#00FF00"><td data-label="#">13</td><td data-label="Claim">[ClawWork is] 100% free and open source — &quot;100% Free. Open Source.&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">✅ confirmed</td><td data-label="Evidence">MIT license, copyright Data Intelligence Lab@HKU; public repo. The software is free — running it is not: the agent&#x27;s token bills are real API spend the operator pays. (<a href="https://github.com/HKUDS/ClawWork/blob/main/LICENSE" rel="noopener noreferrer" target="_blank">source</a>)</td></tr><tr class="claim-row" data-verdict="misleading" style="--v:#FF8800"><td data-label="#">14</td><td data-label="Claim">[ClawWork] is not a benchmark but a survival test — &quot;This isn&#x27;t a benchmark, it&#x27;s a survival test.&quot;</td><td data-label="Type">factual</td><td data-label="Verdict" class="verdict-cell">🟠 misleading</td><td data-label="Evidence">The project&#x27;s own materials describe it as an economic survival <em>benchmark</em> on the GDPval dataset with simulated income (claim 5). Kernel of truth: the token costs and the zero-balance stop are real pressure, which is genuinely novel. But the sentence does exactly the work of hiding that the &quot;salary&quot; is benchmark-denominated — the steelman (rhetorical emphasis) does not survive the primary source contradicting it in its own self-description. (<a href="https://github.com/HKUDS/ClawWork" rel="noopener noreferrer" target="_blank">source</a>)</td></tr></tbody></table></div>
+<p><strong>Tally: 14 claims extracted, 14 individually source-checked</strong> — 10 confirmed, 3 plausible, 1 misleading.</p>
+<p class="callout"><strong>Ambiguous: 0 claims dropped before verification.</strong></p>
+<p><em>run: 7m2s, searches 14, tools 24, coverage 0, per claim 30s, model claude-fable-5</em></p></section><section class="section"><h2 id="hype-signals-observed">Hype signals observed</h2><ul><li><strong>Simulated income framed as salary, nowhere disclosed</strong> — &quot;earn its own salary&quot;, &quot;$10K earned&quot;, &quot;$1,500+/hr equivalent&quot;. The project&#x27;s own formula (claim 5) computes pay as <code>quality_score × estimated_hours × BLS_hourly_wage</code>: no client pays anything, and only the token costs are real dollars. The single most load-bearing omission in the tweet.</li><li><strong>Denial of category</strong>: <em>&quot;This isn&#x27;t a benchmark, it&#x27;s a survival test.&quot;</em> The project describes itself as an economic survival <strong>benchmark</strong> on OpenAI&#x27;s GDPval dataset.</li><li><strong>Stale headline as fresh news</strong>: <em>&quot;$10K earned. 7 hours.&quot;</em> is the lab&#x27;s own launch-day headline from 2026-02-16, ~6 months old; the repo&#x27;s headline has since moved to &quot;$19K in 8 Hours&quot;. The tweet dates nothing.</li><li><strong>An added superlative the source never makes</strong>: <em>&quot;Zero human input&quot;</em> appears in no project material found.</li><li><strong>Peril cadence</strong>: <em>&quot;No safety net. No unlimited budget.&quot;</em> — drama restating the same mechanism twice.</li></ul></section><section class="section"><h2 id="incentive-analysis">Incentive analysis</h2><p>@dr_cintas is a 131K-follower AI-news engagement account. The tweet links nothing — not even the repo — which is the engagement-farming shape: wonder first, source never. No affiliation with HKUDS is evident, and nothing is being sold; the currency here is reach. The &quot;100% Free. Open Source.&quot; close is accurate about the software and doubles as the retweet hook.</p></section><section class="section section--key"><h2 id="bottom-line">Bottom line</h2><p>The project is real and better-documented than the tweet implies: HKU&#x27;s Data Intelligence Lab built ClawWork on OpenAI&#x27;s GDPval task set, the mechanism (real token costs, death at zero balance, GPT-5.2-graded quality, BLS-wage formula) is exactly as described, and it is genuinely free and open source. What the tweet never says is that the <strong>income side is simulated</strong> — &quot;$10K earned&quot; means a formula multiplied a model-judged quality score by estimated hours and a government wage table; no one paid the agent anything, while its costs are real API spend. Strip that framing and the honest sentence is &quot;an agent completed benchmark tasks whose simulated wages, per its own builders&#x27; telemetry, outpaced its real token costs&quot; — still interesting, much less viral. The headline figure is also the lab&#x27;s own six-month-old launch number, recycled undated, with &quot;zero human input&quot; added by the tweeter.</p></section><section class="section section--key section--hostile"><h2 id="what-a-hostile-reader-would-hit-first">What a hostile reader would hit first</h2><ol><li><strong>&quot;$10K earned&quot; is Monopoly money</strong> — the payment formula is in the README the tweet paraphrases one line above. The tweet quotes the formula and still calls it a salary.</li><li><strong>&quot;Zero human input&quot;</strong> — absent from every project source found; the tweeter&#x27;s own addition.</li><li><strong>The figure is stale</strong> — the lab&#x27;s Feb 2026 launch headline; the repo now claims different, larger numbers from the ongoing run. Quoting a moving self-reported number undated is how it never has to be right.</li><li><strong>&quot;This isn&#x27;t a benchmark&quot;</strong> — the project&#x27;s own name for itself is &quot;economic survival benchmark&quot;.</li><li><strong>Every performance number has one origin</strong> — the lab&#x27;s own telemetry; no independent replication or press verification exists.</li></ol></section>
+<footer>
+  <p class="run">run: 7m2s, searches 14, tools 24, coverage 0, per claim 30s, model claude-fable-5</p>
+  <p class="colophon">Generated by <a href="https://github.com/SerhiiKorniienko/bullshit-detector"
+    rel="noopener noreferrer" target="_blank">bullshit-detector</a> 0.14.0.
+    Verdicts require sources; a report is a dated reading, not a permanent verdict.</p>
+</footer>
+</main>
+<script>
+(function(){
+  var chips=[].slice.call(document.querySelectorAll('.chip[data-filter]'));
+  var rows=[].slice.call(document.querySelectorAll('.claim-row'));
+  var lb=document.querySelector('.chip[data-toggle="loadbearing"]');
+
+  function apply(filter){
+    var want=filter==='all'?null:filter.split(' ');
+    rows.forEach(function(r){
+      var v=r.getAttribute('data-verdict');
+      r.classList.toggle('is-hidden', !!want && want.indexOf(v)===-1);
+    });
+    chips.forEach(function(c){c.classList.toggle('is-on', c.getAttribute('data-filter')===filter);});
+  }
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){apply(c.getAttribute('data-filter'));});
+  });
+  if(lb){
+    lb.addEventListener('click',function(){
+      var on=lb.classList.toggle('is-on');
+      [].forEach.call(document.querySelectorAll('.section--incidental'),function(s){
+        s.classList.toggle('is-hidden',on);
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

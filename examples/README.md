@@ -17,7 +17,7 @@ Every report ships as **markdown** — that is the artifact `tally.py` validates
 against a later run. From 0.8.0 a **`.html`** sits beside it: the same report rendered as a
 self-contained page, produced by the [`report-card`](../skills/publishing/report-card/SKILL.md)
 skill. GitHub shows `.html` as source rather than rendering it, so the pages are also served from
-GitHub Pages — **[read the latest one in your browser](https://serhiikorniienko.github.io/bullshit-detector/examples/0.13.0/report-south-korea-ai-bubble.html)**.
+GitHub Pages — **[read the latest one in your browser](https://serhiikorniienko.github.io/bullshit-detector/examples/0.14.0/report-clawwork-ai-salary-tweet.html)**.
 The file itself is self-contained: no network requests in it, so a downloaded copy keeps working
 offline forever.
 
@@ -41,6 +41,21 @@ of the warning above:
 - **"How to Build a $1M YouTube Channel in 1 Hour a Day"** — [0.5.0](./0.5.0/report-1m-youtube-channel.md)
   → [0.6.0](./0.6.0/report-1m-youtube-channel.md). 7/10 to 6/10, and the later run **drops four
   claims as ambiguous** — the first release that could.
+
+## [0.14.0](./0.14.0/)
+
+The composed-report release: the claims tables are rendered by `tally.py --compose` from a
+`claims.jsonl` written during verification, so the table cannot disagree with the tally that
+counts it — and the run footer names the instrument (`model`, and `effort`/`mode` when known).
+
+- [report-clawwork-ai-salary-tweet.md](./0.14.0/report-clawwork-ai-salary-tweet.md) ·
+  [page](./0.14.0/report-clawwork-ai-salary-tweet.html) ·
+  [claims.jsonl](./0.14.0/report-clawwork-ai-salary-tweet.claims.jsonl) — a viral tweet about an
+  AI that "has to earn its own salary or go bankrupt" — **4/10**
+
+  The specs all verify against the primary sources; the deception is one omission — the "salary"
+  is simulated (`quality × estimated hours × BLS wage`, no client pays anything) while only the
+  token costs are real. The first example produced by the compose flow, claims file included.
 
 ## [0.13.0](./0.13.0/)
 
