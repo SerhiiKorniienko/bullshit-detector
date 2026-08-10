@@ -30,7 +30,8 @@ jobs:
       # requirements.txt, and this repo has neither, so it would be a cache that
       # never invalidates. Nothing to cache either — the scripts declare no
       # dependencies, and only the interpreter is fetched.
-      - uses: astral-sh/setup-uv@v9
+      # Pinned to the exact release: setup-uv publishes no floating v9 tag.
+      - uses: astral-sh/setup-uv@v9.0.0
         with:
           enable-cache: false
 
