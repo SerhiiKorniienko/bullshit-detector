@@ -1,0 +1,41 @@
+name: checks
+
+# The repo's self-checks exist because each caught something that had already
+# broken silently: a tally that drifted from its own table, a verdict scale that
+# disagreed across skills until a carousel crashed on it, and a worked example
+# lifted from the corpus the tool is measured on. Running them by hand is the
+# failure mode they were written for.
+#
+# Nothing here calls a model, and nothing here needs a key. Every step is a
+# plain Python script with no dependencies, so this job proves the gates hold
+# without an agent in the loop — which is the claim the project makes about
+# them. A check that needed an AI to run could not be that claim's evidence.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Every script is PEP 723 self-contained, so uv is the whole toolchain.
+      - uses: astral-sh/setup-uv@v5
+
+      - name: version gates can fire
+        run: uv run skills/analysis/bullshit-detector/scripts/tally.py --self-test
+
+      - name: verdict scale and score bands agree
+        run: uv run scripts/check-consistency.py
+
+      - name: worked examples stay out of the measured corpus
+        run: uv run scripts/check-fixture-independence.py
+
+      - name: published examples still pass their own gate
+        run: uv run scripts/check-examples.py

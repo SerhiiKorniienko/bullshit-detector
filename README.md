@@ -2,6 +2,7 @@
 
 [![skills.sh](https://skills.sh/b/SerhiiKorniienko/bullshit-detector)](https://skills.sh/SerhiiKorniienko/bullshit-detector)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+[![checks](https://github.com/SerhiiKorniienko/bullshit-detector/actions/workflows/checks.yml/badge.svg)](https://github.com/SerhiiKorniienko/bullshit-detector/actions/workflows/checks.yml)
 
 <a href="https://tinylaunch.com"><img src="https://tinylaunch.com/tinylaunch_badge_launching_soon.svg" alt="Launching soon on TinyLaunch" width="202"></a>
 
