@@ -36,13 +36,27 @@ Contributors: clone the repo and run `scripts/link-skills.sh` — it symlinks th
 
 ## Claude Desktop app: Code tab
 
-The desktop app (macOS/Windows) has three tabs — **Chat**, **Cowork**, **Code**. The Code tab is full Claude Code and reads `~/.claude/skills/` exactly like the CLI ([docs](https://code.claude.com/docs/en/desktop)).
+The desktop app (macOS/Windows) has two surfaces: **Home** — where the message box carries a **Chat | Cowork** toggle — and **Code**. (Older builds show Chat, Cowork, Code as three separate tabs.) The Code tab is full Claude Code and reads `~/.claude/skills/` exactly like the CLI ([docs](https://code.claude.com/docs/en/desktop)).
 
 - Install once via either CLI path above — the Code tab sees the same skills, no extra steps.
 - Plugins work too: **"+" next to the prompt → Plugins → Add plugin**, same marketplace config as the CLI.
 - Everything works here: local shell, `uv`, yt-dlp, unrestricted network. This is the recommended way to use the full pipeline in a GUI.
 
-Note: the **Cowork** tab is different — it sources skills from your claude.ai account ("Customize" in the sidebar), *not* from `~/.claude/skills`. Local skills don't carry over automatically.
+Note: the **Cowork** tab is different — local skills don't carry over automatically. It has its own no-terminal install path, next section.
+
+## Claude Cowork (no terminal)
+
+Cowork — the non-developer surface in the desktop app and on claude.ai — installs the whole bundle as a plugin from a GitHub URL ([docs](https://claude.com/docs/cowork/guide/plugins)). On current desktop builds it's the **Cowork half of the Chat | Cowork toggle** in the message box on Home, not a separate tab. No terminal at any step:
+
+1. Open **Customize** in the sidebar → **Plugins**.
+2. **Add marketplace** → enter `SerhiiKorniienko/bullshit-detector` (the `owner/repo` shorthand works, so does the full GitHub URL).
+3. Install **bullshit-detector** from the marketplace that appears, then open the plugin to see its skills.
+
+Caveats that matter here:
+
+- **Video fetching depends on the Chrome connector.** Cowork sessions default to an isolated cloud sandbox whose network egress is limited to package registries, and YouTube blocks datacenter IPs on top of that — so `fetch-content` itself can't pull YouTube/TikTok transcripts from inside Cowork. With **Claude in Chrome** connected, Cowork routes around this on its own: observed in a real run, it opens the video in your browser, clicks YouTube's "Show transcript" button, and reads the panel — your session, your IP, so nothing blocks it. Slower than the script (a couple dozen browser actions), but the full video pipeline works. Without the Chrome connector: articles, tweets, PDFs, and pasted text work; for a video, fetch the transcript on your machine ([README → TikTok section](./README.md#tiktok-videos)) and paste it.
+- **Plugins don't reach the Chat tab.** Anthropic's docs are explicit: plugins are available in Cowork and Code, "they aren't used in Chat". For Chat, upload skill zips instead (next section).
+- The report lands in the sandbox, which dies with the conversation — download the HTML before you close it (see [Where the report ends up](#where-the-report-ends-up)).
 
 ## Claude Desktop and claude.ai: Chat
 
@@ -60,7 +74,7 @@ The Chat tab (and claude.ai on the web) supports custom skills on all plans, but
 
 ## OpenAI Codex
 
-The skills.sh installer supports multiple agents — run it and pick Codex when prompted:
+Codex reads Agent Skills natively — repo-level `.agents/skills/` and user-level `~/.agents/skills/`, built on the same [agentskills.io](https://agentskills.io) standard ([OpenAI's skills doc](https://learn.chatgpt.com/docs/build-skills)). The skills.sh installer puts them in the right place — run it and pick Codex when prompted:
 
 ```bash
 npx skills@latest add SerhiiKorniienko/bullshit-detector
@@ -68,18 +82,44 @@ npx skills@latest add SerhiiKorniienko/bullshit-detector
 
 Notes:
 
-- Skills are copied into the agent's skills directory. If your Codex version doesn't auto-discover skills, point to them from your `AGENTS.md` (e.g. "For fact-checking requests, follow the instructions in `<path>/bullshit-detector/SKILL.md`").
 - `fetch-content` needs shell access and `uv` installed; approve network access for yt-dlp when Codex asks.
 - The detector's verdicts require web search — enable Codex's web search, otherwise every claim comes back ❓ unverifiable (by design: the skill forbids confirming claims from model memory).
+- Per OpenAI's doc, standalone skills also load in the **ChatGPT desktop app** and the Codex IDE extension — same folders, no extra install.
 
 ## ChatGPT
 
-ChatGPT (web/desktop chat) has no Agent Skills support and no local shell, so the scripts can't run. Two workarounds:
+The **desktop app** loads standalone Agent Skills from the same directories Codex uses (see above), so the skills.sh install covers it. On **chatgpt.com without the desktop app** there's no skills folder and no local shell, so the scripts can't run — two workarounds:
 
 - **Paste-driven:** open [`skills/analysis/bullshit-detector/SKILL.md`](./skills/analysis/bullshit-detector/SKILL.md), paste its contents as the first message, then paste the transcript/article text. Web search must be enabled for verification.
 - **Custom GPT:** create a GPT with the SKILL.md contents (plus `RUBRIC.md`) as instructions. Same limitation: you supply the text, it does the judging.
 
 For videos, fetch the transcript locally first (`uvx yt-dlp --write-auto-subs --skip-download <url>`) and paste it.
+
+## GitHub Copilot CLI
+
+Copilot reads SKILL.md skills natively — project-level `.github/skills/`, `.claude/skills/`, `.agents/skills/`; personal `~/.copilot/skills/`, `~/.agents/skills/` ([docs](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills)). The skills.sh installer covers it, and if you've already installed for another agent, the `~/.agents/skills/` copy is picked up as-is.
+
+- `fetch-content` needs shell + `uv`; approve the commands when Copilot asks.
+- Verdicts need a web search tool. If your Copilot surface doesn't have one, every claim comes back ❓ unverifiable — that's the skill refusing to judge from memory, not a bug.
+
+## Cursor
+
+Native skills since Cursor 2.4 — project `.cursor/skills/` or `.agents/skills/`, user `~/.cursor/skills/` or `~/.agents/skills/` ([docs](https://cursor.com/docs/context/skills)). Two installs:
+
+- skills.sh installer (pick Cursor when prompted), or
+- in-app: **Customize → Rules → Remote Rule (GitHub)** → paste the repo URL.
+
+Cursor's agent has web search, so verification works out of the box.
+
+## Gemini CLI
+
+Native skills — user `~/.gemini/skills/` or `~/.agents/skills/`, workspace `.gemini/skills/` or `.agents/skills/` ([docs](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/skills.md)). The skills.sh installer covers it; Gemini also ships its own installer —
+
+```bash
+gemini skills install https://github.com/SerhiiKorniienko/bullshit-detector
+```
+
+— then `/skills list` in a session to confirm. If your version doesn't find the nested skill folders, fall back to the skills.sh installer. Web search (Google Search grounding) is built in, which is exactly what the detector needs.
 
 ## Where the report ends up
 
@@ -114,13 +154,13 @@ that fails its own arithmetic is worse than no page.
 
 ## Other agents
 
-**OpenCode, Cursor, Amp, Gemini CLI, …** — anything the skills.sh installer supports:
+**OpenCode, Zed, Amp, Goose, Cline, Factory Droid, …** — anything the skills.sh installer supports (75 agents at last count):
 
 ```bash
 npx skills@latest add SerhiiKorniienko/bullshit-detector
 ```
 
-The installer detects installed agents and copies the skills into each one's directory. For agents it doesn't know, the manual recipe is always the same:
+The installer detects installed agents and copies the skills into each one's directory. Most of these also read `~/.agents/skills/` directly — the convergence directory of the [Agent Skills standard](https://agentskills.io) — so one install tends to cover several agents. For agents the installer doesn't know, the manual recipe is always the same:
 
 1. Copy `skills/analysis/*`, `skills/ingestion/*`, `skills/publishing/*` into wherever your agent loads skills/instructions from (or reference the SKILL.md files from its context file — `AGENTS.md`, `GEMINI.md`, rules, etc.).
 2. Make sure the agent can run shell commands and `uv` is installed (for `fetch-content` and `share`).
