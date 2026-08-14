@@ -49,22 +49,22 @@ Two ways to install, two philosophies:
 
 **Pick one, not both** — installing both gives Claude Code two copies of every skill.
 
-## Setup by agent
+## What works where
 
-Works beyond Claude Code — the skills are plain markdown + self-contained scripts. Full walkthroughs with caveats per surface live in **[SETUP.md](./SETUP.md)**:
+Rows are the things you'd ask for, columns are where you're asking. Step-by-step setup per app lives in **[SETUP.md](./SETUP.md)**.
 
-| Agent / app | Support | Guide |
-|---|---|---|
-| Claude Code CLI | ✅ everything | [SETUP.md → Claude Code CLI](./SETUP.md#claude-code-cli) |
-| Claude Desktop app (Code tab) | ✅ everything — same as CLI | [SETUP.md → Code tab](./SETUP.md#claude-desktop-app-code-tab) |
-| Claude Cowork | ✅ plugin install from a GitHub URL, no terminal — ⚠️ video fetch limited in the cloud sandbox | [SETUP.md → Claude Cowork](./SETUP.md#claude-cowork-no-terminal) |
-| Claude Desktop / claude.ai (Chat) | ⚠️ analysis skills only (sandbox can't reach YouTube/TikTok) | [SETUP.md → Chat](./SETUP.md#claude-desktop-and-claudeai-chat) |
-| OpenAI Codex | ✅ native skills, skills.sh installer | [SETUP.md → OpenAI Codex](./SETUP.md#openai-codex) |
-| ChatGPT | ⚠️ desktop app loads skills; web is paste-driven | [SETUP.md → ChatGPT](./SETUP.md#chatgpt) |
-| GitHub Copilot CLI | ✅ via skills.sh installer | [SETUP.md → GitHub Copilot](./SETUP.md#github-copilot-cli) |
-| Cursor | ✅ installer or Remote Rule (GitHub) | [SETUP.md → Cursor](./SETUP.md#cursor) |
-| Gemini CLI | ✅ installer or `gemini skills install` | [SETUP.md → Gemini CLI](./SETUP.md#gemini-cli) |
-| OpenCode, Zed, Amp, … | ✅ via skills.sh installer | [SETUP.md → Other agents](./SETUP.md#other-agents) |
+| You ask for… | [Claude Code](./SETUP.md#claude-code-cli)<br>CLI / Code tab | [Claude Cowork](./SETUP.md#claude-cowork-no-terminal)<br>no terminal | [Claude Chat](./SETUP.md#claude-desktop-and-claudeai-chat)<br>claude.ai / desktop | [Coding agents](./SETUP.md#openai-codex)<br>Codex, Copilot, Cursor, Gemini, … |
+|---|---|---|---|---|
+| *"is this bullshit?"* — a YouTube or TikTok link | ✅ | ✅ with the Chrome connector on | ⚠️ paste the transcript | ✅ |
+| — an article, tweet, or PDF | ✅ | ✅ | ✅ paste or attach if a site blocks Claude | ✅ |
+| — a draft or any text you paste | ✅ | ✅ | ✅ | ✅ |
+| Summarize or explain it instead | ✅ | ✅ | ✅ | ✅ |
+| An HTML report card you can send | ✅ | ✅ download before closing | ✅ download before closing | ✅ |
+| Social posts + image carousel | ✅ | ❌ needs your machine | ❌ needs your machine | ✅ |
+
+The Claude Code and Cowork columns are field-tested (real runs, latest 14 Aug 2026). The Chat and coding-agent columns are what each platform's docs support — if a cell lies to you, [that's a bug, tell me](https://github.com/SerhiiKorniienko/bullshit-detector/issues). Coding agents need to be able to run scripts and search the web — per-agent specifics in SETUP.md.
+
+Per-app walkthroughs: [Claude Code](./SETUP.md#claude-code-cli) · [Cowork](./SETUP.md#claude-cowork-no-terminal) · [Chat](./SETUP.md#claude-desktop-and-claudeai-chat) · [Codex](./SETUP.md#openai-codex) · [ChatGPT](./SETUP.md#chatgpt) · [Copilot](./SETUP.md#github-copilot-cli) · [Cursor](./SETUP.md#cursor) · [Gemini CLI](./SETUP.md#gemini-cli) · [everything else](./SETUP.md#other-agents)
 
 ## Why These Skills Exist
 

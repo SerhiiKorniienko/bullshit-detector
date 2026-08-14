@@ -1,15 +1,8 @@
 # Setup guide
 
-How to run these skills in different agents and apps. The skills are portable [Agent Skills](https://agentskills.io) — plain markdown + self-contained Python scripts — so the question is never "does my agent support this repo", it's "can my agent load a skills folder, run a shell script, and search the web".
+Find your app below and follow its steps. For the at-a-glance "what works where" table, see the [README](./README.md#what-works-where) — this file is the walkthroughs.
 
-**Requirements cheat-sheet:**
-
-| Skill | Needs shell + [uv](https://docs.astral.sh/uv/) | Needs internet from scripts | Needs agent web search |
-|---|---|---|---|
-| `fetch-content` (YouTube/TikTok/articles/PDF) | ✅ | ✅ (yt-dlp reaches YouTube/TikTok) | — |
-| `bullshit-detector` | — | — | ✅ (verdicts require sources) |
-| `summarize`, `explain` | — | — | optional |
-| `share` (carousel rendering) | ✅ | first run only (playwright chromium) | — |
+(The skills are portable [Agent Skills](https://agentskills.io) — plain markdown + self-contained scripts — so the question is never "does my agent support this repo", it's "can it load a skills folder, run a script, and search the web". A per-skill requirements table for the technically curious sits [at the bottom](#under-the-hood-what-each-skill-needs).)
 
 ---
 
@@ -46,31 +39,37 @@ Note: the **Cowork** tab is different — local skills don't carry over automati
 
 ## Claude Cowork (no terminal)
 
-Cowork — the non-developer surface in the desktop app and on claude.ai — installs the whole bundle as a plugin from a GitHub URL ([docs](https://claude.com/docs/cowork/guide/plugins)). On current desktop builds it's the **Cowork half of the Chat | Cowork toggle** in the message box on Home, not a separate tab. No terminal at any step:
+Cowork is the "do the work for me" side of Claude — the **Cowork** half of the Chat | Cowork toggle in the message box (a separate tab on older builds), on desktop and claude.ai. No terminal at any step: everything installs by pasting a link ([docs](https://claude.com/docs/cowork/guide/plugins)).
 
 1. Open **Customize** in the sidebar → **Plugins**.
-2. **Add marketplace** → enter `SerhiiKorniienko/bullshit-detector` (the `owner/repo` shorthand works, so does the full GitHub URL).
-3. Install **bullshit-detector** from the marketplace that appears, then open the plugin to see its skills.
+2. **Add marketplace** → paste `SerhiiKorniienko/bullshit-detector`.
+3. Install **bullshit-detector** from the list that appears.
 
-Caveats that matter here:
+Then flip the toggle to **Cowork** and ask: *"is this bullshit? \<link\>"*.
 
-- **Video fetching depends on the Chrome connector.** Cowork sessions default to an isolated cloud sandbox whose network egress is limited to package registries, and YouTube blocks datacenter IPs on top of that — so `fetch-content` itself can't pull YouTube/TikTok transcripts from inside Cowork. With **Claude in Chrome** connected, Cowork routes around this on its own: observed in a real run, it opens the video in your browser, clicks YouTube's "Show transcript" button, and reads the panel — your session, your IP, so nothing blocks it. Slower than the script (a couple dozen browser actions), but the full video pipeline works. Without the Chrome connector: articles, tweets, PDFs, and pasted text work; for a video, fetch the transcript on your machine ([README → TikTok section](./README.md#tiktok-videos)) and paste it.
-- **Plugins don't reach the Chat tab.** Anthropic's docs are explicit: plugins are available in Cowork and Code, "they aren't used in Chat". For Chat, upload skill zips instead (next section).
-- The report lands in the sandbox, which dies with the conversation — download the HTML before you close it (see [Where the report ends up](#where-the-report-ends-up)).
+What to expect:
+
+- **Articles, tweets, PDFs, and pasted text** — work out of the box.
+- **YouTube / TikTok videos** — turn on the **Claude in Chrome** connector first. Claude then opens the video in your own browser and reads the transcript straight off the page — in a real run it found the "Show transcript" button, clicked it, and read the panel by itself. No Chrome connector? Open the video, click **Show transcript** under the description, copy it, and paste it into the chat.
+- **Download the report before closing the session.** Cowork works in a temporary cloud workspace that's discarded afterwards — ask for the HTML report card, download it, and it's yours forever.
+
+*(Why videos need the extra step: that cloud workspace can't reach video sites on its own. The Chrome connector is Claude borrowing your browser, which can.)*
+
+One boundary: plugins apply to Cowork and Code, not to the **Chat** side of the toggle — Chat has its own skill upload, next section.
 
 ## Claude Desktop and claude.ai: Chat
 
-The Chat tab (and claude.ai on the web) supports custom skills on all plans, but they run in a code-execution sandbox with restricted networking — so only the **analysis** skills are practical here.
+Chat can run the analysis skills — the detector, summarize, explain — on any text it can see. One-time setup:
 
-**Install:**
+1. Turn on **Settings → Capabilities → "Code execution and file creation"** ([docs](https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude)).
+2. Get the skill onto your computer: on the [GitHub page](https://github.com/SerhiiKorniienko/bullshit-detector), green **Code** button → **Download ZIP**, unzip it, then zip just the `bullshit-detector` folder you'll find inside `skills/analysis/` (the folder itself, so `SKILL.md` sits one level down in the zip).
+3. Upload it: **Customize → Skills → "+" → Upload a skill** ([docs](https://support.claude.com/en/articles/12512180-use-skills-in-claude)).
 
-1. Enable code execution: **Settings → Capabilities → "Code execution and file creation"** ([docs](https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude)).
-2. Zip a skill folder — the folder itself must be the ZIP root, with `SKILL.md` inside (e.g. zip the `bullshit-detector/` folder from `skills/analysis/`).
-3. Upload: **Customize → Skills → "+" → Upload a skill** ([docs](https://support.claude.com/en/articles/12512180-use-skills-in-claude)).
+What to expect:
 
-**What works:** `bullshit-detector`, `summarize`, `explain` on text you paste or on articles Claude's built-in web search/fetch can reach. Chat has web search, so verification works.
-
-**What doesn't:** `fetch-content` for YouTube/TikTok. The sandbox's network egress is limited to package registries by default on every plan (Team defaults to package managers only; Enterprise defaults to egress off), so yt-dlp can't reach video platforms ([docs](https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude)). Workaround: fetch the transcript on your machine (see [TikTok section in the README](./README.md#tiktok-videos)) and paste it into the chat.
+- **Pasted text and article links** — work. Chat has web search, so claims get verified against real sources.
+- **YouTube / TikTok links — don't.** Chat can't reach video sites. Open the video, click **Show transcript** under the description, copy, paste it into the chat.
+- Want summarize or explain here too? Repeat steps 2–3 with their folders — uploads are one skill per zip.
 
 ## OpenAI Codex
 
@@ -167,3 +166,14 @@ The installer detects installed agents and copies the skills into each one's dir
 3. Make sure the agent has a web search tool (for `bullshit-detector`).
 
 The SKILL.md bodies deliberately avoid agent-specific tool names ("use your web search tool", never a vendor tool name), so they read the same everywhere.
+
+## Under the hood: what each skill needs
+
+For contributors and the technically curious — nothing above requires this table.
+
+| Skill | Needs shell + [uv](https://docs.astral.sh/uv/) | Needs internet from scripts | Needs agent web search |
+|---|---|---|---|
+| `fetch-content` (YouTube/TikTok/articles/PDF) | ✅ | ✅ (yt-dlp reaches YouTube/TikTok) | — |
+| `bullshit-detector` | — | — | ✅ (verdicts require sources) |
+| `summarize`, `explain` | — | — | optional |
+| `share` (carousel rendering) | ✅ | first run only (playwright chromium) | — |
