@@ -58,8 +58,9 @@ uv run eval/score.py cases/<id> --stability <r1.md> <r2.md> ...
 
 `score.py` is stdlib-only and offline — same rule as `tally.py`: the gate must be
 deterministic and run anywhere. It reads claims from the report's `.claims.jsonl` sibling
-when one exists (the structured `claim@1` path), else parses the markdown table with the
-same row shape the gate uses.
+when one exists (the `claim@1` file every run has written since 0.14.0), else parses the
+markdown table with the same row shape the gate uses. When the file is there the `.md`
+is never opened, which is what lets a claims-only run be scored at all.
 
 Matching: normalized token-set similarity between the curated quote/claim and the report's
 claim cell, greedy one-to-one, threshold auditable (`--min-similarity`; weak pairings under
@@ -115,12 +116,28 @@ Method rules that are not optional, learned the hard way:
 - **The runner is never told it is being timed.** External instrumentation
   (`scripts/runprofile.py`) only.
 
-## Stage 2, deliberately not built yet
+### Claims-only runs
 
-- **Claims-only scoring mode.** A scored case does not need a prose report or HTML — report
-  *size* is the best single wall-time predictor on record, so a mode that emits only
-  `.claims.jsonl` (the dormant `claim@1` schema) is what makes a 20-case release gate
-  affordable. Needs a SKILL.md change; ships alone.
+`EVAL_CLAIMS_ONLY=1 eval/run-case.sh cases/<id> <outdir>` asks the runner for the skill's
+claims-only mode: full verification, then the claims file and its run record, and no
+report. The script gates the file itself with `tally.py --claims --source <transcript>`
+before scoring, so the reading does not depend on the runner having done so, and
+`score.py` reads the file directly. This is a distinct arm, like quick mode: do not
+compare a claims-only reading against a full-mode baseline as if they were one
+instrument, even though the verification rules are identical, until the delta below
+says they are.
+
+`EVAL_SKILL=<dir>` points the run at a skill directory other than the installed symlink,
+so a change can be measured from a worktree before it is linked.
+
+**What it costs, measured.** The compose experiment
+(`experiments/2026-08-08-compose-before-after.md`) already showed that dropping table
+emission buys no wall time, because the clock is deliberation. Claims-only also drops the
+prose sections, the gate rework on them and the render; the delta is recorded in
+`experiments/2026-09-02-claims-only-delta.md`, n=3 per arm on `kospi-ai-bubble`.
+
+## Not built yet
+
 - **Frozen evidence packs.** Caching source text per case so a prompt change is the only
   variable — the requirement (not optimisation) the credible-sources experiment established.
   Until then, verdict-agreement numbers carry retrieval noise and only large effects are

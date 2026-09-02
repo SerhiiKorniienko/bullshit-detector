@@ -16,7 +16,7 @@ deliberation, 15% of all the thinking a run does, and the single longest uninter
 record — 421 seconds — sits there, before a claim had been read or a search issued. Read step 1,
 do step 1.
 
-**Two modes, and the user picks.** Default is **full** — every step below as written. Run **quick**
+**Three modes, and the user picks.** Default is **full** — every step below as written. Run **quick**
 only when the user asked for speed in this request ("quick check", "rough read", "gut check",
 "don't spend 20 minutes"); never choose it silently, and when in doubt, run full. Quick cuts
 **breadth, never depth** — measured on this exact corpus: capping follow-up searches bought no
@@ -30,6 +30,17 @@ reasoning-effort setting, quick is the mode built to pair with a lower one — t
 carry both labels. A quick report discloses itself: `"mode": "quick"` in the run record and the
 **Mode: quick** line specified in [RUBRIC.md](RUBRIC.md) directly under the Checked line — the
 gate rejects a quick run that hides it.
+
+The third mode is **claims-only**, and it is opt-in the same way: run it when the user asks for
+the claims file and nothing else ("claims only", "just the claims file", "skip the report", "no
+report card"). It is the full mode through step 4, every search, every follow-up budget and
+every steelman as written, and then it stops: no hype scan, no report shell, no compose, no
+page. The artifact is the claims file itself, gated by `tally.py --claims` at the end of step 4,
+and the run record beside it says `"mode": "claims-only"`. It exists for measurement. The eval
+corpus is scored on the claims file alone, so a run that also writes and renders a report spends
+its clock on an artifact the scorer never reads. It is not a shortcut to a verdict and it produces
+no BS score, because the score belongs to the report and there is none. When the user wants to
+know whether the content holds up, that is a full run.
 
 1. **Get the text.** If the input is a URL and the `fetch-content` skill is installed, use its script. Otherwise use your web fetch tool or ask the user to paste the content. Keep the metadata (views, author, date) — it feeds step 5.
 
@@ -121,6 +132,20 @@ gate rejects a quick run that hides it.
    renders the tables from, so a claim that never lands here never lands in the report. If your
    harness has no shell to append with, skip the file and write the tables by hand in step 6 —
    the report format is identical either way.
+
+   **Claims-only mode ends here.** Once the last claim is written, write the run record beside
+   the file with `"mode": "claims-only"` (see [RUN-RECORD.md](RUN-RECORD.md)), then gate the file:
+
+   ```bash
+   uv run <detector-skill-dir>/scripts/tally.py --claims <the-claims-file> \
+     --source /tmp/bs-source-<slug>-<YYYY-MM-DD>.md
+   ```
+
+   It validates every line with the parse `--compose` uses and checks every `quote` field
+   against the source, which is the one check a claims-only run must not skip: a verdict against
+   words the speaker never said is the same failure whether or not a report was rendered. Exit 2
+   names the line; fix the claims file and re-run until it exits 0. Then go to step 9. Without a
+   shell to append with there is no claims-only mode: say so, and run full.
 5. **Scan for hype signals** using the checklist in [RUBRIC.md](RUBRIC.md).
 6. **Write the report shell, not the tables.** Follow the template in [RUBRIC.md](RUBRIC.md) for
    every prose section — header, source and checked lines (plus the Mode line on a quick run),
@@ -137,11 +162,11 @@ gate rejects a quick run that hides it.
 
    Those blocks are generated from the claims file and the run record in step 7 — the same
    "a number that can be computed is never typed" rule that already owns the tally and run
-   lines, now owning the tables they count. Save the shell beside the report as
-   `<report>.shell.md`. **Fallback:** if you could not keep a claims file (no shell
-   available), write the full report card by hand from the template instead, tables
-   included — the finished artifact is identical, only the authorship of the mechanical
-   blocks differs.
+   lines, now owning the tables they count. Save the shell beside the report, same path with
+   `.md` swapped for `.shell.md` (`bs-report-x.shell.md`, not `bs-report-x.md.shell.md`).
+   **Fallback:** if you could not keep a claims file (no shell available), write the full
+   report card by hand from the template instead, tables included — the finished artifact is
+   identical, only the authorship of the mechanical blocks differs.
 
 7. **Save it to a file, always.** The file is the artifact — it survives the session, it can be diffed against a later run, and it is what gets published.
 
@@ -298,6 +323,9 @@ gate rejects a quick run that hides it.
    Add at most two sentences of your own — the finding that actually matters, the one a reader
    would want before opening anything. Then stop, and say the full report is there if they want it
    inline.
+
+   On a claims-only run there is no score and no page. The reply is the `tally.py --claims`
+   summary pasted as printed, and the claims file as a bare `file://` URL on its own line.
 
    **Reproduce the whole card in the reply only when asked** — "print it", "show me the report",
    "paste the table", or a standing instruction to output in full. The reader already has both

@@ -80,7 +80,53 @@ PHASES = [
 ]
 
 REPORT_RE = re.compile(r"bs-report-[\w.-]+\.md\b")
+CLAIMS_RE = re.compile(r"bs-report-[\w.-]+\.claims\.jsonl\b")
 SOURCE_RE = re.compile(r"bs-source-[\w.-]+\.md\b")
+
+
+def run_stem(text: str):
+    """The run's file stem, whichever of its artifacts `text` names.
+
+    One run writes up to four files from one stem: the report, its shell, the claims
+    file and the run record. Anchoring on the stem groups them as one run. Matching
+    the `.md` alone read a shell write as a second report (the compose experiment's
+    stated caveat) and could not see a claims-only run at all, since that run never
+    writes an `.md`.
+    """
+    m = CLAIMS_RE.search(text) or REPORT_RE.search(text)
+    if not m:
+        return None
+    name = m.group(0)
+    # Strip until nothing matches: a runner has read "<report>.shell.md" literally and
+    # written bs-report-x.md.shell.md, which is still the same run as bs-report-x.md.
+    stripped = True
+    while stripped:
+        stripped = False
+        for suffix in (".claims.jsonl", ".shell.md", ".md"):
+            if name.endswith(suffix):
+                name = name[:-len(suffix)]
+                stripped = True
+    return name
+
+
+def anchor_stem(e: dict):
+    """The stem an event writes an artifact for, or None.
+
+    A file-tool write of any artifact counts. So does a shell command that names the
+    claims file without being the gate: the skill appends claims with a shell
+    redirect, one line per verdict, so on a claims-only run that is the only write
+    there is.
+    """
+    if e["kind"] != "block":
+        return None
+    inp = e.get("input", {})
+    if e.get("tool") in ("Write", "Edit", "MultiEdit"):
+        return run_stem(json.dumps(inp)[:2000])
+    if e.get("tool") == "Bash":
+        cmd = str(inp.get("command") or "")
+        if CLAIMS_RE.search(cmd) and "tally.py" not in cmd:
+            return run_stem(cmd)
+    return None
 
 
 def child_index() -> dict:
@@ -224,17 +270,14 @@ def find_runs(events: list) -> list:
     first detector marker, through the last gate/render call that follows its report
     write, plus the one assistant message after it (the handoff).
     """
-    anchors = [i for i, e in enumerate(events)
-               if e["kind"] == "block" and e.get("tool") in ("Write", "Edit", "MultiEdit")
-               and REPORT_RE.search(json.dumps(e.get("input", {}))[:2000])]
+    anchors = [(i, stem) for i, e in enumerate(events) for stem in [anchor_stem(e)] if stem]
     if not anchors:
         return []
-    # Collapse anchors belonging to one report (first Write, then gate-forced edits).
+    # Collapse anchors belonging to one run: the claims appends, the shell, the first
+    # report write, then the gate-forced edits, all under one stem.
     runs, cur = [], [anchors[0]]
     for a in anchors[1:]:
-        same = REPORT_RE.search(json.dumps(events[a]["input"])[:2000])
-        prev = REPORT_RE.search(json.dumps(events[cur[-1]]["input"])[:2000])
-        if same and prev and same.group(0) == prev.group(0):
+        if a[1] == cur[-1][1]:
             cur.append(a)
         else:
             runs.append(cur)
@@ -244,7 +287,7 @@ def find_runs(events: list) -> list:
     out = []
     prev_end = 0
     for group in runs:
-        first, last = group[0], group[-1]
+        first, last = group[0][0], group[-1][0]
         start = min(prev_end, first)
         for i in range(first, start - 1, -1):
             if events[i]["kind"] == "prompt":
@@ -285,6 +328,8 @@ def classify_tool(tool: str, inp: dict, state: str, seen_search: bool,
             return "fetch"
         if "tally.py" in cmd or "retractions.py" in cmd:
             return "gate"
+        if CLAIMS_RE.search(cmd):
+            return "verify"      # a claim written the moment its verdict resolved
         if "render_report" in cmd or "render_carousel" in cmd:
             return "render"
         if "coverage.py" in cmd:
@@ -307,6 +352,8 @@ def classify_tool(tool: str, inp: dict, state: str, seen_search: bool,
             return "gate"
         return state
     if tool in ("Write", "Edit", "MultiEdit", "NotebookEdit"):
+        if CLAIMS_RE.search(path):
+            return "verify"
         if REPORT_RE.search(path) or REPORT_RE.search(blob):
             # Rework only counts as rework once something has judged the draft.
             # A report built in three Writes before the gate ever ran is still
@@ -561,19 +608,17 @@ def print_timeline(events: list, lo: int, hi: int) -> None:
         prev = max(prev, e["ts"], result_ts.get(e.get("tool_id"), 0))
 
 
-def report_paths_of(events: list, lo: int, hi: int) -> list:
-    """Every report filename the run wrote, in order.
+def report_stems_of(events: list, lo: int, hi: int) -> list:
+    """Every artifact stem the run wrote, in order.
 
     Runs that draft to one file and finalise to another are common enough that
     picking the first match names the draft and loses the run record.
     """
     seen = []
     for i in range(lo, hi + 1):
-        e = events[i]
-        if e["kind"] == "block" and e.get("tool") in ("Write", "Edit", "MultiEdit"):
-            m = REPORT_RE.search(json.dumps(e.get("input", {}))[:2000])
-            if m and m.group(0) not in seen:
-                seen.append(m.group(0))
+        stem = anchor_stem(events[i])
+        if stem and stem not in seen:
+            seen.append(stem)
     return seen
 
 
@@ -587,6 +632,7 @@ def fmt_mmss(sec: float) -> str:
 def print_run(r: dict) -> None:
     print(f"\n=== {r['label']}   [{r.get('model_name','?')} {r.get('effort','')}]")
     print(f"    report: {r.get('report') or '(none)'}"
+          + (f"   mode {r['mode']}" if r.get("mode") else "")
           + (f"   version {r['version']}" if r.get("version") else "")
           + (f"   N={r['N']} M={r['M']}" if r.get("N") else "")
           + f"   searches(measured)={r['searches_measured']}"
@@ -665,17 +711,18 @@ def attach_run_record(r: dict) -> None:
     """
     roots = [os.environ.get("BULLSHIT_DETECTOR_REPORTS"),
              str(Path.home() / ".bullshit-detector" / "reports"), "/tmp"]
-    for name in reversed(r.get("reports") or []):
+    for stem in reversed(r.get("reports") or []):
         for root in roots:
             if not root:
                 continue
-            for p in glob.glob(str(Path(root).expanduser() / "**" / (name[:-3] + ".run.json")),
+            for p in glob.glob(str(Path(root).expanduser() / "**" / (stem + ".run.json")),
                                recursive=True):
                 try:
                     d = json.loads(Path(p).read_text(encoding="utf-8"))
                 except (OSError, json.JSONDecodeError):
                     continue
-                r["report"] = name
+                r["report"] = stem
+                r["mode"] = d.get("mode")
                 r["version"] = d.get("skill_version") or d.get("version")
                 claims = d.get("claims") or {}
                 r["N"] = claims.get("extracted")
@@ -732,7 +779,7 @@ def main() -> int:
                     and r["phases"]["gate"]["calls"] == 0:
                 continue
             r["gate"] = gate_rejections(events, lo, hi)
-            r["reports"] = report_paths_of(events, lo, hi)
+            r["reports"] = report_stems_of(events, lo, hi)
             r["report"] = (r["reports"] or [""])[-1]
             r["transcript"] = str(p)
             attach_run_record(r)
