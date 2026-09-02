@@ -10,6 +10,11 @@ set -euo pipefail
 #         every baseline on record ran at xhigh; change it only in a deliberate arm)
 #         EVAL_QUICK=1 asks the runner for the skill's quick mode (a distinct arm —
 #         never compare a quick run against full-mode baselines as if same instrument)
+#         EVAL_CLAIMS_ONLY=1 asks for claims-only mode: full verification, then the
+#         claims file and its run record, no report. score.py reads the claims file
+#         directly, so nothing the scorer needs is lost. Also a distinct arm.
+#         EVAL_SKILL points at a skill directory other than the installed one (a
+#         worktree, to measure a change before it is linked)
 
 CASE_DIR=$(cd "$1" && pwd)
 OUT=$2
@@ -21,7 +26,8 @@ TRANSCRIPT="$CASE_DIR/transcript.md"
 # bs-report-* naming keeps eval runs visible to scripts/runprofile.py, which anchors
 # run detection on the skill's own report naming.
 REPORT="$OUT/bs-report-$CASE_ID.md"
-SKILL="$HOME/.claude/skills/bullshit-detector"
+CLAIMS="$OUT/bs-report-$CASE_ID.claims.jsonl"
+SKILL="${EVAL_SKILL:-$HOME/.claude/skills/bullshit-detector}"
 [ -e "$SKILL" ] || SKILL="$HOME/.agents/skills/bullshit-detector"
 [ -e "$SKILL" ] || { echo "no installed skill found — run scripts/link-skills.sh" >&2; exit 1; }
 [ -f "$TRANSCRIPT" ] || { echo "no transcript at $TRANSCRIPT" >&2; exit 1; }
@@ -47,6 +53,22 @@ This is a QUICK check — the user wants speed. Use the skill's quick mode and f
 its disclosure rules."
 fi
 
+if [ -n "${EVAL_CLAIMS_ONLY:-}" ]; then
+  # The same blind prompt with the artifact swapped: the claims file is the whole
+  # deliverable, and the report path above is never written.
+  PROMPT="Run the bullshit-detector skill in claims-only mode on the transcript at
+$TRANSCRIPT. The skill is installed at $SKILL: read its SKILL.md and follow its
+claims-only mode, which is the full workflow through verification and then stops. The
+transcript is already fetched and normalized; do not fetch anything about the source
+video. Do not read any directory named examples/ and do not look at any prior report of
+any content: work only from the transcript and your own verification searches. Write the
+claims file to $CLAIMS and its run record beside it. Write no report and render nothing.
+Your session runs model ${EVAL_MODEL:-<the harness default>} at reasoning effort
+${EVAL_EFFORT:-xhigh} in the claude-code harness; record these in the run record's
+model/effort/harness fields. Use the skill's scripts from their installed paths; do not
+modify any skill file."
+fi
+
 MODEL_ARGS=()
 [ -n "${EVAL_MODEL:-}" ] && MODEL_ARGS+=(--model "$EVAL_MODEL")
 MODEL_ARGS+=(--effort "${EVAL_EFFORT:-xhigh}")
@@ -54,4 +76,11 @@ MODEL_ARGS+=(--effort "${EVAL_EFFORT:-xhigh}")
 claude -p "$PROMPT" "${MODEL_ARGS[@]}" --permission-mode bypassPermissions
 
 echo
+if [ -n "${EVAL_CLAIMS_ONLY:-}" ]; then
+  # Gate the artifact from outside the run. The runner is asked to do this too, but
+  # the reading that gets scored should not depend on the runner having complied.
+  uv run "$SKILL/scripts/tally.py" --claims "$CLAIMS" --source "$TRANSCRIPT" \
+    || echo "claims gate failed (exit $?), scoring anyway" >&2
+  echo
+fi
 uv run "$(dirname "$0")/score.py" "$CASE_DIR" "$REPORT"

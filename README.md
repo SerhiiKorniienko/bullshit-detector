@@ -122,9 +122,11 @@ Honest limits, because a tool like this earns nothing by overselling itself:
   reporting sometimes re-enters quoted secondhand by an aggregator, which looks like an independent
   source and isn't. [The measurements are here](./experiments/2026-07-30-credible-sources.md); it's
   worse than I assumed before running them.
-- **It has no eval harness yet.** So there is no number for how often it's right. The only evidence
-  of accuracy is reports it wrote about content its author chose — which is exactly the circularity
-  its own [self-audit](./examples/0.4.x/report-own-readme.md) flagged and editing can't fix. Tracked as
+- **It has an eval harness and no published number yet.** [`eval/`](./eval/README.md) scores a run
+  against hand-labelled claims, but the corpus is two cases and the labels are unreviewed drafts, so
+  there is still no number for how often it's right. The only evidence of accuracy is reports it
+  wrote about content its author chose, which is exactly the circularity its own
+  [self-audit](./examples/0.4.x/report-own-readme.md) flagged and editing can't fix. Tracked as
   [#3](https://github.com/SerhiiKorniienko/bullshit-detector/issues/3), and it's the top of the backlog.
 - **Verdicts vary between runs.** Web search is non-deterministic; the same query minutes apart can
   return a mostly different evidence base. Treat a single report as one reading, not a measurement.

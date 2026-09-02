@@ -683,35 +683,40 @@ def quoted_spans(text: str):
     return out
 
 
+def span_in_source(quote: str, nsrc: str) -> bool:
+    """One quoted span against the normalized source.
+
+    An ellipsis marks elision, so `"A ... B"` is satisfied when A and B both appear, in
+    order. Everything else must be present verbatim once normalized. Shared by the
+    report gate and `--claims`: two checks reading the same words for the same purpose
+    must share one parse, or one of them drifts.
+    """
+    parts = [p for p in ELLIPSIS.split(quote) if len(p.split()) >= 3]
+    pos = 0
+    for part in parts:
+        np = quote_norm(part)
+        if not np:
+            continue
+        found = nsrc.find(np, pos)
+        if found < 0:
+            return False
+        pos = found + len(np)
+    return True
+
+
 def quote_integrity_problems(text: str, source: str) -> list:
     """A quoted span must be words the content actually contains.
 
     The failure a fact-checking tool cannot survive is a verdict rendered against words
     the speaker never said, and until the source cache landed there was nothing on disk
     to check against.
-
-    An ellipsis marks elision, so `"A ... B"` is satisfied when A and B both appear, in
-    order. Everything else must be present verbatim once normalized.
     """
     nsrc = quote_norm(source)
     problems = []
     for line_no, where, quote in quoted_spans(text):
         if len(quote.split()) < 5:
             continue
-        parts = [p for p in ELLIPSIS.split(quote) if len(p.split()) >= 3]
-        if not parts:
-            continue
-        pos, ok = 0, True
-        for part in parts:
-            np = quote_norm(part)
-            if not np:
-                continue
-            found = nsrc.find(np, pos)
-            if found < 0:
-                ok = False
-                break
-            pos = found + len(np)
-        if not ok:
+        if not span_in_source(quote, nsrc):
             problems.append(
                 f'{where} (line {line_no}) quotes "{quote[:70]}" — not in the source text. '
                 f"Quote the content verbatim, mark elision with an ellipsis, and don't put "
@@ -1206,7 +1211,9 @@ def validate_claim(c: dict, lineno: int) -> list:
         elif c.get("origin_kind") not in ("measured", "judged"):
             out.append(f"{where}: `origin_kind` must say whether the count was measured or judged")
 
-    readings = c.get("readings")
+    # `[]` is "none", same as null: a run wrote it that way and lost a gate cycle to it,
+    # and an empty list is structurally unambiguous about carrying no readings.
+    readings = c.get("readings") or None
     if readings is not None and (not isinstance(readings, list) or len(readings) < 2):
         out.append(f"{where}: `readings` means two or more, each checked and shown")
     return out
@@ -1299,6 +1306,107 @@ def compose_report(report_path: str, shell_path: str) -> int:
     for p in problems:
         print(f"  ! {p}", file=sys.stderr)
     return 2 if problems else 0
+
+
+# ---------------------------------------------------------------- claims-only gate
+
+
+def claims_searched_count(claims: list) -> int:
+    """M over a claims file, by the rule `searched_count` applies to a table: every
+    rated row except not checked, minus unverifiable-by-construction, minus derived
+    rows that link nothing of their own."""
+    m = 0
+    for c in claims:
+        v = c.get("verdict")
+        if v is None or v == "not checked":
+            continue
+        if v == "unverifiable" and c.get("unverifiable_kind") != "searched":
+            continue
+        if c.get("derived_from") and not c.get("sources"):
+            continue
+        m += 1
+    return m
+
+
+def check_claims(claims_path: str, source_arg) -> int:
+    """The gate for a claims-only run. No report exists, so this is the whole check.
+
+    Every rule that applies to a claim line is applied here with the parse `--compose`
+    uses, plus the quote check the report gate would have run on the claim cell. A
+    claims-only run that skipped this would be a laxer instrument than a full run, and
+    the eval corpus, which is scored on the claims file alone, would then be measuring
+    the weaker one.
+    """
+    path = Path(claims_path)
+    try:
+        claims, problems = load_claims(path)
+    except OSError as e:
+        print(f"ERROR: cannot read {path}: {e}", file=sys.stderr)
+        return 1
+    if not claims:
+        print("ERROR: no usable claims", file=sys.stderr)
+        return 1
+
+    numbers = []
+    for c in claims:
+        m = re.fullmatch(r"(\d+)([a-z]?)", str(c.get("n", "")))
+        if m:
+            numbers.append((int(m.group(1)), m.group(2)))
+    problems.extend(numbering_problems(numbers))
+
+    # The source cache is named after the report this file sits beside, whether or
+    # not that report was ever written.
+    stem = (path.name[:-len(".claims.jsonl")] if path.name.endswith(".claims.jsonl")
+            else path.stem)
+    source = load_source(str(path.with_name(stem + ".md")), source_arg)
+    if source:
+        nsrc = quote_norm(source)
+        for c in claims:
+            quote = str(c.get("quote") or "")
+            if len(quote.split()) < 5:
+                continue
+            if not span_in_source(quote, nsrc):
+                problems.append(
+                    f'claim {c.get("n")} quotes "{quote[:70]}" which is not in the source '
+                    f"text. Quote the content verbatim, mark elision with an ellipsis, and "
+                    f"never put your own paraphrase in the quote field")
+    else:
+        print("note: source text not found, so quote integrity was not checked. Pass "
+              "--source or set $BULLSHIT_DETECTOR_SOURCE.", file=sys.stderr)
+
+    warnings = []
+    for c in claims:
+        if (c.get("type") == "factual"
+                and c.get("verdict") not in (None, "not checked")
+                and len(str(c.get("quote") or "").split()) < 5):
+            warnings.append(
+                f"claim {c.get('n')} records no verbatim words from the content, so a "
+                f"reader cannot see that the claim was not sharpened in the paraphrasing")
+
+    counts = Counter(c.get("verdict") for c in claims)
+    m = claims_searched_count(claims)
+    print(f"claim lines: {len(claims)}   searched (M): {m}")
+    for _, name in VERDICTS:
+        if counts[name]:
+            print(f"  {name:14} {counts[name]}")
+    if counts[None]:
+        print(f"  {'not rateable':14} {counts[None]}")
+
+    if warnings:
+        shown, rest = warnings[:6], len(warnings) - 6
+        print(f"\nWARNINGS ({len(warnings)}, not blocking):", file=sys.stderr)
+        for w in shown:
+            print(f"  ! {w}", file=sys.stderr)
+        if rest > 0:
+            print(f"  ... and {rest} more", file=sys.stderr)
+    if problems:
+        print("\nNON-COMPLIANT:", file=sys.stderr)
+        for p in problems:
+            print(f"  \u2717 {p}", file=sys.stderr)
+        return 2
+    print("\n\u2714 every claim line validates and every quote is in the source"
+          if source else "\n\u2714 every claim line validates", file=sys.stderr)
+    return 0
 
 
 def sync_record(report_path: str, text: str, total: int, m: int) -> list:
@@ -1463,6 +1571,9 @@ def main() -> None:
                     help="write the tally line and the run footer from the table and the record")
     ap.add_argument("--compose", metavar="SHELL",
                     help="build the report from <report>.claims.jsonl and a markdown shell")
+    ap.add_argument("--claims", metavar="JSONL",
+                    help="gate a claims file on its own (claims-only mode): every line "
+                         "validated, every quote checked against --source")
     ap.add_argument("--self-test", action="store_true",
                     help="check this script's own version gates against the manifest")
     args = ap.parse_args()
@@ -1476,8 +1587,11 @@ def main() -> None:
               else f"{len(problems)} self-test problem(s)")
         sys.exit(2 if problems else 0)
 
+    if args.claims:
+        sys.exit(check_claims(args.claims, args.source))
+
     if not args.report:
-        ap.error("a report path is required (or use --self-test)")
+        ap.error("a report path is required (or use --self-test or --claims)")
 
     if args.compose:
         sys.exit(compose_report(args.report, args.compose))

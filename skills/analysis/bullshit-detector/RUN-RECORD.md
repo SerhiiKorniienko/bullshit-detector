@@ -72,6 +72,8 @@ quick mode (SKILL.md names the four budgets it cuts), and omit the field entirel
 Unlike `model` and `effort` this one is *not* optional-when-known: the gate rejects a quick
 record whose report carries no **Mode: quick** disclosure line, and a disclosure line whose
 record does not say quick. `--fix` prints it into the footer alongside model and effort.
+A claims-only run writes `"mode": "claims-only"`. It has no report to disclose in, so the record
+is the only place a reader can learn that no report was ever meant to exist.
 
 It happens under `--fix` only. A plain `tally.py <report>` never writes to the record, which is what
 keeps `render_report.py` — which runs the gate on every render — from mutating anything.

@@ -1,7 +1,8 @@
 # The claims file — `bullshit-detector/claim@1`
 
 Written beside every report: same path, `.md` swapped for `.claims.jsonl`. **One JSON object per
-line**, one line per claim.
+line**, one line per claim. On a claims-only run (SKILL.md) it is the only artifact, and
+`tally.py --claims` is its gate.
 
 **Read this file only when you are writing the claims file.** Like the run record, it is off the
 runtime path of a report that does not use it.
@@ -44,7 +45,7 @@ flatters the run.
 | `origin_count` | int \| null | iff more than one source |
 | `origin_kind` | `measured` \| `judged` \| null | iff `origin_count` is set |
 | `derived_from` | string \| null — the `n` of the row this rests on | derived rows |
-| `readings` | array of `{basis, note}` \| null — ≥2 entries | rows kept under every reading |
+| `readings` | array of `{basis, note}` \| null — ≥2 entries, `[]` reads as null | rows kept under every reading |
 | `evidence` | string | whenever a search happened |
 
 **`n` is a string, not an integer.** Split-late suffixes (`6a`, `6b`) are the native case, not a
@@ -67,3 +68,7 @@ re-deriving it from the source — while making the file materially harder to wr
 `scan()` the gate uses**, so the tally line cannot disagree with the table above it. That is the
 point of the format: today the same quantity is parsed out of prose three times — by the gate, by
 the renderer, and by hand — and the three disagreed on a published page.
+
+`tally.py --claims` gates the file on its own, with the same line parse plus the quote check
+against the source, for runs that stop before a report exists. The eval scorer reads it directly
+and never looks at the table when the file is there.
