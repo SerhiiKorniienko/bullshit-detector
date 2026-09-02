@@ -31,7 +31,7 @@ talking about itself, printed under a masthead it paid for. Tier 4, and name it 
 
 This is not an edge case. Restricting search to reputable domains and reading the top twenty results
 returned **five** advertorials and index pages, every one of which reads as tier 2 if you tier by
-domain (see [experiments/](../../../experiments/2026-07-30-search-api-access.md)):
+domain (see [experiments/](https://github.com/SerhiiKorniienko/bullshit-detector/blob/main/experiments/2026-07-30-search-api-access.md)):
 
 ```
 reuters.com/media-campaign/brandfeatures/medc/...    branded content
@@ -128,7 +128,7 @@ Some high-reputation outlets block agent crawlers, so they never appear in your 
 absence is not evidence that no one reported the claim, and the SEO blog that ranked in their place
 is not the best available source, only the best *reachable* one. If a claim's evidence trail dead-ends
 at a paywall or a blocked domain, say the evidence was unreachable. Do not silently substitute
-whatever ranked next. See [experiments/](../../../experiments/2026-07-30-credible-sources.md) for how
+whatever ranked next. See [experiments/](https://github.com/SerhiiKorniienko/bullshit-detector/blob/main/experiments/2026-07-30-credible-sources.md) for how
 badly this skews the pool in practice.
 
 ## Counting sources: collapse syndication first
@@ -355,7 +355,7 @@ about the content's honesty. It must not count toward the BS score the way a ðŸŸ
   against the content; "capped by a tier-4 ceiling" is not the content's fault at all
 
 This matters more than it looks, because reputable sources are the ones most often unreachable â€” see
-[experiments/](../../../experiments/2026-07-30-credible-sources.md). Without this rule the tool scores
+[experiments/](https://github.com/SerhiiKorniienko/bullshit-detector/blob/main/experiments/2026-07-30-credible-sources.md). Without this rule the tool scores
 content as more dishonest exactly when good sourcing is hardest to reach, which is a bias in the
 instrument, not a finding about the world.
 
