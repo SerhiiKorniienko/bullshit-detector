@@ -1211,7 +1211,9 @@ def validate_claim(c: dict, lineno: int) -> list:
         elif c.get("origin_kind") not in ("measured", "judged"):
             out.append(f"{where}: `origin_kind` must say whether the count was measured or judged")
 
-    readings = c.get("readings")
+    # `[]` is "none", same as null: a run wrote it that way and lost a gate cycle to it,
+    # and an empty list is structurally unambiguous about carrying no readings.
+    readings = c.get("readings") or None
     if readings is not None and (not isinstance(readings, list) or len(readings) < 2):
         out.append(f"{where}: `readings` means two or more, each checked and shown")
     return out

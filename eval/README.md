@@ -133,8 +133,11 @@ so a change can be measured from a worktree before it is linked.
 **What it costs, measured.** The compose experiment
 (`experiments/2026-08-08-compose-before-after.md`) already showed that dropping table
 emission buys no wall time, because the clock is deliberation. Claims-only also drops the
-prose sections, the gate rework on them and the render; the delta is recorded in
-`experiments/2026-09-02-claims-only-delta.md`, n=3 per arm on `kospi-ai-bubble`.
+prose sections, the gate rework on them and the render, and it buys no wall time either:
+median 22.2 minutes full against 22.0 claims-only, n=3 per arm on `kospi-ai-bubble`,
+ranges overlapping, quality inside the same band. The reading is in
+`experiments/2026-09-02-claims-only-delta.md`. Use the mode because the claims file is the
+only artifact the scorer reads, not because it is cheaper. It is not.
 
 ## Not built yet
 

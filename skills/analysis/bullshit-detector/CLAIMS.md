@@ -45,7 +45,7 @@ flatters the run.
 | `origin_count` | int \| null | iff more than one source |
 | `origin_kind` | `measured` \| `judged` \| null | iff `origin_count` is set |
 | `derived_from` | string \| null — the `n` of the row this rests on | derived rows |
-| `readings` | array of `{basis, note}` \| null — ≥2 entries | rows kept under every reading |
+| `readings` | array of `{basis, note}` \| null — ≥2 entries, `[]` reads as null | rows kept under every reading |
 | `evidence` | string | whenever a search happened |
 
 **`n` is a string, not an integer.** Split-late suffixes (`6a`, `6b`) are the native case, not a
