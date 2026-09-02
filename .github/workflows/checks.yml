@@ -46,3 +46,6 @@ jobs:
 
       - name: published examples still pass their own gate
         run: uv run scripts/check-examples.py
+
+      - name: eval cases parse and every quote is in its transcript
+        run: uv run eval/check-cases.py
