@@ -19,7 +19,9 @@ Portable [Agent Skills](https://agentskills.io) — plain markdown + self-contai
 
 Built in the open with [Claude Code](https://claude.com/claude-code) — an AI helped build the tool that fact-checks AI hype, and the [example report](./examples/0.4.x/report-14-ways-to-make-money-with-ai.md) is it auditing its own kind.
 
-Follow [@SerhiiFounder](https://x.com/SerhiiFounder) for new skills and fact-check experiments, or [join the newsletter](https://korniienko.dev/newsletter) to get them in your inbox.
+**Installed it? GitHub can tell you when it changes.** Every new skill and rule change ships as a [release](https://github.com/SerhiiKorniienko/bullshit-detector/releases). Click **Watch → Custom → Releases** at the top of this page and GitHub emails you each one. A star is a silent bookmark; that is the setting that actually notifies you. No signup, no list, nothing to unsubscribe from.
+
+Prefer something else? Follow [@SerhiiFounder](https://x.com/SerhiiFounder), or [join the newsletter](https://korniienko.dev/newsletter).
 
 ## Quickstart
 
@@ -185,8 +187,9 @@ See [skills/in-progress](./skills/in-progress/README.md): `compare` (same topic 
 
 I'm building these skills in the open — new detectors, adapters, and real fact-check reports as they land.
 
+- **[Watch → Custom → Releases](https://github.com/SerhiiKorniienko/bullshit-detector/releases)**: GitHub emails you every version, straight from the repo you already cloned. Nothing to sign up for.
 - Follow [@SerhiiFounder](https://x.com/SerhiiFounder) on X
-- [Join the newsletter](https://korniienko.dev/newsletter) — a short weekly-ish email, no spam, unsubscribe anytime
+- [Join the newsletter](https://korniienko.dev/newsletter): new skills and what broke building them, roughly monthly
 
 ## License
 
