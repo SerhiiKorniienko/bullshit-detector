@@ -2,7 +2,7 @@
   "name": "serhii-korniienko",
   "owner": {
     "name": "Serhii Korniienko",
-    "url": "https://korniienko.dev/?utm_source=claude-plugin&utm_medium=marketplace&utm_campaign=bullshit-detector"
+    "url": "https://korniienko.dev"
   },
   "description": "Serhii Korniienko's content-analysis skills as an installable Claude Code plugin: bullshit detection, summarizing, and explaining for any URL.",
   "plugins": [

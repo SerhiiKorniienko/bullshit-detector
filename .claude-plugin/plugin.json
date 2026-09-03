@@ -4,9 +4,9 @@
   "description": "Fact-check the internet with your agent: fetch any YouTube video, article, tweet, or PDF, verify its claims against independent sources, and get a BS score instead of hype.",
   "author": {
     "name": "Serhii Korniienko",
-    "url": "https://korniienko.dev/?utm_source=claude-plugin&utm_medium=marketplace&utm_campaign=bullshit-detector"
+    "url": "https://korniienko.dev"
   },
-  "homepage": "https://korniienko.dev/bullshit-detector/?utm_source=claude-plugin&utm_medium=marketplace&utm_campaign=bullshit-detector",
+  "homepage": "https://korniienko.dev/bullshit-detector/",
   "repository": "https://github.com/SerhiiKorniienko/bullshit-detector",
   "license": "MIT",
   "keywords": [
