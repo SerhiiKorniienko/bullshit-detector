@@ -8,9 +8,9 @@ transcripts pre-fetched, skill paths handed over, runner never told it is scored
 **Corpus:** the ten cases in `eval/cases/`, 480 curated claims. **Labels:** drafts, agent-
 curated from primary sources, not yet reviewed by the owner (`labeled_by` says so in every
 case). **Runs:** one per case, three each on `kospi-ai-bubble` and `claude-situation` for
-stability, fourteen in all; wall clock 9 to 23 minutes per case, median 13.6. Claims files, run records and scorer output are filed under
-`eval/runs/0.14.1/`, so the number below can be re-scored after label review without a
-single re-run:
+stability, fourteen in all; wall clock 9 to 23 minutes per case, median 13.6. Claims files,
+run records and scorer output are filed under `eval/runs/0.14.1/`, so the number below can
+be re-scored after label review without a single re-run:
 
 ```
 uv run eval/score.py eval/cases/<id> eval/runs/0.14.1/<id>-1/bs-report-<id>.md
