@@ -49,6 +49,13 @@ whether the owner has reviewed them. The standing caveat from #3 stays attached:
 whose labels the tool's own author wrote narrows the "author-picked content" limitation, it
 does not remove it.
 
+**The corpus is checked, not trusted.** `uv run eval/check-cases.py` loads every case with the
+scorer's own loader and asserts what a script can: each `quote` is a verbatim span of its
+transcript (the gate's span check, so a quote the report gate would reject cannot be a
+fixture identifier either), every labelled claim carries a `basis`, `tolerance` includes the
+label, pairs point both ways, and dated labels have a `review_by`. It runs in CI. Whether a
+label is *right* is the owner's review, which no script can do.
+
 ## The scorer
 
 ```

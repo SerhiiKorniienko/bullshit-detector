@@ -1,0 +1,592 @@
+{
+  "schema": "bullshit-detector/eval-case@1",
+  "id": "rich-as-a-dev",
+  "source_url": "https://youtu.be/CEqosMn3m34",
+  "source_title": "How to Get So Rich as a Dev It Feels Illegal",
+  "source_words": 3116,
+  "fetched": "2026-09-02",
+  "labeled": "2026-09-02",
+  "labeled_by": "draft - pending owner review",
+  "review_by": "2027-03-02",
+  "prior_readings": [
+    "examples/0.7.0/report-how-to-get-so-rich-as-a-dev.md"
+  ],
+  "claims": [
+    {
+      "id": "R1",
+      "quote": "Last year my company made three times more than the combined salaries of an L7 Google, a Meta, and an Amazon engineer",
+      "claim": "[The narrator's own consulting company] made three times more in the past year than the combined salaries of an L7 Google engineer, a Meta engineer and an Amazon engineer.",
+      "type": "anecdote",
+      "load_bearing": true,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "Revenue of a private, unnamed consultancy: no filing, registry entry or audited figure exists to check it against. The comparator is checkable and worth stating for scale: levels.fyi medians are $957,068 total comp for Google L7 (https://www.levels.fyi/companies/google/salaries/software-engineer/levels/l7) and $1,361,635 for Meta E7 (https://www.levels.fyi/companies/facebook/salaries/software-engineer/levels/e7), with Amazon Principal SDE (L7) around $731,714, so the sentence implies roughly $9.1M of revenue on a total-comp reading, or about $3.4M if 'salaries' means base pay only (bases $321,727 and $398,448 plus roughly $430,000). Unverifiable by construction, not for want of searching.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R2",
+      "quote": "his firm was billing him out at $1,850 an hour per client to three different clients while he was getting less than $150 on the hour",
+      "claim": "[The narrator's former consulting firm] billed him out at $1,850 an hour to each of three clients at the same time while paying him under $150 an hour.",
+      "type": "anecdote",
+      "load_bearing": true,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "misleading"
+      ],
+      "basis": "A private rate card at an unnamed firm: nothing public can confirm or refute it. For scale, published 2026 US IT and software consulting rate ranges top out around $250 to $850 an hour at enterprise-level consultancies and sit at $125 to $175 for mid-size agencies (https://www.cleveroad.com/blog/software-consulting-rates/), so $1,850 an hour for one engineer's time is roughly double the documented top of the market, which is why a rating of misleading is also defensible.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R3",
+      "quote": "that's almost $6,000 an hour",
+      "claim": "[At $1,850 an hour billed to each of three clients simultaneously,] the firm was taking in almost $6,000 an hour from one engineer's work.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "Arithmetic on the speaker's own inputs: $1,850 x 3 = $5,550, which is 92.5% of $6,000. 'Almost $6,000' rounds his own figure up by 8.1%, defensible as speech but not exact.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R4",
+      "quote": "I wasn't getting paid overtime",
+      "claim": "[The narrator], working as a salaried software engineer at a consulting firm, was not paid overtime past 40 hours.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "Personal pay arrangement, so not directly checkable, but it is the legal norm rather than an anomaly: the FLSA computer employee exemption (29 U.S.C. 213(a)(17)) exempts software engineers and similarly skilled computer workers paid at least $684 per week or $27.63 an hour from overtime, per DOL Fact Sheet 17E (https://www.dol.gov/agencies/whd/fact-sheets/17e-overtime-computer).",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R5",
+      "quote": "the guy didn't even have a CS background",
+      "claim": "[The partner at the narrator's former firm who signed the clients] had no computer science background and could not center a div.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "An unnamed person at an unnamed firm, described by a single interested party. There is no one to look up. Unverifiable by construction.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R6",
+      "quote": "that equation will never change no matter how good I get",
+      "claim": "An employee's pay is a fixed linear function of hours worked and will never change no matter how good the employee gets at the work.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "Employee pay in this industry is neither fixed nor mostly hourly. levels.fyi puts Google L7 median total compensation at $957,068, of which $550,000 a year is stock and $85,341 bonus against a $321,727 base (https://www.levels.fyi/companies/google/salaries/software-engineer/levels/l7); the same page's level ladder shows compensation rising several times over as an engineer levels up. Skill and level move employee pay a great deal, so 'never change no matter how good I get' is false as stated, though the narrower point that an hourly employee is not paid per unit of value created is fair.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R7",
+      "quote": "You work with the most leveraged assets in this day and age that humans have ever invented",
+      "claim": "Software is the most leveraged asset humans have ever invented.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A superlative value judgement with no agreed measure of 'leverage' across asset classes; not rateable as true or false.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R8",
+      "quote": "you write code once, it's going to run a million times",
+      "claim": "Code, once written, runs a million times, works while you sleep and never calls in sick.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Figurative framing of software economics rather than a quantified claim; 'a million times' is rhetorical, not a measured number, so there is nothing to check.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R9",
+      "quote": "There's a little bit of maintenance work involved",
+      "claim": "Software requires only a little bit of maintenance work once written.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "Maintenance is the dominant cost of software over its life, not a small residual. The peer-reviewed review by Dehaghani and Hajrahimi reports estimates that around 90% of software life-cycle cost falls in the maintenance phase (https://pmc.ncbi.nlm.nih.gov/articles/PMC3610582/); the widely cited industry range is 60% to 80%. Describing that as 'a little bit' understates the largest cost line in the life cycle.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R10",
+      "quote": "You were underpaid because your code was valuable",
+      "claim": "Employed developers are underpaid precisely because their code is valuable and their employer owns it.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A causal interpretation of the employment relationship, not a measurable proposition; no source could settle it.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R11",
+      "quote": "that comes out to, let's say, a roughly 60 grand a year in payroll",
+      "claim": "[Two employees spending 15 hours a week copying data between two systems by hand] costs a business roughly $60,000 a year in payroll.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "Arithmetic on the stated inputs: 2 employees x 15 hours x 52 weeks = 1,560 hours, so $60,000 implies $38.46 an hour fully loaded (or $76.92 an hour if the 15 hours is meant as the pair's combined total). The first reading holds for staff on roughly $80,000 a year fully loaded spending 37.5% of their time on the task, which is ordinary. It does not hold at clerical pay: BLS May 2023 puts data entry keyers at a $18.17 median hourly wage and $40,130 mean annual wage (https://www.bls.gov/oes/2023/may/oes439021.htm), which with 30% overhead puts the same hours near $37,000. Plausible under the charitable reading, high under the literal one.",
+      "rot": "stable",
+      "pair": "R12"
+    },
+    {
+      "id": "R12",
+      "quote": "for something that a script could do or a workflow automation could do for pretty much very minimal cost",
+      "claim": "[That same manual data-copying task] could be done by a script or a workflow automation at very minimal cost.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "The running cost of a script is small, but 'very minimal cost' is not the cost of the solution. Maintenance dominates software life-cycle cost, with estimates around 90% in the peer-reviewed literature and 60% to 80% in industry benchmarks (https://pmc.ncbi.nlm.nih.gov/articles/PMC3610582/), and a two-system sync inherits every credential rotation, schema change and API deprecation on both sides. The speaker's own next sentence prices this same work at $15,000, which is 25% of the first-year saving he attributes to it.",
+      "rot": "stable",
+      "pair": "R11"
+    },
+    {
+      "id": "R13",
+      "quote": "considering you have cloud code and cursor these days",
+      "claim": "With AI coding tools such as Claude Code and Cursor, automating a two-system manual data transfer is about a day of actual coding or less.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "Claude Code and Cursor are real, widely used AI coding tools in 2026, and a single-purpose sync script is a day's work for an experienced developer. The estimate covers coding only: it excludes access provisioning, credentials, error handling, deployment and handover, which is why the same task is quoted at three weeks earlier in the same passage.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "R14",
+      "quote": "a solution that saves 60 grand a year, every year, forever",
+      "claim": "An automation replacing that manual data copying saves the client $60,000 a year, every year, forever.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "Two problems with the arithmetic as stated. Payroll spent on a task only becomes cash saving if headcount is cut or the freed hours are redeployed to revenue work; a business that keeps both employees on payroll saves nothing on payroll. And 'forever' assumes zero ongoing cost, against maintenance estimates of 60% to 90% of software life-cycle cost (https://pmc.ncbi.nlm.nih.gov/articles/PMC3610582/). The gross figure is a fair upper bound on the opportunity, not a recurring saving.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R15",
+      "quote": "back when he was in the US with Port City AI, and now in Sydney, Australia",
+      "claim": "[A founder named Dom, cited as doing value-priced automation deals] ran Port City AI in the United States and now does the same work in Sydney, Australia.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "Portcity AI LLC is a real US AI consultancy in Dauphin Island, Alabama, whose listed contact is Dominik Fretz (https://aitaskforce.alabama.gov/ai-vendor-list/portcity-ai-llc/). Dominik Fretz is now founder of Harbour Edge Intelligence, an AI consultancy based in Sydney, Australia (https://harbouredgeintelligence.au/). The US-then-Sydney trajectory checks out; his membership of the narrator's program and his deal history do not appear in any public record and were not verified.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R16",
+      "quote": "it was because the client trusted their name over mine",
+      "claim": "The reason the firm could bill the narrator at $1,850 an hour was that clients trusted the firm's brand rather than him personally.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A causal attribution about an unnamed firm's clients, offered by one party; no source could establish what those clients were paying for.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R17",
+      "quote": "you can actually build that exact same asset for pretty much free",
+      "claim": "A software engineer can build the same brand and distribution asset a consulting firm has, for pretty much free.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Advice framed as a cost claim, with 'pretty much free' undefined and the time cost of building an audience unpriced; not rateable as true or false.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R18",
+      "quote": "is a little salesperson that works for you 24/7 without a salary or a commission",
+      "claim": "Every post, video, case study and testimonial a developer publishes acts as a salesperson working 24/7 without salary or commission.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A metaphor about marketing content, not a proposition with a truth value.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R19",
+      "quote": "the highest paid person back in my old consulting firm",
+      "claim": "The highest paid person at the narrator's old consulting firm was a partner with no engineering degree who was not among the firm's top ten engineers.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "Unnamed firm, unnamed partner, private compensation. Nothing to check against a source. Unverifiable by construction.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R20",
+      "quote": "In every single company, there's a gap between what the code does and what the business people understand",
+      "claim": "Every single company has a gap between what its code does and what its business people understand.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A universal generalisation about all companies with no measurable definition of the 'gap'; presented as rhetorical framing, not a surveyed finding.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R21",
+      "quote": "One sentence gets you $150 an hour, whereas the other one gets you that 1850 per hour",
+      "claim": "Describing the same project in business terms rather than technical terms is what moves the rate from $150 an hour to $1,850 an hour.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "Value framing does move prices, but the specific 12.3x attributed here to wording is contradicted by the video's own earlier explanation, which attributes the $1,850 rate to the firm's brand and client relationships ('the client trusted their name over mine', 'their brand did all the selling'). Published 2026 US consulting rates run $125 to $175 an hour for mid-size agencies and $250 to $850 at enterprise consultancies (https://www.cleveroad.com/blog/software-consulting-rates/), so no phrasing change takes an individual from $150 to $1,850 inside the documented market. The mechanism is real, the magnitude is not.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R22",
+      "quote": "is going to become a discount on your price later on",
+      "claim": "Every question a prospect leaves unanswered becomes a discount on the price later.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A forward-looking sales heuristic about unspecified future deals; not resolvable as true or false.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R23",
+      "quote": "When the risk for them hits zero, the price stops being the conversation",
+      "claim": "Once perceived risk for the client reaches zero, price stops being a negotiating point and the seller can charge whatever they want.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A conditional prediction with an unmeasurable antecedent (risk 'hits zero'); nothing to check.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R24",
+      "quote": "English was my third language",
+      "claim": "English is the narrator's third language and he started out with a very heavy accent.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "plausible"
+      ],
+      "basis": "A personal biographical detail with no public record; the accent is audible in the video but the ordering of his languages is not checkable.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R25",
+      "quote": "from Pedro from Brazil, closing deals in Portuguese",
+      "claim": "[Members of the narrator's program] include Pedro from Brazil closing deals in Portuguese, Toufic from Bangalore, Marco from Serbia and Carl from Switzerland.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "First names only, attached to a private paid cohort with no published roster. There is no identifiable person to check. Unverifiable by construction.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "R26",
+      "quote": "communication is not a personality trait. You're not born with it",
+      "claim": "Communication is not a personality trait and nobody is born with it; it is a learnable system.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "The learnable part is fair, but 'you're not born with it' contradicts behaviour-genetic evidence on the traits that underpin social confidence: pooled twin-study estimates put the genetic contribution at 54% for extraversion, 57% for openness and 42% for agreeableness (https://en.wikipedia.org/wiki/Big_Five_personality_traits). Heritable does not mean unchangeable, which is why plausible is also defensible, but the flat denial of any innate component is not supported.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R27",
+      "quote": "Spend 6 months learning the one language that CEOs understand",
+      "claim": "Six months spent learning to talk about money the way CEOs do will substantially and quickly raise a developer's income.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A forward-looking promise about the audience's future earnings; not resolvable as true or false at labelling time.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R28",
+      "quote": "they have 16 leadership principles",
+      "claim": "Amazon has 16 leadership principles.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Amazon's own leadership principles page lists exactly 16, from Customer Obsession through Success and Scale Bring Broad Responsibility (https://www.aboutamazon.com/about-us/leadership-principles). The list went from 14 to 16 in 2021, so the count is current but not permanent.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "R29",
+      "quote": "which one they grill you the hardest on in interviews",
+      "claim": "Bias for Action is the leadership principle Amazon grills candidates hardest on in interviews.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "misleading"
+      ],
+      "basis": "Amazon publishes no per-principle weighting for interviews, and searches of Amazon's own interview guidance and third-party prep material turned up no ranking that puts Bias for Action first. What those sources do say is that every role starts from Customer Obsession, which points the other way, so misleading is defensible; but no source establishes a ranking either way.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "R30",
+      "quote": "because speed and execution are the most important things in business",
+      "claim": "Speed and execution are the most important things in business.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A superlative value judgement about business priorities; no measure exists that would settle it.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R31",
+      "quote": "developers memorize that principle to get the job and then they never once apply it to their own lives",
+      "claim": "Developers memorise Amazon's bias-for-action principle to pass the interview and then never apply it to their own lives.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A rhetorical generalisation about the inner lives of a whole profession; not measurable.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R32",
+      "quote": "The day that Chat GPT launched, every developer I knew had the same exact reaction",
+      "claim": "On the day ChatGPT launched, every developer the narrator knew reacted by saying they were finished.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "A claim about the narrator's personal acquaintances on a specific day, with no record to check. The anchor date is solid: ChatGPT was released 30 November 2022 (https://en.wikipedia.org/wiki/ChatGPT).",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R33",
+      "quote": "The doom threads were flying on Reddit and on X",
+      "claim": "Threads predicting the end of software engineering were circulating on Reddit and X at the time ChatGPT launched.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "Developer anxiety about ChatGPT is well documented on Reddit and Twitter from late 2022 onward, so the substance is fair, but the platform was still called Twitter on ChatGPT's launch date (30 November 2022, https://en.wikipedia.org/wiki/ChatGPT); it was renamed X on 23 to 24 July 2023, about eight months later. Retroactive naming is normal speech, and the strongest 'is software engineering over' wave came months after launch rather than that day.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R34",
+      "quote": "notice and I started working on my consultancy",
+      "claim": "The narrator put in his two weeks' notice on the day ChatGPT launched and started his consultancy.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "A private employment decision with no public record. Worth noting for internal consistency: ChatGPT launched 30 November 2022, three and a half years before this video, while the same video describes the consulting-firm episode as 'a couple years back'.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R35",
+      "quote": "I had $258 in my bank account",
+      "claim": "A few months after quitting, the narrator had $258 in his bank account and rent due.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "A private bank balance. Unverifiable by construction.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R36",
+      "quote": "I was already making over six figures a month",
+      "claim": "One year after quitting, the narrator was making over six figures a month.",
+      "type": "anecdote",
+      "load_bearing": true,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "Private revenue with no filing or audited figure. The only corroboration available is the narrator's own sales page, which claims he 'built a business to $450K+/month revenue' (https://codetoceo.com/); a seller's marketing copy about himself is not independent verification.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R37",
+      "quote": "the average founder inside Code to CEO lands their first client in about 47 days",
+      "claim": "The average member of the narrator's Code to CEO program lands their first client in about 47 days.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "misleading"
+      ],
+      "basis": "The number is the seller's own marketing statistic: codetoceo.com displays '47 Days - Avg. time to first client' alongside '$5.3M+ Partner revenue', '31+ Devs have quit their 9-5' and '$15K+ Avg. first deal' (https://codetoceo.com/). No methodology, sample size, denominator or independent audit is published, and the same page describes the cohort as under 40 partners admitted at roughly 1 in 45 applicants. Self-reported and unauditable.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "R38",
+      "quote": "speed is literally a money multiplier and the 47 days average proves it",
+      "claim": "The 47-day average time to first client proves that speed is a money multiplier.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "The stated evidence cannot support the stated conclusion. An average time-to-first-client computed over a hand-picked paying cohort (the program's own page says roughly 1 in 45 applicants is accepted, under 40 partners total: https://codetoceo.com/) has no control group, no denominator of members who never landed a client, and no way to separate speed from selection. It is a marketing statistic being used as a proof.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "R39",
+      "quote": "The engineers who take a year are not doing more",
+      "claim": "Engineers who take a year to land their first client are doing the same amount of work as fast movers, only slower.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "An unmeasured generalisation about two hypothetical groups; no data is offered and none exists to check it.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R40",
+      "quote": "there is no course. The market is the course",
+      "claim": "There is no course that teaches business for developers; the market itself is the only teacher.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Rhetorical advice rather than a checkable fact, and self-contradicted 90 seconds later by the paid program and free training the video pitches.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "R41",
+      "quote": "on July 26th, 11:00 a.m. Pacific Standard Time",
+      "claim": "The narrator is hosting a free live training on 26 July at 11:00 a.m. Pacific Standard Time.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "plausible"
+      ],
+      "basis": "A privately hosted webinar with a registration link and no public record to check against; the event date has since passed. Two details are checkable and both are slightly off: 26 July 2026 fell on a Sunday, and late July in the Pacific zone is daylight time (PDT, UTC-7), so 'Pacific Standard Time' read literally is an hour out.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "R42",
+      "quote": "how to land your first $10,000 plus client as a developer without writing a single line of production code",
+      "claim": "The training will show developers how to land a first client worth $10,000 or more without writing a single line of production code.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A promise about what an unheld training will achieve for attendees; not resolvable as true or false.",
+      "rot": "dated",
+      "pair": null
+    }
+  ]
+}
