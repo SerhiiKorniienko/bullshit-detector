@@ -1,0 +1,847 @@
+{
+  "schema": "bullshit-detector/eval-case@1",
+  "id": "needle-light-speed",
+  "source_url": "https://youtu.be/Fzi39NMYWO4",
+  "source_title": "What If a Needle Hit The Earth At The Speed Of Light?",
+  "source_words": 2878,
+  "fetched": "2026-09-02",
+  "labeled": "2026-09-02",
+  "labeled_by": "draft - pending owner review",
+  "review_by": "2027-03-02",
+  "prior_readings": [
+    "examples/0.8.0/report-needle-at-the-speed-of-light.md"
+  ],
+  "claims": [
+    {
+      "id": "N1",
+      "quote": "in empty space, it will always travel at the same speed",
+      "claim": "[Light] always travels at the same speed in empty space, with no drag or wind resistance to slow it.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The speed of light in vacuum is a defined constant, exactly 299,792,458 m/s, and is the same for all observers regardless of the motion of the source. https://en.wikipedia.org/wiki/Speed_of_light",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N2",
+      "quote": "it can travel around the Earth 7 and a half times in a single second",
+      "claim": "Light can travel around the Earth 7 and a half times in a single second.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Arithmetic: 299,792.458 km/s divided by Earth's equatorial circumference of 40,075 km = 7.48 laps per second (7.49 over the poles, circumference 40,008 km). c from https://en.wikipedia.org/wiki/Speed_of_light",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N3",
+      "quote": "The moon is 386,400 km away from Earth",
+      "claim": "The Moon is 386,400 km away from Earth.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "The standard mean Earth-Moon distance is 384,400 km, so the stated figure is 2,000 km (0.52%) high and is not the canonical number, most likely a transposition of it. It is not wrong as an instantaneous distance: the Moon ranges from about 356,500 km at perigee to 406,700 km at apogee, so 386,400 km is a separation the Moon really occupies. https://en.wikipedia.org/wiki/Lunar_distance_(astronomy)",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N4",
+      "quote": "it takes about 3 days or 69 hours for a spacecraft to go from Earth to the moon",
+      "claim": "It takes a spacecraft about 3 days, or 69 hours, to travel from Earth to the Moon.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "The nine crewed Apollo missions averaged just over 78 hours (3 days 6 hours) to lunar orbit; Apollo 11 took 75 hours 49 minutes to landing. The fastest was Apollo 8 at 2 days 21 hours 8 minutes, which is 69.1 hours, so '69 hours' is the record low end rather than the typical transit, while 'about 3 days' is right. https://www.space.com/how-long-does-it-take-to-get-to-the-moon",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N5",
+      "quote": "this trip takes a mere 1.3 seconds",
+      "claim": "A trip from Earth to the Moon at the speed of light would take 1.3 seconds.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Arithmetic: 384,400 km / 299,792.458 km/s = 1.282 s. Using the video's own 386,400 km figure, 1.289 s. Both round to 1.3 s.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N6",
+      "quote": "you'd be traveling at 300,000 km per second",
+      "claim": "Travelling at the speed of light means travelling at 300,000 km per second.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "c is exactly 299,792.458 km/s, which is 300,000 km/s to three significant figures. https://en.wikipedia.org/wiki/Speed_of_light",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N7",
+      "quote": "The fastest human-made object ever made is the NASA Parker Solar Probe",
+      "claim": "The fastest human-made object ever built is NASA's Parker Solar Probe.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Guinness World Records lists the fastest spacecraft speed as the Parker Solar Probe's, and no faster human-made object exists. https://www.guinnessworldrecords.com/world-records/66135-fastest-spacecraft-speed",
+      "rot": "dated",
+      "pair": "N8"
+    },
+    {
+      "id": "N8",
+      "quote": "that only goes a measly 635,000 km per hour",
+      "claim": "[The Parker Solar Probe] only reaches 635,000 km per hour.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "Parker's record when this video published (12 Sep 2025) was 692,000 km/h (430,000 mph, 192.22 km/s), set at perihelion on 24 December 2024. 635,266 km/h was its earlier September 2023 record, so the figure is one record behind and understates the top speed by about 8%. https://science.nasa.gov/science-research/heliophysics/nasas-parker-solar-probe-makes-history-with-closest-pass-to-sun/ and https://www.guinnessworldrecords.com/world-records/66135-fastest-spacecraft-speed",
+      "rot": "dated",
+      "pair": "N7"
+    },
+    {
+      "id": "N9",
+      "quote": "Nothing is able to travel faster than the speed of light",
+      "claim": "Nothing can travel faster than the speed of light; it is the fastest speed in the known universe.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The speed of light in vacuum is the upper limit for the speed at which information, matter or energy can travel through space. https://en.wikipedia.org/wiki/Speed_of_light",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N10",
+      "quote": "as an object's speed gets close to the speed of light, its mass increases",
+      "claim": "According to Einstein's theory of relativity, an object's mass increases as its speed approaches the speed of light.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "This is the deprecated 'relativistic mass' convention. In modern physics rest mass is an invariant that does not change with speed; what grows by the Lorentz factor is energy and momentum. Einstein himself later argued against calling gamma-times-m a mass. The formulation survives in older popular treatments, which is why the band includes plausible, and the conclusion the video draws from it (more and more energy needed, infinite at c) is correct either way. https://math.ucr.edu/home/baez/physics/Relativity/SR/mass.html and https://bigthink.com/starts-with-a-bang/mass-increase-speed-of-light/",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N11",
+      "quote": "time actually slows down",
+      "claim": "As an object approaches the speed of light, time slows down for it.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Time dilation: moving clocks run slower by the Lorentz factor gamma = (1 - v^2/c^2)^-0.5. At 86.6% of c time dilates by a factor of 2, at 99.5% by a factor of 10. https://en.wikipedia.org/wiki/Speed_of_light",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N12",
+      "quote": "you'd need to have an infinite amount of energy to make this happen",
+      "claim": "Accelerating an object with mass, such as a needle, to the speed of light would require an infinite amount of energy.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Relativistic kinetic energy (gamma - 1)mc^2 diverges as v approaches c, so it would take an infinite amount of energy to accelerate an object with mass to the speed of light. https://en.wikipedia.org/wiki/Speed_of_light",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N13",
+      "quote": "as the needle hurdled through our atmosphere, there would be an enormous amount of friction generated",
+      "claim": "A needle passing through Earth's atmosphere at relativistic speed would generate an enormous amount of friction, which is what would heat it.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "Heating of a hypersonic body is dominated by adiabatic compression in the shock layer, not friction: 'Direct friction upon the reentry object is not the main cause of shock-layer heating. It is caused mainly from isentropic heating of the air molecules within the compression wave.' The video gives the correct compression mechanism itself later, in the steak segment. https://en.wikipedia.org/wiki/Atmospheric_entry",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N14",
+      "quote": "we've seen spaceships ignite upon re-entry into Earth's atmosphere because of friction and heat in the air",
+      "claim": "Spacecraft heat up and burn on re-entry into Earth's atmosphere because of friction with the air.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "Re-entry vehicles do heat up and can burn up, but the cause is wrong. A bow shock separates the vehicle surface from direct friction; the air is superheated by compression through that shock and the heat reaches the vehicle by convection and radiation. Friction (viscous shear in the boundary layer) is secondary. https://en.wikipedia.org/wiki/Atmospheric_entry",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N15",
+      "quote": "the energy released would be over 100 times the amount of energy from an exploding nuclear bomb",
+      "claim": "The energy released by a needle striking Earth at 99.9% of the speed of light would be over 100 times the energy of an exploding nuclear bomb.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "Arithmetic with the video's own 99.9% c: gamma = 1/sqrt(1 - 0.999^2) = 22.37, so gamma - 1 = 21.37, and c^2 = 8.988e16 m^2/s^2, giving 1.92e18 J of kinetic energy per kilogram. A steel sewing needle is roughly 0.5 to 0.8 g (a 5 cm by 0.5 mm steel rod at 7.85 g/cm3 is 0.77 g), so 0.96e15 to 1.54e15 J, which is 0.23 to 0.37 megatons of TNT at 4.184e15 J per megaton, or about 15 to 25 Hiroshima bombs (15 kt). 'Over 100 times a nuclear bomb' holds only if the reference bomb is about 3 kt or smaller, or if the needle weighs about 3.3 g. The video never states the needle's mass or which bomb it is comparing to, so the multiplier rests entirely on unstated assumptions; it is the right order of magnitude for a small device and several times too high against a Hiroshima-class one. Needle dimensions and steel density: https://en.wikipedia.org/wiki/Sewing_needle",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N16",
+      "quote": "The tall buildings surrounding the park and further away in New York City would collapse",
+      "claim": "Tall buildings around Central Park and further away in New York City would collapse if the needle struck the park.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Outcome of a physically impossible hypothetical; not rateable against any source.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N17",
+      "quote": "massive enough to rock nearby states like New Jersey",
+      "claim": "The shock wave from the needle impact in Central Park would be big enough to shake nearby states such as New Jersey.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Outcome of a physically impossible hypothetical; not rateable against any source.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N18",
+      "quote": "The energy released would be equal to the power of an earthquake that's about 7.3",
+      "claim": "The energy released by the needle impact would equal that of a magnitude 7.3 earthquake.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "Gutenberg-Richter energy relation log10(E in joules) = 4.8 + 1.5M gives 5.6e15 J for M7.3, which is 1.34 megatons of TNT. That is consistent with the video's own later 'over 1 megaton' figure, so the chain is internally coherent. Against the needle kinetic energy computed in N15 (0.23 to 0.37 Mt, 0.96e15 to 1.54e15 J) the same relation gives M6.8 to M6.9, about half a magnitude lower. Two caveats keep this out of confirmed: the needle's mass is never stated, and the equivalence is energy-only, since only a small fraction of an impactor's kinetic energy couples into seismic waves. https://www.volcanodiscovery.com/earthquakes/energy.html",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N19",
+      "quote": "In 1906, an earthquake that measured 7.9",
+      "claim": "An earthquake measuring 7.9 hit San Francisco in 1906.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The 18 April 1906 San Francisco earthquake is assigned a moment magnitude of 7.9. https://en.wikipedia.org/wiki/1906_San_Francisco_earthquake",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N20",
+      "quote": "It destroyed over 28,000 buildings",
+      "claim": "The 1906 San Francisco earthquake and the fire that followed destroyed over 28,000 buildings.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The earthquake and the four-day fire that followed leveled more than 500 city blocks and destroyed about 28,000 buildings. https://www.britannica.com/event/San-Francisco-earthquake-of-1906",
+      "rot": "stable",
+      "pair": "N21"
+    },
+    {
+      "id": "N21",
+      "quote": "killed more than 700 people",
+      "claim": "The 1906 San Francisco earthquake killed more than 700 people.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "700 was the contemporary official count and has been known for decades to be a severe undercount. Research by Gladys Hansen and Emmet Condon puts the toll above 3,000, and that is the figure USGS and Britannica now use. 'More than 700' is not false of a 3,000-plus toll, but it presents the discredited official number as the death toll, in the same sentence as an otherwise accurate building figure. https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/casualties.php",
+      "rot": "stable",
+      "pair": "N20"
+    },
+    {
+      "id": "N22",
+      "quote": "ranked as one of the top scanning apps worldwide with over 125 million downloads",
+      "claim": "[iScanner] is ranked one of the top scanning apps worldwide, with over 125 million downloads.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "plausible"
+      ],
+      "basis": "125 million is the vendor's own marketing figure, carried on iScanner's site and store listings and repeated by review sites that source it from the vendor. No independent download estimate was located, and app-store download counts are not published at that resolution. This is a paid sponsor read, which is why the self-reported number cannot be treated as a source. https://iscanner.com/",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "N23",
+      "quote": "this needle would give off as much energy as a nuke. That's over 1 megaton of TNT",
+      "claim": "Scientists estimate the needle would release as much energy as a nuclear weapon, over 1 megaton of TNT.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "Same arithmetic as N15: at 99.9% c each kilogram carries 1.92e18 J, so a 0.5 to 0.8 g needle yields 0.23 to 0.37 megatons. Reaching 'over 1 megaton' needs a needle of 4.184e15 / 1.92e18 = 2.18 g, roughly three times a typical sewing needle, closer to a knitting or darning needle. Right order of magnitude, about 3x high on the most natural reading of 'needle', and the mass is never stated so the figure turns on an unstated assumption. Note also that this figure and the video's earlier 'over 100 times a nuclear bomb' only reconcile if the reference bomb is around 10 kt.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N24",
+      "quote": "in what was known as the Baker test, a 23 kiloton nuke was detonated underwater",
+      "claim": "In 1946 the Baker test detonated a 23 kiloton nuclear device underwater.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Operation Crossroads Baker, 25 July 1946 at Bikini Atoll: an implosion device suspended 90 feet underwater, yield 23 kilotons. https://en.wikipedia.org/wiki/Operation_Crossroads",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N25",
+      "quote": "This created a plume of water 2 km high",
+      "claim": "The Baker test created a plume of water 2 km high.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The Baker column of radioactive spray rose about 6,000 feet, roughly 1.8 to 2 km, and is commonly described as reaching more than 1.3 miles. https://nuclearweaponarchive.org/Usa/Tests/Crossrd.html",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N26",
+      "quote": "Waves close to the explosion radiated out at heights of up to 30 m",
+      "claim": "Waves close to the Baker explosion reached heights of up to 30 m.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The first wave measured 94 feet (29 m) at 1,000 feet from surface zero, and initial waves near the burst are reported at 100 feet or more; by the time they reached the atoll shore they were about 15 feet. https://en.wikipedia.org/wiki/Operation_Crossroads",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N27",
+      "quote": "it's unlikely to generate a massive tsunami",
+      "claim": "A point explosion in the ocean, such as the needle impact, would raise a large plume but is unlikely to generate a tsunami.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "Tsunami generation requires displacing a substantial volume of water, in practice the whole water column over a large area. Underwater nuclear tests displace water only locally, and no test, Baker included, produced a tsunami. https://en.wikipedia.org/wiki/Tsunami and https://www.surfertoday.com/surfing/the-days-when-underwater-nuclear-tests-generated-big-waves",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N28",
+      "quote": "that's only created by large geological movements like underwater earthquakes",
+      "claim": "The large-area water displacement that makes a tsunami is only created by large geological movements such as underwater earthquakes.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "Undersea earthquakes are the most common cause, and the underlying point about large-area displacement is right, but 'only' is too narrow: 'Earthquakes, volcanic eruptions, underwater explosions, landslides, glacier calvings, meteorite impacts and other disturbances above or below water all have the potential to generate a tsunami.' Landslide tsunamis (Lituya Bay 1958) and volcanic-collapse tsunamis (Krakatau 1883, Anak Krakatau 2018) are documented. https://en.wikipedia.org/wiki/Tsunami",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N29",
+      "quote": "the one in the Indian Ocean in 2004 which was equivalent to 23,000 Hiroshima bombs",
+      "claim": "The 2004 Indian Ocean tsunami was equivalent to 23,000 Hiroshima bombs.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "USGS estimated the Mw 9.1 Sumatra-Andaman earthquake that generated the 2004 tsunami released the energy of 23,000 Hiroshima-type atomic bombs. The figure is the earthquake's energy rather than the wave's, which is how it is always quoted. https://www.nationalgeographic.com/science/article/deadliest-tsunami-in-history",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N30",
+      "quote": "you'd die instantly so quickly that you probably wouldn't feel it",
+      "claim": "A person hit directly by the needle would die instantly, too quickly to feel it.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Outcome of a physically impossible hypothetical; not rateable against any source.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N31",
+      "quote": "It would disrupt the magma underground and set off a series of massive volcanic eruptions",
+      "claim": "A needle impact on an active volcano would disrupt the magma underground and set off a series of massive volcanic eruptions.",
+      "type": "prediction",
+      "load_bearing": true,
+      "label": null,
+      "tolerance": [],
+      "basis": "Outcome of a physically impossible hypothetical, and no impact-triggered eruption sequence has been modelled for a relativistic projectile; not rateable against any source.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N32",
+      "quote": "Mass volcanic eruptions like this could cause an extinction event on Earth",
+      "claim": "Mass volcanic eruptions could cause an extinction event on Earth, as they have repeatedly in Earth's past.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "Continental flood basalts are linked to several Phanerozoic mass extinctions: end-Permian and the Siberian Traps, end-Triassic and central Atlantic volcanism, end-Guadalupian and the Emeishan basalts, early Toarcian and the Karoo Traps. The 'over and over again' part is therefore right for large igneous provinces, which erupt over hundreds of thousands to millions of years, and not for a single supervolcano event of the Toba kind the video is describing, which is why this sits at plausible rather than confirmed. https://www.pnas.org/doi/10.1073/pnas.2120441119",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N33",
+      "quote": "The Toba eruption 74,000 years ago",
+      "claim": "The Toba eruption happened 74,000 years ago.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The Youngest Toba Tuff eruption is dated to approximately 74,000 years ago. https://www.nature.com/articles/s43247-021-00141-7",
+      "rot": "stable",
+      "pair": "N34"
+    },
+    {
+      "id": "N34",
+      "quote": "almost wiped out all human beings",
+      "claim": "The Toba eruption almost wiped out all human beings.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "The Toba catastrophe hypothesis (Ambrose, 1998) is now largely unsupported. Archaeological sites above and below the Toba ash layer show continuous occupation with the same tools and behaviours; Lake Malawi and East African cores show no volcanic winter after the eruption; and a 2020 analysis of DNA from 28 mammal species on every continent found no bottleneck signature at that date. The eruption itself was real and enormous, which is why this is misleading rather than flatly false. https://www.johnhawks.net/p/the-so-called-toba-bottleneck-didnt-happen",
+      "rot": "stable",
+      "pair": "N33"
+    },
+    {
+      "id": "N35",
+      "quote": "Only 2,000 to 20,000 humans survived that eruption and its aftermath",
+      "claim": "Only 2,000 to 20,000 humans survived the Toba eruption and its aftermath.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "The number traces to the same disputed hypothesis, which posited a reduction to between 1,000 and 10,000 breeding pairs, that is 2,000 to 20,000 individuals. Two problems: that range is a genetic inference about effective population size around 70,000 years ago, not a headcount of survivors of an eruption, and the causal link to Toba is the part the recent evidence rejects. https://www.johnhawks.net/p/the-so-called-toba-bottleneck-didnt-happen",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N36",
+      "quote": "Volcanic ash thrown high into the atmosphere can linger there for 10 years or longer",
+      "claim": "Volcanic ash thrown high into the atmosphere can linger there for 10 years or longer, blocking the sun.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "Two errors. Large volcanic ash particles fall out of the stratosphere quickly, dominating the cloud's optical properties for roughly the first 60 days and then settling out. What persists is sulfate aerosol formed from SO2, and its stratospheric residence time is months to about two years for a high-injection tropical eruption, not ten. Decade-scale cooling in supereruption models comes from the climate system's response, not from material staying aloft for ten years. https://acp.copernicus.org/articles/25/3821/2025/ and https://www.nature.com/articles/s41467-020-18352-5",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N37",
+      "quote": "Scientists have found that some parts of the southern hemisphere like Australia and New Zealand might be able to produce food in these very specific conditions",
+      "claim": "Scientists have found that parts of the southern hemisphere such as Australia and New Zealand might still be able to produce food under conditions of little sunlight and low temperatures.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Boyd and Wilson, 'Island refuges for surviving nuclear winter and other abrupt sunlight-reducing catastrophes', Risk Analysis, 2023, identifies New Zealand and Australia, alongside Iceland, Vanuatu and the Solomon Islands, as likely to retain food self-sufficiency under an extreme sunlight-reducing catastrophe. https://onlinelibrary.wiley.com/doi/10.1111/risa.14072",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N38",
+      "quote": "our current global population of 8 billion people",
+      "claim": "The current global population is 8 billion people.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "World population passed 8 billion on 15 November 2022 and stood at roughly 8.2 billion through 2025, so '8 billion' is right to the stated precision. https://www.worldometers.info/world-population/",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "N39",
+      "quote": "The vast majority of humans would die out, but a small minority might remain",
+      "claim": "In a volcanic winter following such an eruption, the vast majority of humans would die out and only a small minority would survive.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A prediction about a hypothetical catastrophe; no source can confirm or refute a future casualty share.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N40",
+      "quote": "the possibility of this tiny needle hitting Earth at light speed is close to zero",
+      "claim": "The chance of a needle hitting Earth at light speed is close to zero.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "The presenter's summary judgement on his own hypothetical; not an independently checkable assertion.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N41",
+      "quote": "gloves that only allow about 20% of their gloveless range of motion",
+      "claim": "Spacesuit gloves allow astronauts only about 20% of their gloveless range of motion.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "NASA's Space Suit RoboGlove disclosure states that when non-assisted spacesuit gloves are coupled to a pressurized suit and operated in a vacuum, they 'tend to limit the range of motion of an astronaut's hand to as little as 20% of normal range'. NASA frames 20% as a floor and the video as a typical value, which is the only gap. https://technology.nasa.gov/patent/MSC-TOPS-80",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N42",
+      "quote": "Astronauts have dropped everything from a camera to a spatula",
+      "claim": "Astronauts have accidentally lost items in space ranging from a camera to a spatula.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Piers Sellers lost a 14-inch putty knife (spatula) during an STS-121 spacewalk in July 2006, and Sunita Williams lost a digital camera during a spacewalk in 2007 (and another in December 2006). Other documented losses include Ed White's glove in 1965, Scott Parazynski's pliers and a full tool bag in 2008. https://www.nbcnews.com/id/wbna27792819",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N43",
+      "quote": "They used that thing for space shuttle repairs and not for cooking",
+      "claim": "The spatula lost in space was being used for space shuttle repairs, not cooking.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Sellers was spreading heat-shield repair compound with the putty knife during an on-orbit test of a shuttle tile repair kit when it slipped over the starboard side. https://www.washingtonpost.com/wp-dyn/content/article/2006/07/12/AR2006071201708.html",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N44",
+      "quote": "has been continuously occupied since the end of the year 2000",
+      "claim": "The International Space Station has been continuously occupied since the end of the year 2000.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Expedition 1 (Shepherd, Krikalev, Gidzenko) docked on 2 November 2000 and the station has been crewed without a break since. https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N45",
+      "quote": "none of its visitors have been chefs",
+      "claim": "None of the International Space Station's visitors have been chefs.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "plausible"
+      ],
+      "basis": "A universal negative over 280-plus visitors. No roster of every ISS visitor's prior profession exists in a form that can settle it, and no professional chef appears in the published crew biographies, but that is absence of evidence rather than a checkable record. Unverifiable by construction.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N46",
+      "quote": "Astronauts have all their food pre-cooked here on Earth",
+      "claim": "Astronauts' food is all pre-cooked on Earth; meals either come ready to eat or are prepared by adding water or heating.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "ISS food is prepared on the ground and flown as ready-to-eat, rehydratable, thermostabilized or irradiated items; rehydratable and thermostabilized items are reconstituted with water or reheated in the food warmer. https://www.asc-csa.gc.ca/eng/astronauts/living-in-space/eating-in-space.asp",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N47",
+      "quote": "Anything that hadn't been approved 6 months before your launch would be prohibited",
+      "claim": "Any food not approved six months before launch is prohibited on the International Space Station.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "misleading"
+      ],
+      "basis": "No six-month approval cutoff was located in any published NASA food-system document. The published timeline runs the other way and is looser: crews taste and score items roughly 8 to 9 months out, select their menu about five months before flight, and the menu is finalized and handed to the Flight Equipment Processing Contractor three months before launch. Those are planning milestones, not a prohibition deadline, so the video's rule is neither confirmed nor cleanly refuted by them. https://www.worldspaceflight.com/bios/spacefood.php",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N48",
+      "quote": "you would break about 20 food regulations by sneaking raw meat aboard the ISS",
+      "claim": "Sneaking raw meat aboard the ISS would break about 20 food regulations.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "No enumerated list of ISS food regulations against which a count of 20 could be checked was located, and the figure is given with no attribution. Unverifiable by construction: there is no published rule set to count against.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N49",
+      "quote": "The ISS is orbiting 400 km above the Earth",
+      "claim": "The International Space Station orbits 400 km above the Earth.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "NASA gives the station's altitude as about 400 km; the ISS transition plan FAQ quotes 257 miles (415 km) for the current operating altitude, so 400 km is right to the stated precision. https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "N50",
+      "quote": "when air is compressed, its molecules move faster, releasing kinetic energy",
+      "claim": "Air in front of a fast-falling object cannot get out of the way and is compressed, and compression makes its molecules move faster, so things get hotter.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "The mechanism is the right one: adiabatic (isentropic) compression ahead of a fast body is what heats the air, and this is exactly what the video attributed to friction earlier in the same episode. The phrasing 'releasing kinetic energy' inverts the bookkeeping: work is done on the gas and its internal energy rises, nothing is released. https://en.wikipedia.org/wiki/Atmospheric_entry",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N51",
+      "quote": "If you drop the steak from a height of 70 km, it would break the sound barrier",
+      "claim": "A steak dropped from 70 km would break the sound barrier on the way down.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Felix Baumgartner reached 1,357.6 km/h, Mach 1.25, in unpowered freefall from 39 km, roughly half the stated drop height and with far more drag area than a steak, so a dense object released at 70 km goes supersonic with a wide margin. https://www.guinnessworldrecords.com/records/hall-of-fame/felix-baumgartner-first-person-to-break-sound-barrier-in-freefall",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N52",
+      "quote": "the air around it would heat up to 177",
+      "claim": "A steak dropped from 70 km would be surrounded by air heated to 177 degrees for about a minute.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Ground truth could not be established: the figure depends on the steak's mass, area and drag coefficient, none of which the video states, and no published calculation for a dropped steak was located. Stagnation-temperature arithmetic shows how sensitive it is: T0 = T(1 + 0.2 M^2), so reaching 450 K (177 C) from a 227 K stratosphere needs about Mach 2.2, whereas the video pairs 177 C with a drop it describes only as 'breaking the sound barrier', and Mach 1.25 on the same arithmetic gives about 298 K, or 25 C. Not labelled, because the assumption that would decide it is missing rather than wrong.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N53",
+      "quote": "your ribeye would be falling at twice the speed of sound for 90 seconds",
+      "claim": "A steak dropped from 100 km would fall at twice the speed of sound for 90 seconds.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Ground truth could not be established. Peak Mach number and time above it are set by the object's ballistic coefficient (mass over drag area), which the video never gives, and no published trajectory for a steak dropped from 100 km was located. The qualitative trend, higher release meaning higher peak Mach, is right; the specific pairing of Mach 2 with 90 seconds cannot be reproduced without the missing inputs.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N54",
+      "quote": "The falling meat would travel at six times the speed of sound",
+      "claim": "A steak dropped from 250 km would travel at six times the speed of sound and end up seared on the surface and raw inside.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Ground truth could not be established, for the same reason as N53: the peak Mach number depends on the steak's unstated ballistic coefficient. Mach 6 is in the range reported for shallow re-entries of small bodies, but nothing published ties it to a 250 km release of an object with a steak's mass and area.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N55",
+      "quote": "it would take 2 and 1/2 years due to the orbit it's in",
+      "claim": "If the International Space Station were left to fall from space on its own, it would take two and a half years.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "NASA's ISS transition plan FAQ states that 'depending on solar activity, the station's orbital lifetime (the time before the station would naturally re-enter from atmospheric drag alone) at this altitude is roughly one-to-two years without reboosts', against the video's two and a half years. The figure does move with the solar cycle, which keeps this inside the band rather than flatly false, but 2.5 years sits above NASA's stated range. https://www.nasa.gov/faqs-the-international-space-station-transition-plan/",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N56",
+      "quote": "roughly 90 minutes later, it would be flying right back at the ISS",
+      "claim": "An object released from the ISS would come back around to the station roughly 90 minutes later.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The ISS orbits the Earth in about 90 minutes, so an object released with a small relative velocity stays on a near-identical orbit and returns to the neighbourhood of the release point one orbit later. https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+      "rot": "stable",
+      "pair": "N57"
+    },
+    {
+      "id": "N57",
+      "quote": "at a speed of roughly 28,000 kmh",
+      "claim": "The dropped object would come back at the ISS at a speed of roughly 28,000 km/h.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "28,000 km/h is the ISS's own orbital speed, which the released object also has, so as an absolute figure it is right. As the speed it would come back 'at' the station, in the same sentence that sets up the crew-killing impact, it is wrong: a co-orbiting object's closing speed relative to the ISS is on the order of the release velocity, metres per second, not 28,000 km/h. The video's own next line, that the meat could wipe out an entire crew, rests on the wrong one of the two readings. https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+      "rot": "stable",
+      "pair": "N56"
+    },
+    {
+      "id": "N58",
+      "quote": "it has the potential to wipe out an entire crew",
+      "claim": "A steak returning to the ISS after one orbit has the potential to wipe out an entire crew.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A prediction about a hypothetical collision, and one that inherits the relative-velocity error in N57; not rateable against any source.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "N59",
+      "quote": "don't take cabbage, beans, or broccoli for a side dish. Those foods make astronauts fart",
+      "claim": "Cabbage, beans and broccoli are avoided in space because they make astronauts flatulent.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "NASA restricts gas-producing foods including beans, cabbage, broccoli and Brussels sprouts on crewed missions, and reducing gastrointestinal gas was an explicit space-food objective from the Apollo programme onward, because intestinal gas is both a comfort problem and a flammability question in a sealed habitat. https://www.npr.org/sections/krulwich/2010/09/16/129908529/space-propulsion-made-easy-eat-beans",
+      "rot": "stable",
+      "pair": null
+    }
+  ]
+}

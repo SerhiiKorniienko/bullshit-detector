@@ -1,0 +1,950 @@
+{
+  "schema": "bullshit-detector/eval-case@1",
+  "id": "fed-inflation-jobs",
+  "source_url": "https://www.youtube.com/watch?v=FacyMSgF5tw",
+  "source_title": "Fed Is Now Worried Inflation and Jobs Not As Good As We Thought - Economic Update 04 July 2026",
+  "source_words": 3085,
+  "fetched": "2026-09-02",
+  "labeled": "2026-09-02",
+  "labeled_by": "draft - pending owner review",
+  "review_by": "2027-03-02",
+  "prior_readings": [],
+  "claims": [
+    {
+      "id": "F1",
+      "quote": "It is now the 250th anniversary of the independence of the United States",
+      "claim": "July 4, 2026 is the 250th anniversary of the independence of the United States.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "1776 + 250 = 2026, and the Declaration of Independence was adopted on July 4, 1776, so July 4, 2026 is the 250th anniversary (the semiquincentennial). https://www.archives.gov/founding-docs/declaration",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F2",
+      "quote": "Our producers price index was up 6.5%",
+      "claim": "[In the Producer Price Index release of June 11, 2026, covering May 2026 data] the producer price index was up 6.5% year over year.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS PPI news release of June 11, 2026 (May 2026 data): final demand prices rose 6.5% for the 12 months ended in May, described in the release as the largest 12-month rise since November 2022. Release date also matches. https://www.bls.gov/news.release/archives/ppi_06112026.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F3",
+      "quote": "This is up 4.2% and core",
+      "claim": "[In the Consumer Price Index release of June 10, 2026, covering May 2026 data] headline CPI was up 4.2% year over year and core CPI, excluding food and energy, was up 2.9%.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS CPI news release of June 10, 2026 (May 2026 data, USDL-26-0824): the all-items CPI-U rose 4.2% and the index for all items less food and energy rose 2.9% over the 12 months ended in May. Release date also matches. https://www.bls.gov/news.release/archives/cpi_06102026.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F4",
+      "quote": "So, it went up 4.1%",
+      "claim": "[In the Personal Income and Outlays release of June 25, 2026, covering May 2026 data] the PCE price index was up 4.1% year over year and core PCE, excluding food and energy, was up 3.4%.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BEA Personal Income and Outlays, May 2026, released June 25, 2026: PCE price index up 4.1% and the index excluding food and energy up 3.4% from a year earlier. Release date also matches. https://www.bea.gov/news/2026/personal-income-and-outlays-may-2026",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F5",
+      "quote": "All of these are above what the target would be for the Fed",
+      "claim": "All of the inflation readings cited (PPI 6.5%, CPI 4.2%, core CPI 2.9%, PCE 4.1%, core PCE 3.4%) are above the Federal Reserve's inflation target.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The FOMC's longer-run inflation objective is 2 percent, measured on the PCE price index; every figure listed (2.9% to 6.5%) exceeds 2%. https://www.federalreserve.gov/faqs/economy_14400.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F6",
+      "quote": "One is stable prices, keep it around 2%, and the second one is keep maximum employment",
+      "claim": "The Federal Reserve's statutory mandates are stable prices (around 2%), maximum employment, and moderate long-term interest rates.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Section 2A of the Federal Reserve Act directs the Board and the FOMC to promote 'the goals of maximum employment, stable prices, and moderate long-term interest rates' - the three goals the video names, in the same order of substance. The 2 percent figure is the FOMC's own longer-run objective, not statutory. https://www.federalreserve.gov/aboutthefed/section2a.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F7",
+      "quote": "We're up 98,000 jobs in June",
+      "claim": "ADP reported 98,000 private-sector jobs added in June 2026, in a report released July 1, 2026.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "ADP National Employment Report, released July 1, 2026: private-sector employment increased by 98,000 jobs in June. Sectors named in the video (financial activities +14,000, education/health services +48,000, trade/transportation/utilities +15,000) all gained. ADP later revised June down to 95,000 in its August 5, 2026 report, but 98,000 is the figure that stood when this video was made. https://mediacenter.adp.com/2026-07-01-ADP-National-Employment-Report-Private-Sector-Employment-Increased-by-98,000-Jobs-in-June-Annual-Pay-was-Up-4-4",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F8",
+      "quote": "We've added 57,000 jobs in June",
+      "claim": "The Bureau of Labor Statistics reported 57,000 nonfarm jobs added in June 2026, in the Employment Situation released July 2, 2026.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS Employment Situation for June 2026, released July 2, 2026: total nonfarm payroll employment rose by 57,000. Later revised down to +20,000 in the August 2026 release, so the figure is correct at the vintage the video was describing but has since moved. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F9",
+      "quote": "May is now at 129,000 jobs. This was just revised down by 43,000 jobs",
+      "claim": "In the July 2, 2026 BLS release, May 2026 payrolls were revised down by 43,000 to 129,000 and April 2026 payrolls down by 31,000 to 148,000.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS Employment Situation, July 2, 2026: 'The change in total nonfarm payroll employment for April was revised down by 31,000, from +179,000 to +148,000, and the change for May was revised down by 43,000, from +172,000 to +129,000.' Both revised levels and both revision sizes match. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F10",
+      "quote": "So this is 74,000 jobs that don't exist that we thought existed",
+      "claim": "The April and May 2026 downward payroll revisions total 74,000 jobs.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Arithmetic on the two revisions in the July 2, 2026 release: 43,000 (May) + 31,000 (April) = 74,000. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F11",
+      "quote": "It's now at 61.5%. It went down by about 0.3%",
+      "claim": "The US labor force participation rate fell about 0.3 percentage points in June 2026 to 61.5%.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS Employment Situation, June 2026: 'The labor force participation rate decreased by 0.3 percentage point to 61.5 percent in June.' https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F12",
+      "quote": "It was down at a low of 3.4%",
+      "claim": "The US unemployment rate reached a cycle low of 3.4% before beginning to climb.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The unemployment rate hit 3.4% in January 2023 and again in April 2023, its lowest since May 1969. https://www.bls.gov/opub/ted/2023/unemployment-rate-3-4-percent-in-april-2023.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F13",
+      "quote": "It got up to about 4.3, 4.4%. It's down at 4.2%",
+      "claim": "After that low the US unemployment rate rose to about 4.3-4.4% and has since come down to 4.2% [in June 2026].",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "The June 2026 rate of 4.2% is exact: BLS reported 'the unemployment rate, at 4.2 percent, and the number of unemployed people, at 7.1 million, changed little in June.' The stated peak understates it: the rate ran 4.3-4.5% from mid-2025 into early 2026, reaching a four-year high near 4.5% around November 2025 before easing. https://www.bls.gov/news.release/archives/empsit_07022026.htm and https://www.bls.gov/opub/ted/2026/unemployment-rate-unchanged-at-4-3-percent-in-may-2026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F14",
+      "quote": "There's 7.1 million people considered unemployed",
+      "claim": "There were 7.1 million people counted as unemployed in the United States [in June 2026].",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS Employment Situation, June 2026: 7,094,000 unemployed, which the release itself rounds to 7.1 million. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F15",
+      "quote": "That means they've actively looked for a job in the last 4 weeks",
+      "claim": "To be counted as unemployed by BLS, a person must have actively looked for work in the last 4 weeks; someone without a job who has not looked is counted as not in the labor force rather than unemployed.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS definition: people are classified as unemployed if they do not have a job, have actively looked for work in the prior 4 weeks, and are currently available for work; those who want a job but have not searched recently are not in the labor force. The video omits the availability condition but states the search test correctly. https://www.bls.gov/cps/cps_htgm.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F16",
+      "quote": "So there's 6 million people not in the labor force",
+      "claim": "There are 6 million people not in the labor force who want a job [as of June 2026].",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS Employment Situation, June 2026: 'the number of people not in the labor force who currently want a job changed little at 6.0 million.' The BLS category is defined by wanting a job, not strictly by the 4-week search test the video attaches to it, but the figure is exact. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F17",
+      "quote": "that's another 4.7 million people that want that full-time work",
+      "claim": "Another 4.7 million people are working part time but want full-time work [as of June 2026], and are counted as employed rather than unemployed.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS Employment Situation, June 2026: 'The number of people employed part time for economic reasons changed little at 4.7 million in June' (4,681,000). People working part time are counted as employed, as the video says. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F18",
+      "quote": "you're at 13.1 million people that do want a job",
+      "claim": "Adding the 7.1 million unemployed and the 6 million out of the labor force who want a job gives 13.1 million people who want a job.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Arithmetic on the June 2026 BLS figures: 7.1 million + 6.0 million = 13.1 million. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F19",
+      "quote": "there's about 7.7% of people that are not employed, but want a job",
+      "claim": "About 7.7% of people are not employed but want a job, counting both those who have looked for work in the last 4 weeks and those who have not.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "The figure reproduces on the video's own inputs: 13.094 million / 169.358 million civilian labor force = 7.73%. But the denominator is inconsistent with the numerator, since the 6.0 million who want a job are by definition outside the labor force; adding them to the base (169.358 + 6.0 = 175.4 million) gives 7.47%. Either way the rate is real and near 7.5-7.7%, but the exact 7.7% depends on a base that excludes people it counts on top. Labor force level: https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F20",
+      "quote": "is closer to about 10 and 1/2%",
+      "claim": "Counting everyone who wants full-time work and does not have it (unemployed, out of the labor force but wanting a job, and involuntary part-timers) gives a rate closer to about 10.5%.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "Reproduces on the video's inputs: (7.094 + 6.0 + 4.681) million / 169.358 million = 10.5%. It is not the official broad measure, though: BLS U-6 for June 2026 was 7.9%, because U-6 counts only the roughly 1.5-2 million marginally attached rather than all 6.0 million who want a job, and puts them in the denominator too. The video's number is arithmetically sound but is a wider gauge than the published one it will be compared against. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F21",
+      "quote": "it's about one in four people have been unemployed for at least 6 months or more",
+      "claim": "About one in four unemployed people have been unemployed for at least 6 months (27 weeks or more) [as of June 2026].",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "BLS Employment Situation, June 2026: 'The long-term unemployed accounted for 27.3 percent of all unemployed people in June' (1,937,000). 27.3% is nearer to one in 3.7 than to one in four, so 'about one in four' rounds the wrong way slightly but is in the right neighbourhood. https://www.bls.gov/news.release/archives/empsit_07022026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F22",
+      "quote": "There were 7.6 million jobs reported as being open and available",
+      "claim": "The JOLTS report released June 30, 2026 showed 7.6 million job openings, 5.2 million hires and 5.1 million total separations.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BLS JOLTS released June 30, 2026 (May 2026 data): job openings 7.6 million, hires 5.2 million, total separations 5.1 million, all little changed from April. Release date also matches. https://www.bls.gov/news.release/archives/jolts_06302026.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F23",
+      "quote": "That's about 2.4 million jobs are left unfilled",
+      "claim": "Subtracting the 5.2 million hires from the 7.6 million job openings shows about 2.4 million jobs left unfilled, roughly a third of jobs left open each month.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "The arithmetic is right (7.6 - 5.2 = 2.4, and 2.4 / 7.6 = 32%) but the two figures are not comparable quantities. JOLTS openings are a stock counted on the last business day of the month; hires are a flow over the whole month, and a hire can fill an opening that did not exist at month-end. Subtracting one from the other does not yield a count of jobs that went unfilled, and openings carry over between months by construction. https://www.bls.gov/jlt/jltfaq.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F24",
+      "quote": "the likelihood that it's a a ghost or a fake job uh goes up infinitely higher",
+      "claim": "A job posting that has been open for more than a month is far more likely to be a ghost or fake job than one posted a week or two ago.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "unverifiable"
+      ],
+      "basis": "Directionally supported: a study of more than 175,000 US job listings found roughly one in seven postings stays active beyond 30 days and treats that persistence as the ghost-job signal, and surveys put the overall ghost-job share somewhere between 18% and 30%. No source found quantifies the increase in likelihood as a function of posting age, and 'infinitely higher' is rhetorical rather than measurable. https://www.forbes.com/sites/rachelwells/2026/04/09/1-in-7-job-postings-are-ghost-jobs-new-study-reveals-here-are-3-steps-to-avoid-fake-job-ads/",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F25",
+      "quote": "They decided to hold interest rates steady at 3.5% to 3.75%",
+      "claim": "At its June 2026 meeting the FOMC held the federal funds target range steady at 3.5% to 3.75%.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "FOMC statement, June 17, 2026: 'the Committee decided to maintain the target range for the federal funds rate at 3-1/2 to 3-3/4 percent,' a unanimous decision. The meeting ran June 16-17, so the video's 'On June 17th' is the announcement day rather than the whole meeting. https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F26",
+      "quote": "a lot of people were hoping with the new Fed chair",
+      "claim": "There is a new Federal Reserve chair as of the June 2026 meeting, and many expected him to cut interest rates.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Kevin Warsh was sworn in as Fed chair on May 22, 2026, succeeding Jerome Powell; June 17, 2026 was his first meeting as chair. https://www.pbs.org/newshour/politics/senate-confirms-trump-pick-warsh-as-chairman-of-the-federal-reserve-following-powell",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F27",
+      "quote": "so 2.0% is not his inflation target",
+      "claim": "The new Fed chair signalled that 2.0% is not his inflation target, unlike the previous chair's.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "false",
+      "tolerance": [
+        "false",
+        "misleading"
+      ],
+      "basis": "The opposite of what he said. Asked at the June 17, 2026 press conference whether the framework review would revisit the 2% target, Warsh answered: 'that is the Federal Reserve's long-held objective of 2 percent. You've heard me say before, I tend to focus on the left of the decimal point. Well, the two is the left of the decimal point. For now, zero is to the right. I see no reason until we have reestablished our commitment and ability to deliver on the 2 percent inflation objective to revisit that.' He reaffirmed 2.0%, and at his July 29, 2026 press conference said there is no soft inflation target. https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20260617.pdf",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F28",
+      "quote": "whether it's two or 2.5 or 2.9",
+      "claim": "The new Fed chair said the first digit is what matters, so an inflation rate of 2, 2.5 or 2.9 would all be acceptable to him.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "false",
+      "tolerance": [
+        "false",
+        "misleading"
+      ],
+      "basis": "Warsh's 'left of the decimal point' remark at the June 17, 2026 press conference said that the 2 is the left of the decimal point and 'for now, zero is to the right' - that is, the target is exactly 2.0, not any number beginning with 2. The video reads the remark as granting a 2.0-to-2.9 tolerance band, which inverts it. https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20260617.pdf",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F29",
+      "quote": "They said that they want to maintain ample reserves",
+      "claim": "The June 2026 FOMC said it wants to maintain ample reserves in the banking system.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "June 17, 2026 FOMC statement: 'The Committee also reaffirmed its policy of maintaining ample reserves in the banking system.' https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F30",
+      "quote": "they're buying up that 0 to 3-year T-bills",
+      "claim": "To maintain ample reserves the Fed is buying Treasury securities in the 0 to 3-year maturity range.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "The June 17, 2026 Implementation Note directs the Desk to increase SOMA holdings 'through purchases of Treasury bills' and to reinvest agency principal in Treasury bills. Treasury bills mature in one year or less by definition, so the purchases are shorter-dated than the stated 0-to-3-year range; no 3-year maturity appears anywhere in the statement or implementation note. https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a1.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F31",
+      "quote": "inflation is elevated, capital investment productivity are strong",
+      "claim": "The June 2026 FOMC characterized inflation as elevated, capital investment and productivity as strong, unemployment as steady, and economic activity as having expanded.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "June 17, 2026 FOMC statement and the chair's opening remarks: 'Economic activity is expanding at a solid pace despite elevated uncertainty'; 'Productivity growth and capital investment - both strong'; 'Job gains have kept pace with the workforce, and the unemployment rate has changed little'; 'Inflation remains elevated relative to the Committee's 2 percent goal.' An accurate paraphrase of all four points. https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F32",
+      "quote": "17 out of the 18 people",
+      "claim": "In the June 2026 dot plot, 17 of the 18 FOMC participants projected the policy rate to stay the same or rise in 2026, and only one projected a cut.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The June 2026 Summary of Economic Projections had 18 participants: 9 projected a higher year-end 2026 rate (1 at +75bp, 5 at +50bp, 3 at +25bp), 8 projected no change, and 1 projected a 25bp cut - 17 at or above the current range. The median 2026 year-end projection rose to 3.8%, above the 3.5-3.75% target range, and the chair said at the press conference that nine members wanted a rate increase by year-end. https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20260617.pdf",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F33",
+      "quote": "there's a risk that we're going to raise interest rates this year",
+      "claim": "There is a risk the Fed will raise interest rates before the end of 2026.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Forward-looking statement about a policy decision that had not happened at the time of labeling; not resolvable as true or false.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F34",
+      "quote": "first quarter 2026 was revised to 2.1%",
+      "claim": "First quarter 2026 US GDP growth was revised to 2.1% [in the BEA release of June 25, 2026].",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BEA third estimate for Q1 2026, released June 25, 2026: real GDP increased at an annual rate of 2.1%, revised up from 1.6% in the second estimate. Release date also matches. https://www.bea.gov/news/2026/gdp-third-estimate-industries-corporate-profits-state-gdp-and-state-personal-income-1st",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F35",
+      "quote": "GDP now has dropped their estimate fairly significantly",
+      "claim": "The Atlanta Fed's GDPNow estimate for second quarter 2026 dropped significantly, to plus 1.2% [as of July 1, 2026].",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Atlanta Fed GDPNow for Q2 2026 fell to 1.2% on July 1, 2026, from 2.5% on June 25, 2026, on a weaker nowcast for private domestic investment and net exports. Both the level and the characterization of a significant drop hold. https://www.atlantafed.org/research-and-data/data/gdpnow/current-and-past-gdpnow-commentaries",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F36",
+      "quote": "personal income is up 0.7% up 181 billion",
+      "claim": "[In the June 25, 2026 BEA release for May 2026] personal income rose 0.7%, or 181 billion dollars, and consumer spending also rose 0.7%, or 156 billion dollars, absorbing most of the income gain.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BEA Personal Income and Outlays, May 2026: personal income increased 0.7%, or $181.6 billion; PCE increased 0.7%, or $156.1 billion, so spending did absorb most of the increase. https://www.bea.gov/news/2026/personal-income-and-outlays-may-2026",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F37",
+      "quote": "Really, it's in finance, insurance, health care, housing, utilities, gas, energy",
+      "claim": "[In the same release] the increase in consumer spending was concentrated in finance, insurance, health care, housing, utilities, gas and energy.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BEA Personal Income and Outlays, May 2026: of the $156.1 billion spending increase, $94.3 billion was services, led by financial services and insurance (+$22.3 billion), health care (+$22.3 billion) and housing and utilities (+$21.1 billion); the largest goods contributor was gasoline and other energy goods (+$14.6 billion). Every category the video names appears among the leaders. https://www.bea.gov/news/2026/personal-income-and-outlays-may-2026",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F38",
+      "quote": "the personal savings rate is going up slightly. It's at 3%",
+      "claim": "[In the same release] the personal saving rate rose slightly, to 3%.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "BEA reported a personal saving rate of 3.0% for May 2026, up from 2.6% in April 2026, so the level is exact and the direction is right, though a 0.4 point move is a larger step than 'slightly' suggests. https://www.bea.gov/news/2026/personal-income-and-outlays-may-2026 and https://www.bea.gov/news/2026/personal-income-and-outlays-april-2026",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F39",
+      "quote": "I would prefer that to be closer like 15% for example",
+      "claim": "The narrator's view is that a 3% personal saving rate is very small and that a saving rate closer to 15% would be preferable.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "A stated personal preference about how much people should save, not a factual claim with a truth value to check.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F40",
+      "quote": "Month-over-month, we're up 10.5%. Year-over-year, we're down 18.5%",
+      "claim": "The University of Michigan consumer survey [released June 26, 2026] showed the Index of Consumer Sentiment up 10.5% month over month and down 18.5% year over year, Current Economic Conditions up 4.1% and down 26.4%, and the Index of Consumer Expectations up 15% and down 12.7%.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Michigan final June 2026: Sentiment 49.5 against 44.8 in May and 60.7 in June 2025 (+10.5%, -18.5%); Current Conditions 47.7 against 45.8 and 64.8 (+4.1%, -26.4%); Expectations 50.7 against 44.1 and 58.1 (+15.0%, -12.7%). All six percentages reproduce from the published levels. https://www.advisorperspectives.com/dshort/updates/2026/06/26/consumer-sentiment-rises-on-cheaper-gas-but-inflation-worries-persist",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F41",
+      "quote": "current financial situation, there's more people thinking it's bad rather than good",
+      "claim": "In the June 30, 2026 consumer confidence data, more people rated their current family financial situation bad than good, while overall confidence was slightly up and the labor component was down.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "The Conference Board Consumer Confidence release of June 30, 2026 says consumers' net views of their family's current financial situation deteriorated for a third straight month, 'with virtually the same portion saying conditions are Good versus Bad.' That is a net view right at the crossover rather than a clear majority saying bad; the underlying good/bad percentages were not retrievable. The surrounding claims do check out: the headline index rose 0.6 points to 91.2, and the labor differential narrowed to its lowest since February 2021, with 'jobs hard to get' at 22.5%, the highest since January 2021. https://www.prnewswire.com/news-releases/us-consumer-confidence-inched-up-in-june-302814510.html",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F42",
+      "quote": "This is the first time I've seen this crossover since 2022",
+      "claim": "The good-versus-bad crossover in consumers' assessment of their current financial situation is the first since 2022.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "plausible"
+      ],
+      "basis": "Searched the June 30, 2026 Conference Board release and its coverage for a stated historical comparison on the family-financial-situation net reading; the release gives no first-since date for it (its explicit records are elsewhere: 'jobs hard to get' at its highest since January 2021, the labor differential at its lowest since February 2021). The claim is also framed as the speaker's own observation, so no published series was found to check it against. https://www.prnewswire.com/news-releases/us-consumer-confidence-inched-up-in-june-302814510.html",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F43",
+      "quote": "back in 2022, this is when the Fed raised interest rates",
+      "claim": "In 2022 the Fed raised interest rates, inflation was high, and the Russia-Ukraine conflict began.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "All three happened in 2022: the FOMC began its hiking cycle in March 2022 and raised rates seven times that year, CPI inflation peaked at 9.1% in June 2022, and Russia invaded Ukraine in February 2022. https://www.federalreserve.gov/monetarypolicy/openmarket.htm",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F44",
+      "quote": "construction spending increased by 0.1%",
+      "claim": "[In the Census release of July 1, 2026] construction spending increased 0.1% month over month with a margin of error of plus or minus 0.7%, so the change could be negative or positive, and is down 1.5% year over year with a margin of plus or minus 1.3%, so the annual decline holds across the band.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Census Bureau construction spending release of July 1, 2026 (May 2026 data): 'Construction spending during May 2026 was estimated at a seasonally adjusted annual rate of $2,210.2 billion, 0.1 percent (plus or minus 0.7 percent) above the revised April estimate... The May figure is 1.5 percent (plus or minus 1.3 percent) below the May 2025 estimate.' The monthly margin exceeds the estimate so its sign is indeterminate, while 1.3 is smaller than 1.5 so the annual decline stays negative across the band, both exactly as the video says. https://www.census.gov/construction/c30/pdf/pr202605.pdf",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F45",
+      "quote": "manufacturing is expanding, but they're growing at a slower pace",
+      "claim": "[In the ISM report released July 1, 2026] the overall economy and manufacturing were both expanding but growing at a slower pace, and the employment index had been contracting for a while.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "ISM Manufacturing PMI for June 2026: 53.3%, down 0.7 point from May, manufacturing expanding for a sixth consecutive month and the overall economy for a twentieth; expansion at a slower rate is exactly what a lower but above-50 reading means. The employment index was 49.7%, below 50 for a 33rd consecutive month, so 'contracting for a while' also holds. https://www.prnewswire.com/news-releases/manufacturing-pmi-at-53-3-june-2026-ism-manufacturing-pmi-report-302814991.html",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F46",
+      "quote": "New orders, this is the first month it's actually contracted in some time",
+      "claim": "[In the same ISM report] the new orders index contracted, for the first time in some time.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "false",
+      "tolerance": [
+        "false",
+        "misleading"
+      ],
+      "basis": "New orders were expanding, not contracting. The ISM Manufacturing New Orders Index for June 2026 was 56.0%, down 0.8 point from May's 56.8% but well above the 50 breakeven, its sixth consecutive month of expansion. The video appears to have read a decline in the index level as a move into contraction. https://www.prnewswire.com/news-releases/manufacturing-pmi-at-53-3-june-2026-ism-manufacturing-pmi-report-302814991.html",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F47",
+      "quote": "people borrow money in Yen and then convert it",
+      "claim": "In the yen carry trade, investors borrow in yen, convert to US dollars and buy US assets, and a yen move, a Bank of Japan rate rise or a falling stock market can force them to unwind and pull billions out of US markets.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "An accurate description of the mechanism and its three standard triggers. The pattern was demonstrated again shortly after this video: the Bank of Japan raised rates in late July 2026, the yen rallied, and a carry-trade unwind followed. https://www.economicshelp.org/blog/glossary/yen-carry-trade/",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F48",
+      "quote": "this is leading Iran to blockade the Strait of Hormuz",
+      "claim": "Iran is blockading the Strait of Hormuz, and with it closed energy prices are high.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "Iran did block the strait during the 2026 crisis, but a US-Iran memorandum of understanding signed June 17, 2026 restored safe passage for 60 days, so the strait was nominally open on the July 4-5 publication date rather than closed. Iran resumed attacks on commercial vessels on July 6-7, 2026, after this video. The video does hedge it as 'on again, off again', but the present-tense 'with that being closed' is not the state of the strait that week. https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis and https://www.axios.com/2026/07/07/iran-resumes-hormuz-attacks-us-officials",
+      "rot": "dated",
+      "pair": "F49"
+    },
+    {
+      "id": "F49",
+      "quote": "which is about 20% of the world's oil goes through this area",
+      "claim": "About 20% of the world's oil passes through the Strait of Hormuz.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "EIA: oil flow through the Strait of Hormuz averaged 21 million b/d in 2022, about 21% of global petroleum liquids consumption and more than a quarter of seaborne traded oil. 'About 20%' is the standard figure. https://www.eia.gov/todayinenergy/detail.php?id=61002",
+      "rot": "stable",
+      "pair": "F48"
+    },
+    {
+      "id": "F50",
+      "quote": "they are building pipelines to try to circumvent this whole issue",
+      "claim": "Middle Eastern countries are building pipelines to get oil out without going through the Strait of Hormuz.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable",
+        "plausible"
+      ],
+      "basis": "Bypass pipelines exist and are documented by EIA (Saudi Arabia's East-West line at 5 million b/d, the UAE's Habshan-Fujairah line at 1.5 million b/d, Iran's Goreh-Jask line at 0.3 million b/d, together about 3.5 million b/d of unused bypass capacity), but all three predate the 2026 crisis. No source was located for new pipeline construction begun in response to it, which is what the present tense 'are building' asserts. https://www.eia.gov/todayinenergy/detail.php?id=61002",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F51",
+      "quote": "this is now dropping below 320 million barrels",
+      "claim": "The US Strategic Petroleum Reserve is now dropping below 320 million barrels and falling every day.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "EIA weekly SPR stocks: 331.2 million barrels on June 20, 2026, 325.7 million on June 27, and 319.5 million on July 4, 2026, so the reserve crossed below 320 million right at this video's publication date and was declining week over week. https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCSSTUS1&f=W",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F52",
+      "quote": "this is the lowest it's been since the 1980s",
+      "claim": "The Strategic Petroleum Reserve is at its lowest level in about 40 years, the lowest since the 1980s.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The SPR was reported at its lowest level since 1983 in June 2026, and fell below 300 million barrels by August 2026, still the lowest since 1983. 2026 minus 1983 is 43 years, consistent with both 'about 40 years' and 'since the 1980s'. https://www.cnbc.com/2026/06/15/iran-deal-came-in-time-as-strategic-petroleum-reserve-hits-lowest-level-since-1983.html",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F53",
+      "quote": "they need to keep a roughly 100 hundred something uh million barrels",
+      "claim": "The SPR salt caverns need to hold roughly 100-something million barrels or they will collapse.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "The hard physical floor is lower than stated: reporting sourced to the Department of Energy puts the minimum needed to keep the extraction pipes submerged in oil at roughly 70 million barrels, about 10% of capacity. Separately a petroleum engineer quoted in the same coverage put the practical safe operating minimum nearer 250 million barrels. The video's hedged 'roughly 100 something' sits between the two and matches neither, but is the right order of magnitude and correctly identifies that a floor exists for cavern integrity. https://www.hydrocarbonprocessing.com/news/2026/08/depleted-us-spr-loses-potency-as-iran-war-grinds-on/",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F54",
+      "quote": "Morgan Stanley has started to limit some of their withdrawals",
+      "claim": "Morgan Stanley has limited withdrawals from its private credit funds, so investors cannot pull all their money out.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "Morgan Stanley's North Haven Private Income Fund capped quarterly repurchases at 5% of shares after about 10.9% of shares were tendered in the first quarter of 2026 (investor letter dated March 11, 2026), filling less than half of requests, and gated again in the second quarter when 11.6% was requested. The video does not date the gating, and the substance holds. https://finance.yahoo.com/news/morgan-stanley-north-haven-bdc-115306949.html",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F55",
+      "quote": "we had SpaceX come out",
+      "claim": "SpaceX went public in an IPO in the summer of 2026.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "SpaceX priced its IPO at $135 a share on June 12, 2026, raising roughly $75 billion at an initial valuation near $1.77 trillion, the largest IPO on record. https://www.cnbc.com/2026/06/12/spacex-stock-jumps-2-trillion.html",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F56",
+      "quote": "It's usually like, you know, half a year",
+      "claim": "IPO lockup periods are usually about half a year, sometimes a few weeks to a year, and after the lockup ends the price tends to fall for a period as insider supply arrives and hype-driven demand fades.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The standard IPO lockup bars insiders from selling for 180 days after the offering, the half-year the video names, with shorter and longer terms both in use. Lockup expirations are associated on average with statistically significant negative abnormal returns, on the order of -1.5% over three to five days and 3-4% for venture-backed high-tech firms, alongside a roughly 40% permanent rise in trading volume: direction and mechanism both match, though the magnitude is smaller than the video implies. https://onlinelibrary.wiley.com/doi/abs/10.1111/0022-1082.00334",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F57",
+      "quote": "currently gold is trading at $4,193 per ounce",
+      "claim": "Gold is currently trading at $4,193 per ounce.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "misleading"
+      ],
+      "basis": "Documented spot gold on July 2, 2026, the last full session before this video, ran roughly $4,123 to $4,141 an ounce, so $4,193 is about 1.3% to 1.7% above the recorded spot range for the week. It is in the right neighbourhood and could be a futures quote or an intraday print, but no source was found showing spot at $4,193. https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-thursday-july-2-2026-prices-break-above-4100-following-a-disappointing-june-jobs-report-120224733.html",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F58",
+      "quote": "all of the US gold that the US holds is at $42 an ounce",
+      "claim": "US gold reserves are carried on the books at a statutory value of $42 an ounce, worth about 11 billion dollars in total.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The Treasury's gold report states the book value is the number of fine troy ounces multiplied by a value established by law, $42.2222 an ounce, set in 1973. At roughly 261.5 million fine troy ounces that is about $11.0 billion, matching the video's '11 something billion'. https://fiscal.treasury.gov/reports-statements/gold-report/",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F59",
+      "quote": "gaining a little bit more than 1.1 trillion uh in gains",
+      "claim": "Revaluing US gold from the statutory $42 an ounce to the current market price would produce a gain of a little more than 1.1 trillion dollars.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "Arithmetic on the video's own inputs: 261.5 million fine troy ounces at $4,193 is about $1.0965 trillion, less the $11.0 billion book value, is a gain of about $1.085 trillion. That is a little under 1.1 trillion rather than a little over, but rounds to the same figure. https://fiscal.treasury.gov/reports-statements/gold-report/",
+      "rot": "stable",
+      "pair": "F60"
+    },
+    {
+      "id": "F60",
+      "quote": "which is 1.2 trillion uh dollars effectively",
+      "claim": "That gold revaluation gain works out to 1.2 trillion dollars.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "false"
+      ],
+      "basis": "It does not. On the same inputs the total market value of the holdings is about $1.0965 trillion and the gain about $1.085 trillion; neither reaches $1.2 trillion, which overstates the figure by roughly 10%. The two numbers in this one sentence, 1.1 trillion and 1.2 trillion, cannot both be right, and only the first is close. https://fiscal.treasury.gov/reports-statements/gold-report/",
+      "rot": "stable",
+      "pair": "F59"
+    },
+    {
+      "id": "F61",
+      "quote": "I would expect our inflation numbers to go up even faster",
+      "claim": "If the US revalued its gold and put roughly a trillion dollars into the economy, inflation would rise even faster.",
+      "type": "prediction",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Forward-looking prediction conditional on a policy that has not happened; not resolvable as true or false at the time of labeling.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F62",
+      "quote": "bond value is inversely proportional to the interest rate",
+      "claim": "Bond values move inversely to interest rates: when rates rise bond values fall, and when rates fall bond values rise.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "The inverse relationship between bond prices and yields is standard fixed-income arithmetic, since a bond's price is the present value of fixed cash flows discounted at the prevailing rate. 'Inversely proportional' is loose language for what is an inverse but not strictly proportional relationship, and the direction the video states is right. https://www.investor.gov/introduction-investing/investing-basics/glossary/interest-rate-risk-when-interest-rates-go-bond",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F63",
+      "quote": "insured up to their limit of about 250,000",
+      "claim": "FDIC deposit insurance covers up to about 250,000 dollars.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The FDIC standard maximum deposit insurance amount is $250,000 per depositor, per insured bank, per ownership category, unchanged since 2008. https://www.fdic.gov/resources/deposit-insurance/faq",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F64",
+      "quote": "get out of debt, first thing to do",
+      "claim": "The narrator's advice is that getting out of debt is the first thing to do, though a fixed-rate, low-interest primary mortgage is acceptable to keep.",
+      "type": "opinion",
+      "load_bearing": false,
+      "label": null,
+      "tolerance": [],
+      "basis": "Personal financial advice and a stated preference, not a checkable factual claim.",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "F65",
+      "quote": "These are currently at like 3 and 1/2, 4% is what I've been getting",
+      "claim": "The narrator is currently getting about 3.5% to 4% on his high-yield CDs and savings accounts.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "unverifiable"
+      ],
+      "basis": "The rates on his own accounts are private, but the range is consistent with the market in July 2026, when top high-yield savings accounts advertised roughly 4.2% to 5.0% and leading CDs about 4.3% to 4.4%; 3.5% to 4% sits just below the best available offers. https://fortune.com/article/best-savings-account-rates-7-2-2026/",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "F66",
+      "quote": "I'm putting 70 to 80% to the S&P 500",
+      "claim": "The narrator allocates 70 to 80% of his long-term money to the S&P 500, 10 to 20% to a total international fund and 0 to 10% to bonds, and currently holds about 8% in bonds.",
+      "type": "anecdote",
+      "load_bearing": false,
+      "label": "unverifiable",
+      "tolerance": [
+        "unverifiable"
+      ],
+      "basis": "A description of the speaker's own private portfolio, with no public record to check it against. Unverifiable by construction.",
+      "rot": "dated",
+      "pair": null
+    }
+  ]
+}

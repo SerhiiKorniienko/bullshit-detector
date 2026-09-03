@@ -1,0 +1,265 @@
+{
+  "schema": "bullshit-detector/eval-case@1",
+  "id": "clawwork-ai-salary-tweet",
+  "source_url": "https://x.com/dr_cintas/status/2086566494561828999",
+  "source_title": "Researchers built an AI that has to earn its own salary or go bankrupt.",
+  "source_words": 134,
+  "fetched": "2026-09-02",
+  "labeled": "2026-09-02",
+  "labeled_by": "draft - pending owner review",
+  "review_by": "2027-03-02",
+  "prior_readings": [
+    "examples/0.14.0/report-clawwork-ai-salary-tweet.md"
+  ],
+  "claims": [
+    {
+      "id": "T1",
+      "quote": "Researchers built an AI that has to earn its own salary or go bankrupt",
+      "claim": "[Academic] researchers built an AI [ClawWork] that has to earn its own salary or go bankrupt.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "Researchers: yes. ClawWork was published on 2026-02-15 by the GitHub org HKUDS, whose display name is 'Data Intelligence Lab@HKU' and whose org link points at HKU faculty member Chao Huang (https://github.com/HKUDS). The 'built an AI' half is looser: ClawWork is a harness around off-the-shelf models rather than a new model, its leaderboard rows are Qwen3.5-Plus, Gemini 3.1 Pro Preview, GLM-4.7, Kimi-K2.5 and DeepSeek, and the shipped default agent is gpt-4o. The salary and the bankruptcy are entries in a simulated ledger: the Quick Start calls the main path 'Mode 1: Standalone Simulation' and the agent config sets 'initial_balance': 10.0, so no real money is earned or lost. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T2",
+      "quote": "Starts with $10",
+      "claim": "[The ClawWork agent] starts with a balance of $10.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "ClawWork README, Economic System section: 'Initial balance: $10', described as tight by design. Every row of the README leaderboard shows a Starter column of $10.00, and livebench/configs sets 'initial_balance': 10.0. It is a simulated ledger balance, not a funded wallet, but the figure is the vendor's own. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T3",
+      "quote": "pays for every token it uses out of that balance",
+      "claim": "[The ClawWork agent] pays for every token it uses out of its starting balance.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "ClawWork README, Economic System: 'Token costs: deducted automatically after each LLM call', plus web search API costs of $0.0008/call (Tavily). Per-task records in token_costs.jsonl carry llm_usage, api_usage and balance_after. The 2026-02-20 news entry states token costs are read directly from API responses including thinking tokens rather than estimated. The deduction is against the simulated ledger; the actual API invoice is charged to the operator's key. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T4",
+      "quote": "$10K earned. 7 hours.",
+      "claim": "A ClawWork agent earned $10,000 in 7 hours.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "The repo README headline read '$10K in 7 Hours' at commit 1195297a, dated 2026-02-19: https://github.com/HKUDS/ClawWork/blob/1195297a/README.md. The figure is stale by the tweet's date of 2026-08-09: the README's last commit is 2026-03-03 and its headline by then read '$19K in 8 Hours', while the repo description reads '$15K earned in 11 Hours'. It remains inside what the project reports (leaderboard row ATIC-DEEPSEEK, balance $10,877.01 at $2,579.16/hr). Self-reported simulated income; no independent replication found.",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "T5",
+      "quote": "Zero human input.",
+      "claim": "The ClawWork run that produced the headline earnings involved zero human input.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "The execution loop is autonomous: the README daily loop is receive task, decide work or learn, execute, earn or deduct, persist, with 8 agent tools and LLM grading rather than a human grader. Three qualifiers stop this being flatly confirmed: the GDPVal tasks were written and vetted by human professionals, a human must supply API keys and launch the run (OPENAI_API_KEY is marked Required), and the published results are author-reported with the site 'periodically synced to this repo', so nothing external audits the no-human-in-the-loop condition. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T6",
+      "quote": "Gets real tasks: finance reports, healthcare docs, legal analysis",
+      "claim": "ClawWork assigns real professional tasks including finance reports, healthcare documents and legal analysis.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "ClawWork README: '4 Domains: Technology & Engineering, Business & Finance, Healthcare & Social Services, and Legal Operations'. The sector table lists Financial Analysts and Compliance Officers (Professional Services), Financial Managers and Auditors (Finance & Insurance), and Social Workers and Health Administrators (Healthcare). GDPval tasks are real work products such as a legal brief or a nursing care plan. https://github.com/HKUDS/ClawWork and https://arxiv.org/abs/2510.04374",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T7",
+      "quote": "Creates full deliverables from scratch",
+      "claim": "The ClawWork agent creates full work deliverables from scratch.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "ClawWork README, Task Types: 'Tasks require real deliverables: Word documents, Excel spreadsheets, PDFs, data analysis, project plans, technical specs, research reports, and process designs'. The agent tool list includes create_file for .txt, .xlsx, .docx and .pdf, execute_code_sandbox and create_video, and submit_work takes artifact_file_paths. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T8",
+      "quote": "Graded by GPT-5.2 using profession-specific rubrics",
+      "claim": "ClawWork grades the agent's work with GPT-5.2 using profession-specific rubrics.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "plausible",
+      "tolerance": [
+        "plausible",
+        "confirmed"
+      ],
+      "basis": "The rubric half checks out: eval/meta_prompts holds category-specific evaluation rubrics and the README says there is one per GDPval sector. The grader model does not. The README markets 'Quality scoring via GPT-5.2', but livebench/work/llm_evaluator.py defaults to model = 'gpt-4o' (line 29, overridable only via an EVALUATION_MODEL env var), livebench/work/evaluator.py's docstring says 'Evaluates artifacts using GPT-4o against comprehensive rubrics', and the README's own environment table says OPENAI_API_KEY is 'used for the GPT-4o agent and LLM-based task evaluation'. Nothing in the shipped repo pins GPT-5.2, so the tweet repeats a vendor claim the vendor's code contradicts. https://github.com/HKUDS/ClawWork/blob/main/livebench/work/llm_evaluator.py",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T9",
+      "quote": "Payment = quality × estimated hours × actual BLS wage",
+      "claim": "ClawWork computes payment as quality score times estimated hours times the actual BLS hourly wage.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "ClawWork README, Payment System, verbatim: 'Payment = quality_score x (estimated_hours x BLS_hourly_wage)'. Both qualifiers in the tweet are accurate: scripts/estimate_task_hours.py is GPT-based hour estimation per task, and scripts/calculate_task_values.py computes BLS wage times hours as the task value. Stated range $82.78 to $5,004.00, average $259.45, quality score 0.0 to 1.0. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T10",
+      "quote": "Every API call drains its balance directly",
+      "claim": "Every API call the ClawWork agent makes drains its balance directly.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "ClawWork README: token costs are deducted automatically after each LLM call, and web search calls are billed at $0.0008/call (Tavily) or $0.05/1M tokens (Jina). The ClawMode integration diagram states 'TrackedProvider, every LLM call deducts from agent's balance'. 'Every API call' overreaches slightly, since only metered LLM and search calls are charged and the deduction is against a simulated ledger, but the mechanism is as described. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T11",
+      "quote": "This isn't a benchmark",
+      "claim": "ClawWork is not a benchmark.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "false",
+      "tolerance": [
+        "false",
+        "misleading"
+      ],
+      "basis": "The project calls itself a benchmark repeatedly and prominently. The README carries a shields.io badge reading 'benchmark: economic survival', feature headings 'Real-World Economic Benchmark' and 'End-to-End Professional Benchmark', a section headed 'GDPVal Benchmark Dataset', and a section headed 'Benchmark Metrics' listing survival days, final balance, profit margin and token efficiency. It runs on OpenAI's GDPval benchmark gold set. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": "T12"
+    },
+    {
+      "id": "T12",
+      "quote": "it's a survival test",
+      "claim": "ClawWork is a survival test.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The survival framing is the project's own. README feature 'Extreme Economic Pressure': agents start with just $10 and pay for every token generated, one bad task or careless search can wipe the balance, income only comes from completing quality work. The badge reads 'benchmark: economic survival', the metrics table includes 'Survival days: How long the agent stays solvent', and the console output prints a survival Status such as 'thriving'. Same sentence as T11 and the opposite verdict: it is a survival test, and it is also, explicitly, a benchmark. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": "T11"
+    },
+    {
+      "id": "T13",
+      "quote": "220 tasks across 44 professions",
+      "claim": "ClawWork covers 220 tasks across 44 professions.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "ClawWork README: '220 GDP validation tasks spanning 44 economic sectors' from the GDPval dataset, described as '220 real-world professional tasks across 44 occupations'. Primary source agrees: the GDPval paper covers 44 occupations across the top 9 sectors contributing to US GDP and open-sources a gold subset of 220 tasks, 5 per occupation. https://arxiv.org/abs/2510.04374",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T14",
+      "quote": "The best models hit $1,500+/hr equivalent",
+      "claim": "The best models in ClawWork reach the equivalent of more than $1,500 per hour.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "ClawWork README states twice that top agents achieve '$1,500+/hr equivalent' earnings, and the leaderboard as of the last sync shows pay rates above that line: ATIC-DEEPSEEK $2,579.16/hr and ATIC + Qwen3.5-Plus $2,285.31/hr, with four of seven listed agents below it. The figure is the vendor's own, derived from simulated income divided by wall clock, and no independent replication was found. https://github.com/HKUDS/ClawWork",
+      "rot": "dated",
+      "pair": null
+    },
+    {
+      "id": "T15",
+      "quote": "It also works as a live coworker inside Telegram, Discord, Slack, and WhatsApp",
+      "claim": "ClawWork also runs as a live coworker inside Telegram, Discord, Slack and WhatsApp.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed"
+      ],
+      "basis": "The ClawMode integration ships all 9 nanobot channels: 'Telegram, Discord, Slack, WhatsApp, Email, Feishu, DingTalk, MoChat, QQ', with per-channel setup steps in the integration guide and a /clawwork command for on-demand paid tasks from any connected channel. https://github.com/HKUDS/ClawWork/blob/main/clawmode_integration/README.md",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T16",
+      "quote": "where every message costs it real money",
+      "claim": "In the chat integrations, every message costs the ClawWork agent real money.",
+      "type": "factual",
+      "load_bearing": true,
+      "label": "misleading",
+      "tolerance": [
+        "misleading",
+        "plausible"
+      ],
+      "basis": "Every message is cost tracked and each response carries a cost footer, but the charge lands on a virtual balance the operator sets: clawmode_integration/README.md documents 'initialBalance' with a default of 1000.0 dollars and tokenPricing values the operator is told to 'set to match your actual model costs', so the per-token price is a configured constant in a ledger, not an invoice. The real spend is billed to the operator's API key. The agent holds no funds and cannot pay anyone, so 'costs it real money' is true of the operator and not of the agent. https://github.com/HKUDS/ClawWork/blob/main/clawmode_integration/README.md",
+      "rot": "stable",
+      "pair": null
+    },
+    {
+      "id": "T17",
+      "quote": "100% Free. Open Source.",
+      "claim": "ClawWork is 100% free and open source.",
+      "type": "factual",
+      "load_bearing": false,
+      "label": "confirmed",
+      "tolerance": [
+        "confirmed",
+        "plausible"
+      ],
+      "basis": "The repository is public and MIT licensed: the GitHub API reports license spdx_id 'MIT' for HKUDS/ClawWork and the README carries a 'license-MIT' badge. The software costs nothing to obtain or use. Running it is not free (OPENAI_API_KEY is Required, and E2B sandbox and web search keys are billed), but that is a cost of the third-party APIs, not a charge for ClawWork, and the tweet itself says the agent pays for its tokens. https://github.com/HKUDS/ClawWork",
+      "rot": "stable",
+      "pair": null
+    }
+  ]
+}
