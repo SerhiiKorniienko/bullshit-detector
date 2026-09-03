@@ -1,0 +1,130 @@
+{
+  "report": "claude-situation-2/bs-report-claude-situation.md",
+  "rows": 24,
+  "curated": 28,
+  "matched": 19,
+  "merged": 0,
+  "extraction_recall": 0.679,
+  "load_bearing_recall": 0.727,
+  "review_queue": [
+    {
+      "n": "11",
+      "text": "AI lab leaders like Sam Altman and Dario Amodei have spent years publicly predicting that huge swaths of white-collar jo"
+    },
+    {
+      "n": "16",
+      "text": "AI industry leaders have reportedly begun softening their earlier job-apocalypse predictions, shifting to language about"
+    },
+    {
+      "n": "18",
+      "text": "Switzerland's yearly economic output (GDP) is close to [$1 trillion] [02:06] A price tag near the entire yearly economic"
+    },
+    {
+      "n": "23",
+      "text": "Anthropic's Claude is 'one of the two or three smartest AI systems on Earth' [02:06] one of the two or three smartest AI"
+    },
+    {
+      "n": "24",
+      "text": "If Anthropic's revenue tracking holds around [8%] month-over-month growth or slips further, the 'stall' becomes a trend "
+    }
+  ],
+  "verdicts_scored": 18,
+  "exact_agreement": 0.556,
+  "tolerated_agreement": 0.944,
+  "qwk": 0.645,
+  "confusion": {
+    "confirmed->confirmed": 5,
+    "confirmed->misleading": 1,
+    "confirmed->plausible": 2,
+    "false->misleading": 2,
+    "misleading->misleading": 2,
+    "misleading->plausible": 2,
+    "plausible->misleading": 1,
+    "plausible->plausible": 3
+  },
+  "known_true": 13,
+  "known_true_rate": 0.538,
+  "known_true_missed_by_extraction": 5,
+  "known_false": 2,
+  "known_false_catch_rate": 1.0,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "C1": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "C11": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "C12": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "C14": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "C15": {
+      "row": "19",
+      "sim": 1.0
+    },
+    "C16": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "C17": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "C18": {
+      "row": "21",
+      "sim": 1.0
+    },
+    "C19": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "C2": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "C20": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "C23": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "C24": {
+      "row": "22",
+      "sim": 1.0
+    },
+    "C3": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "C4": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "C5": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "C6": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "C8": {
+      "row": "7",
+      "sim": 1.0
+    },
+    "C9": {
+      "row": "8",
+      "sim": 1.0
+    }
+  }
+}

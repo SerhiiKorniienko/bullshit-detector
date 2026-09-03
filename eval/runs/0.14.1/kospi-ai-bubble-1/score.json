@@ -1,0 +1,220 @@
+{
+  "report": "kospi-ai-bubble-1/bs-report-kospi-ai-bubble.md",
+  "rows": 37,
+  "curated": 60,
+  "matched": 36,
+  "merged": 8,
+  "extraction_recall": 0.733,
+  "load_bearing_recall": 0.75,
+  "review_queue": [
+    {
+      "n": "13",
+      "text": "In late June [2026], US chip stocks sold off because investors were nervous ahead of Micron's earnings [07:30][08:32] In"
+    }
+  ],
+  "verdicts_scored": 42,
+  "exact_agreement": 0.714,
+  "tolerated_agreement": 0.786,
+  "qwk": 0.532,
+  "confusion": {
+    "confirmed->confirmed": 22,
+    "confirmed->misleading": 2,
+    "confirmed->plausible": 1,
+    "false->confirmed": 1,
+    "false->false": 1,
+    "false->misleading": 1,
+    "false->plausible": 1,
+    "misleading->confirmed": 2,
+    "misleading->misleading": 3,
+    "plausible->confirmed": 2,
+    "plausible->misleading": 1,
+    "plausible->plausible": 1,
+    "unverifiable->confirmed": 1,
+    "unverifiable->unverifiable": 3
+  },
+  "known_true": 30,
+  "known_true_rate": 0.733,
+  "known_true_missed_by_extraction": 5,
+  "known_false": 4,
+  "known_false_catch_rate": 0.5,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "K1": {
+      "row": "10",
+      "sim": 0.57
+    },
+    "K10": {
+      "row": "8a",
+      "sim": 1.0
+    },
+    "K11": {
+      "row": "8b",
+      "sim": 1.0
+    },
+    "K12": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "K13": {
+      "row": "27",
+      "sim": 1.0
+    },
+    "K15": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "K16": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "K17": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "K2": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "K20": {
+      "row": "28",
+      "sim": 1.0
+    },
+    "K21": {
+      "row": "29",
+      "sim": 1.0
+    },
+    "K22": {
+      "row": "5",
+      "sim": 0.5
+    },
+    "K23": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "K24": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "K25": {
+      "row": "33",
+      "sim": 1.0
+    },
+    "K27": {
+      "row": "30",
+      "sim": 1.0
+    },
+    "K29": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "K3": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "K30": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "K31": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "K32": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "K33": {
+      "row": "31",
+      "sim": 1.0
+    },
+    "K34": {
+      "row": "19",
+      "sim": 1.0
+    },
+    "K36": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "K37": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "K39": {
+      "row": "10",
+      "sim": 0.7
+    },
+    "K4": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "K40": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "K41": {
+      "row": "17",
+      "sim": 0.8
+    },
+    "K42": {
+      "row": "17",
+      "sim": 0.92
+    },
+    "K46": {
+      "row": "21",
+      "sim": 1.0
+    },
+    "K47": {
+      "row": "22b",
+      "sim": 1.0
+    },
+    "K48": {
+      "row": "22a",
+      "sim": 1.0
+    },
+    "K49": {
+      "row": "24",
+      "sim": 1.0
+    },
+    "K5": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "K50": {
+      "row": "23",
+      "sim": 1.0
+    },
+    "K52": {
+      "row": "32a",
+      "sim": 0.92
+    },
+    "K53": {
+      "row": "32b",
+      "sim": 1.0
+    },
+    "K55": {
+      "row": "25",
+      "sim": 0.67
+    },
+    "K59": {
+      "row": "34",
+      "sim": 1.0
+    },
+    "K6": {
+      "row": "26",
+      "sim": 1.0
+    },
+    "K7": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "K8": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "K9": {
+      "row": "7",
+      "sim": 1.0
+    }
+  }
+}

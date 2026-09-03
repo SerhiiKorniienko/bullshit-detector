@@ -1,0 +1,134 @@
+{
+  "report": "claude-situation-1/bs-report-claude-situation.md",
+  "rows": 25,
+  "curated": 28,
+  "matched": 23,
+  "merged": 0,
+  "extraction_recall": 0.821,
+  "load_bearing_recall": 0.909,
+  "review_queue": [
+    {
+      "n": "6",
+      "text": "Weekly third-party tracker revisions of Anthropic's annualized revenue moved [$54 billion in late May], [$67 billion in "
+    },
+    {
+      "n": "21",
+      "text": "10 million jobs a year needed versus under 100,000 actually replaced is [not a rounding error]; it is [off by a factor o"
+    }
+  ],
+  "verdicts_scored": 22,
+  "exact_agreement": 0.591,
+  "tolerated_agreement": 0.864,
+  "qwk": 0.694,
+  "confusion": {
+    "confirmed->confirmed": 8,
+    "confirmed->misleading": 1,
+    "confirmed->plausible": 2,
+    "false->misleading": 2,
+    "misleading->misleading": 3,
+    "misleading->plausible": 2,
+    "plausible->confirmed": 2,
+    "plausible->plausible": 2
+  },
+  "known_true": 13,
+  "known_true_rate": 0.769,
+  "known_true_missed_by_extraction": 2,
+  "known_false": 2,
+  "known_false_catch_rate": 1.0,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "C1": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "C10": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "C11": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "C12": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "C13": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "C14": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "C15": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "C16": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "C17": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "C18": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "C19": {
+      "row": "19",
+      "sim": 1.0
+    },
+    "C2": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "C20": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "C21": {
+      "row": "22",
+      "sim": 1.0
+    },
+    "C22": {
+      "row": "23",
+      "sim": 1.0
+    },
+    "C23": {
+      "row": "24",
+      "sim": 1.0
+    },
+    "C24": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "C3": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "C4": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "C5": {
+      "row": "5",
+      "sim": 0.89
+    },
+    "C6": {
+      "row": "7",
+      "sim": 0.95
+    },
+    "C8": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "C9": {
+      "row": "9",
+      "sim": 1.0
+    }
+  }
+}

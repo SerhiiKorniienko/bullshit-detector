@@ -1,0 +1,235 @@
+{
+  "report": "kospi-ai-bubble-2/bs-report-kospi-ai-bubble.md",
+  "rows": 40,
+  "curated": 60,
+  "matched": 39,
+  "merged": 8,
+  "extraction_recall": 0.783,
+  "load_bearing_recall": 0.786,
+  "review_queue": [
+    {
+      "n": "38",
+      "text": "Jim Chanos is the guy who called Enron Jim Chanos, the guy who called Enron"
+    }
+  ],
+  "verdicts_scored": 46,
+  "exact_agreement": 0.609,
+  "tolerated_agreement": 0.761,
+  "qwk": 0.592,
+  "confusion": {
+    "confirmed->confirmed": 19,
+    "confirmed->not checked": 1,
+    "confirmed->plausible": 3,
+    "confirmed->unverifiable": 3,
+    "false->confirmed": 1,
+    "false->misleading": 2,
+    "false->plausible": 1,
+    "misleading->confirmed": 1,
+    "misleading->misleading": 2,
+    "misleading->plausible": 3,
+    "misleading->unverifiable": 1,
+    "plausible->plausible": 3,
+    "plausible->unverifiable": 1,
+    "unverifiable->plausible": 1,
+    "unverifiable->unverifiable": 4
+  },
+  "known_true": 30,
+  "known_true_rate": 0.667,
+  "known_true_missed_by_extraction": 4,
+  "known_false": 4,
+  "known_false_catch_rate": 0.5,
+  "laundered_merges": [
+    "pair K10+K11 merged into row 9: rated confirmed, harshest member label is severity 3"
+  ],
+  "pair_warnings": [],
+  "matches": {
+    "K1": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "K10": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "K11": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "K12": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "K13": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "K15": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "K16": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "K17": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "K2": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "K20": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "K21": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "K22": {
+      "row": "6",
+      "sim": 0.5
+    },
+    "K23": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "K24": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "K25": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "K26": {
+      "row": "19",
+      "sim": 1.0
+    },
+    "K27": {
+      "row": "22",
+      "sim": 1.0
+    },
+    "K28": {
+      "row": "21",
+      "sim": 0.75
+    },
+    "K29": {
+      "row": "23",
+      "sim": 1.0
+    },
+    "K3": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "K30": {
+      "row": "23",
+      "sim": 0.91
+    },
+    "K31": {
+      "row": "24",
+      "sim": 1.0
+    },
+    "K32": {
+      "row": "24",
+      "sim": 0.88
+    },
+    "K33": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "K34": {
+      "row": "26",
+      "sim": 0.95
+    },
+    "K36": {
+      "row": "27",
+      "sim": 1.0
+    },
+    "K37": {
+      "row": "27",
+      "sim": 1.0
+    },
+    "K38": {
+      "row": "39",
+      "sim": 1.0
+    },
+    "K39": {
+      "row": "40",
+      "sim": 0.92
+    },
+    "K4": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "K40": {
+      "row": "29",
+      "sim": 0.92
+    },
+    "K41": {
+      "row": "28",
+      "sim": 0.87
+    },
+    "K42": {
+      "row": "28",
+      "sim": 0.83
+    },
+    "K43": {
+      "row": "30",
+      "sim": 1.0
+    },
+    "K46": {
+      "row": "31",
+      "sim": 1.0
+    },
+    "K47": {
+      "row": "32",
+      "sim": 1.0
+    },
+    "K48": {
+      "row": "33",
+      "sim": 1.0
+    },
+    "K5": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "K50": {
+      "row": "34",
+      "sim": 1.0
+    },
+    "K52": {
+      "row": "35",
+      "sim": 0.92
+    },
+    "K53": {
+      "row": "35",
+      "sim": 1.0
+    },
+    "K55": {
+      "row": "36",
+      "sim": 0.91
+    },
+    "K59": {
+      "row": "37",
+      "sim": 1.0
+    },
+    "K6": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "K7": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "K8": {
+      "row": "7",
+      "sim": 1.0
+    },
+    "K9": {
+      "row": "8",
+      "sim": 0.67
+    }
+  }
+}

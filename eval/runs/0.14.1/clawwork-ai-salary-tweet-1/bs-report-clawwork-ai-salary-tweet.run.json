@@ -1,0 +1,30 @@
+{
+ "schema": "bullshit-detector/run@1",
+ "version": "0.14.0",
+ "mode": "claims-only",
+ "model": "claude-sonnet-5",
+ "effort": "xhigh",
+ "harness": "claude-code",
+ "source": "https://x.com/dr_cintas/status/2086566494561828999",
+ "report": "/tmp/eval-results/clawwork-ai-salary-tweet-1/bs-report-clawwork-ai-salary-tweet.md",
+ "started": "2026-09-03T07:22:24Z",
+ "finished": "2026-09-03T07:25:42Z",
+ "wall_seconds": 198,
+ "claims": {"extracted": 10, "checked": 10, "dropped_ambiguous": 0},
+ "source_words": 134,
+ "fetches": 7,
+ "coverage_checks": 0,
+ "tools": 30,
+ "queries": [
+  {"claim": "1", "pass": "first", "q": "ClawWork AI benchmark earn salary bankrupt"},
+  {"claim": "2", "pass": "first", "q": "ClawWork \"$10K\" \"7 hours\" earned"},
+  {"claim": "2", "pass": "follow-up", "q": "ClawWork AI coworker launch announcement \"$10,000\" OR \"$10K\" hours earned"},
+  {"claim": "2", "pass": "follow-up", "q": "ClawWork \"zero human input\" OR \"no human\" autonomous agent"},
+  {"claim": "3", "pass": "first", "q": "ClawWork \"$1,500\" hourly equivalent best model February 2026"},
+  {"claim": "4", "pass": "follow-up", "q": "GDPVal OpenAI benchmark 220 tasks 44 occupations"}
+ ],
+ "unreachable": [
+  {"claim": "2", "url": "https://x.com/huang_chao4969/status/2023282092042580015", "reason": "blocked"},
+  {"claim": "1", "url": "https://x.com/AlphaSignalAI/status/2025210523156185438", "reason": "blocked"}
+ ]
+}

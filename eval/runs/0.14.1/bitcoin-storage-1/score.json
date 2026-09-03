@@ -1,0 +1,136 @@
+{
+  "report": "bitcoin-storage-1/bs-report-bitcoin-storage.md",
+  "rows": 20,
+  "curated": 36,
+  "matched": 19,
+  "merged": 6,
+  "extraction_recall": 0.694,
+  "load_bearing_recall": 0.867,
+  "review_queue": [
+    {
+      "n": "12b",
+      "text": "The [first Coldcard hack] attacker hit the biggest wallets first [02:06] hitting the biggest wallets first"
+    }
+  ],
+  "verdicts_scored": 25,
+  "exact_agreement": 0.68,
+  "tolerated_agreement": 0.96,
+  "qwk": 0.206,
+  "confusion": {
+    "confirmed->confirmed": 17,
+    "confirmed->plausible": 3,
+    "misleading->plausible": 1,
+    "plausible->confirmed": 4
+  },
+  "known_true": 23,
+  "known_true_rate": 0.826,
+  "known_true_missed_by_extraction": 3,
+  "known_false": 0,
+  "known_false_catch_rate": null,
+  "laundered_merges": [
+    "pair W22+W23 merged into row 13: rated plausible, harshest member label is severity 2"
+  ],
+  "pair_warnings": [],
+  "matches": {
+    "W10": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "W12": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "W13": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "W14": {
+      "row": "9",
+      "sim": 0.54
+    },
+    "W16": {
+      "row": "10",
+      "sim": 0.69
+    },
+    "W17": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "W18": {
+      "row": "10",
+      "sim": 0.8
+    },
+    "W19": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "W2": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "W21": {
+      "row": "12a",
+      "sim": 0.84
+    },
+    "W22": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "W23": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "W24": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "W25": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "W26": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "W27": {
+      "row": "16",
+      "sim": 0.53
+    },
+    "W28": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "W29": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "W3": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "W30": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "W36": {
+      "row": "19",
+      "sim": 1.0
+    },
+    "W4": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "W6": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "W7": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "W9": {
+      "row": "7",
+      "sim": 1.0
+    }
+  }
+}

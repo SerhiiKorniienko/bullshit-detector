@@ -1,0 +1,205 @@
+{
+  "report": "needle-light-speed-1/bs-report-needle-light-speed.md",
+  "rows": 28,
+  "curated": 59,
+  "matched": 27,
+  "merged": 14,
+  "extraction_recall": 0.695,
+  "load_bearing_recall": 0.643,
+  "review_queue": [
+    {
+      "n": "10",
+      "text": "[The narrator] tried to scan an important document in bad lighting and got a blurry, unusable result [05:21] the last ti"
+    }
+  ],
+  "verdicts_scored": 37,
+  "exact_agreement": 0.73,
+  "tolerated_agreement": 0.784,
+  "qwk": 0.43,
+  "confusion": {
+    "confirmed->confirmed": 16,
+    "confirmed->misleading": 5,
+    "misleading->confirmed": 2,
+    "misleading->misleading": 5,
+    "misleading->plausible": 1,
+    "plausible->plausible": 5,
+    "unverifiable->confirmed": 1,
+    "unverifiable->plausible": 1,
+    "unverifiable->unverifiable": 1
+  },
+  "known_true": 27,
+  "known_true_rate": 0.593,
+  "known_true_missed_by_extraction": 6,
+  "known_false": 0,
+  "known_false_catch_rate": null,
+  "laundered_merges": [
+    "pair N56+N57 merged into row 25: rated confirmed, harshest member label is severity 2"
+  ],
+  "pair_warnings": [],
+  "matches": {
+    "N10": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "N11": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "N12": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "N15": {
+      "row": "7",
+      "sim": 0.88
+    },
+    "N18": {
+      "row": "8",
+      "sim": 0.89
+    },
+    "N19": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "N2": {
+      "row": "26",
+      "sim": 1.0
+    },
+    "N20": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "N21": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "N22": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "N23": {
+      "row": "7",
+      "sim": 0.64
+    },
+    "N24": {
+      "row": "12",
+      "sim": 0.78
+    },
+    "N25": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "N26": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "N29": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "N3": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "N33": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "N34": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "N35": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "N36": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "N38": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "N4": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "N40": {
+      "row": "7",
+      "sim": 0.62
+    },
+    "N41": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "N42": {
+      "row": "27",
+      "sim": 1.0
+    },
+    "N44": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "N45": {
+      "row": "18",
+      "sim": 0.57
+    },
+    "N48": {
+      "row": "19",
+      "sim": 1.0
+    },
+    "N49": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "N5": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "N51": {
+      "row": "21",
+      "sim": 1.0
+    },
+    "N52": {
+      "row": "21",
+      "sim": 1.0
+    },
+    "N53": {
+      "row": "22",
+      "sim": 1.0
+    },
+    "N54": {
+      "row": "23",
+      "sim": 1.0
+    },
+    "N55": {
+      "row": "24",
+      "sim": 1.0
+    },
+    "N56": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "N57": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "N59": {
+      "row": "28",
+      "sim": 1.0
+    },
+    "N6": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "N7": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "N8": {
+      "row": "5",
+      "sim": 1.0
+    }
+  }
+}

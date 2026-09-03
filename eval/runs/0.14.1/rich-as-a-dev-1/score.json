@@ -1,0 +1,87 @@
+{
+  "report": "rich-as-a-dev-1/bs-report-rich-as-a-dev.md",
+  "rows": 11,
+  "curated": 42,
+  "matched": 11,
+  "merged": 3,
+  "extraction_recall": 0.333,
+  "load_bearing_recall": 0.364,
+  "review_queue": [],
+  "verdicts_scored": 14,
+  "exact_agreement": 0.714,
+  "tolerated_agreement": 0.786,
+  "qwk": 0.5,
+  "confusion": {
+    "confirmed->confirmed": 1,
+    "confirmed->plausible": 1,
+    "plausible->misleading": 1,
+    "plausible->unverifiable": 1,
+    "unverifiable->not rated": 1,
+    "unverifiable->unverifiable": 9
+  },
+  "known_true": 2,
+  "known_true_rate": 1.0,
+  "known_true_missed_by_extraction": 0,
+  "known_false": 0,
+  "known_false_catch_rate": null,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "R1": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "R15": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "R19": {
+      "row": "4",
+      "sim": 0.57
+    },
+    "R2": {
+      "row": "2a",
+      "sim": 0.94
+    },
+    "R25": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "R28": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "R29": {
+      "row": "9",
+      "sim": 0.78
+    },
+    "R3": {
+      "row": "2b",
+      "sim": 1.0
+    },
+    "R34": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "R35": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "R36": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "R37": {
+      "row": "7",
+      "sim": 1.0
+    },
+    "R4": {
+      "row": "2a",
+      "sim": 0.5
+    },
+    "R5": {
+      "row": "4",
+      "sim": 0.5
+    }
+  }
+}

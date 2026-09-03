@@ -1,0 +1,259 @@
+{
+  "schema": "bullshit-detector/run@1",
+  "version": "0.14.0",
+  "source": "https://youtu.be/hy90LdpEUvQ",
+  "report": "/tmp/claims-only-delta/claims-2/bs-report-kospi-ai-bubble.claims.jsonl",
+  "started": "2026-09-02T18:09:00Z",
+  "finished": "2026-09-02T18:29:00Z",
+  "wall_seconds": 1200,
+  "claims": {
+    "extracted": 40,
+    "checked": 36,
+    "dropped_ambiguous": 0
+  },
+  "source_words": 4023,
+  "fetches": 0,
+  "coverage_checks": 0,
+  "tools": 78,
+  "mode": "claims-only",
+  "model": "claude-sonnet-5",
+  "effort": "xhigh",
+  "harness": "claude-code",
+  "queries": [
+    {
+      "claim": 1,
+      "pass": "first",
+      "q": "KOSPI index up 200% 12 months 2026 South Korea stock market best performing"
+    },
+    {
+      "claim": 3,
+      "pass": "first",
+      "q": "Samsung SK Hynix stock 2026 up 500% 1000% memory chip rally"
+    },
+    {
+      "claim": 8,
+      "pass": "first",
+      "q": "KOSPI crash July 2026 25% margin calls \"Black Tuesday\""
+    },
+    {
+      "claim": 28,
+      "pass": "first",
+      "q": "US margin debt percent of GDP 2026 record high highest ever"
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "KOSPI index level July 2025 around 3000 points historical"
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "\"KOSPI\" up \"200%\" OR \"199%\" 12 months 2025 2026 world's best performing stock market"
+    },
+    {
+      "claim": 3,
+      "pass": "follow-up",
+      "q": "Samsung Electronics stock price \"500%\" 2025 2026 rally SK Hynix \"1,000%\" OR \"10x\""
+    },
+    {
+      "claim": 3,
+      "pass": "follow-up",
+      "q": "Samsung Electronics stock 52-week low high 2025 2026 KRW share price low point rally peak"
+    },
+    {
+      "claim": 4,
+      "pass": "follow-up",
+      "q": "SK Hynix share price 52-week range 2025 2026 low high trough peak KRW"
+    },
+    {
+      "claim": 17,
+      "pass": "first",
+      "q": "Microsoft Google Amazon Meta AI infrastructure capex 2025 \"$376 billion\" 2026 \"$725 billion\" hyperscaler"
+    },
+    {
+      "claim": 3,
+      "pass": "follow-up",
+      "q": "Samsung Electronics stock low November 2024 49900 won rally 2025 2026 percent gain"
+    },
+    {
+      "claim": 3,
+      "pass": "follow-up",
+      "q": "\"Samsung\" stock \"500%\" OR \"up 500 percent\" 2026 AI rally claim"
+    },
+    {
+      "claim": 3,
+      "pass": "follow-up",
+      "q": "Samsung Electronics share price January 2026 start of year KRW"
+    },
+    {
+      "claim": 4,
+      "pass": "follow-up",
+      "q": "SK Hynix share price January 2026 start of year KRW low"
+    },
+    {
+      "claim": 17,
+      "pass": "follow-up",
+      "q": "hyperscaler capex 2025 \"$376 billion\" Microsoft Google Amazon Meta AI infrastructure spending Reuters CNBC"
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "KOSPI index level June 2025 2900 3000 points closing value"
+    },
+    {
+      "claim": 6,
+      "pass": "first",
+      "q": "Samsung SK Hynix combined market cap share KOSPI total index weight 56% percent"
+    },
+    {
+      "claim": 5,
+      "pass": "first",
+      "q": "S&P 500 top 10 stocks concentration percent index 2026 \"36%\""
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "KOSPI index closed at record high June 19 2026 \"9,385\" year-over-year change 12-month"
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "\"KOSPI\" \"up 197%\" OR \"up 198%\" OR \"up 199%\" OR \"up 200%\" OR \"nearly 200%\" 12 months"
+    },
+    {
+      "claim": 1,
+      "pass": "follow-up",
+      "q": "KOSPI index closing price \"June 19, 2025\" OR \"June 20, 2025\" points"
+    },
+    {
+      "claim": 9,
+      "pass": "first",
+      "q": "South Korea margin call accounts \"1.2 million\" OR \"1,200,000\" July 2026 crash brokerage"
+    },
+    {
+      "claim": 10,
+      "pass": "first",
+      "q": "South Korea stock crash \"3 trillion won\" liquidated forced selling July 2026"
+    },
+    {
+      "claim": 21,
+      "pass": "first",
+      "q": "Micron earnings June 2026 chip stocks selloff ahead of results memory"
+    },
+    {
+      "claim": 31,
+      "pass": "first",
+      "q": "Jim Chanos hyperscaler returns \"40%\" \"20%\" \"10%\" incremental dollar invested quote 2026"
+    },
+    {
+      "claim": 33,
+      "pass": "first",
+      "q": "OpenAI Anthropic share of AI compute demand \"70%\" OR \"80%\" 2026"
+    },
+    {
+      "claim": 34,
+      "pass": "first",
+      "q": "2026 IPO market cap percent of GDP record dot-com \"5%\" post-IPO"
+    },
+    {
+      "claim": 34,
+      "pass": "follow-up",
+      "q": "IPO market capitalization percent of GDP 2026 record \"12%\" Torsten Slok OR Apollo OR dot-com \"5%\""
+    },
+    {
+      "claim": 32,
+      "pass": "first",
+      "q": "OpenAI Anthropic losing \"tens of billions\" a year 2026 losses"
+    },
+    {
+      "claim": 35,
+      "pass": "first",
+      "q": "Cisco Coca-Cola 10,000 routers 2000 2,000 2001 order cut earnings NASDAQ 78%"
+    },
+    {
+      "claim": 37,
+      "pass": "first",
+      "q": "Titanic \"we have absolute confidence\" \"unsinkable\" Philip Franklin White Star Line quote 1912"
+    },
+    {
+      "claim": 35,
+      "pass": "follow-up",
+      "q": "\"Coca-Cola\" \"Cisco\" \"10,000\" routers anecdote dot-com bubble capex cut story"
+    },
+    {
+      "claim": 27,
+      "pass": "first",
+      "q": "South Korea 600 billion dollars erased Asian markets two days Japan down 4% Kospi crash contagion"
+    },
+    {
+      "claim": 30,
+      "pass": "first",
+      "q": "FINRA margin debt statistics only track traditional brokerage margin loans exclude leveraged ETFs options portfolio margin"
+    },
+    {
+      "claim": 25,
+      "pass": "first",
+      "q": "10% one day stock market drop third worst day American history 1987 Great Depression ranking"
+    },
+    {
+      "claim": 29,
+      "pass": "first",
+      "q": "margin debt GDP chart historical peaks 1968 1972 1987 2000 2007 2018 2021 preceded crash"
+    },
+    {
+      "claim": 20,
+      "pass": "first",
+      "q": "DeleteMe Wirecutter \"number one data removal service\" best pick"
+    },
+    {
+      "claim": 38,
+      "pass": "first",
+      "q": "Jim Chanos short seller \"called Enron\" reputation famous short"
+    },
+    {
+      "claim": 20,
+      "pass": "follow-up",
+      "q": "Wirecutter best data removal service 2026 top pick recommendation"
+    },
+    {
+      "claim": 34,
+      "pass": "follow-up",
+      "q": "IPO issuance record 2026 \"percent of GDP\" OR \"% of GDP\" market cap new listings bubble indicator"
+    },
+    {
+      "claim": 34,
+      "pass": "follow-up",
+      "q": "\"post-IPO market cap\" GDP ratio 2026 record dot-com bubble comparison"
+    },
+    {
+      "claim": 13,
+      "pass": "first",
+      "q": "South Korea population 51 million 2026 retail investors 14 million one in four"
+    },
+    {
+      "claim": 16,
+      "pass": "first",
+      "q": "Korea leveraged ETF single stock \"10 trillion won\" invested Samsung SK Hynix peak"
+    },
+    {
+      "claim": 2,
+      "pass": "first",
+      "q": "S&P 500 12-month return June 2026 up 24 percent year over year"
+    },
+    {
+      "claim": 22,
+      "pass": "first",
+      "q": "Micron biggest US chip maker market cap vs Nvidia Intel 2026 memory"
+    },
+    {
+      "claim": 24,
+      "pass": "follow-up",
+      "q": "KOSPI \"Black Tuesday\" July 2026 Asian markets Japan Taiwan Hong Kong billion erased contagion"
+    },
+    {
+      "claim": 39,
+      "pass": "first",
+      "q": "South Korea stock market closed national holiday July 2026 Kospi crash trading halted"
+    }
+  ]
+}

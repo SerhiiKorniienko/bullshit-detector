@@ -1,5 +1,8 @@
 # Eval harness
 
+**The current reading is in [RESULTS.md](RESULTS.md)**, with the runs behind it filed under
+`runs/<version>/` so it can be re-scored after a label review without re-running anything.
+
 The answer to "how often is it wrong" — the gap named in the Show HN post, tracked as
 [#3](https://github.com/SerhiiKorniienko/bullshit-detector/issues/3), and the reason every
 accuracy question about this tool has so far ended in "unfalsifiable". The design here
@@ -48,6 +51,19 @@ is burned for the fabrication-tell rule for exactly this reason and is deliberat
 whether the owner has reviewed them. The standing caveat from #3 stays attached: a harness
 whose labels the tool's own author wrote narrows the "author-picked content" limitation, it
 does not remove it.
+
+**Reviewing labels.** Open `cases/<id>/case.json` and read each claim as three questions.
+Is `claim` what the content actually asserts, no sharper and no softer than the `quote`? Is
+`label` what a careful person would conclude from the `basis`, and does the `basis` actually
+show it (a URL you would click, or arithmetic you can redo)? Is `tolerance` the band of
+verdicts a reasonable checker could land on, no wider? Change what you disagree with in
+place. For a `null` row, the basis names what would settle it: look it up, label it, or
+leave it null. Then set `labeled_by` to your name and the date, and run
+`uv run eval/check-cases.py cases/<id>`. Rows to weigh first: anything `false` or
+`misleading` (they carry the known-false metric), anything `load_bearing`, and the `pair`
+rows (the merge metric rests on the two halves really having opposite truth values). Do not
+read `examples/` or a run's output while reviewing; the labels anchor the runs, not the
+other way round.
 
 **The corpus is checked, not trusted.** `uv run eval/check-cases.py` loads every case with the
 scorer's own loader and asserts what a script can: each `quote` is a verbatim span of its
