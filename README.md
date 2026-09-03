@@ -21,7 +21,7 @@ Built in the open with [Claude Code](https://claude.com/claude-code) — an AI h
 
 **Installed it? GitHub can tell you when it changes.** Every new skill and rule change ships as a [release](https://github.com/SerhiiKorniienko/bullshit-detector/releases). Click **Watch → Custom → Releases** at the top of this page and GitHub emails you each one. A star is a silent bookmark; that is the setting that actually notifies you. No signup, no list, nothing to unsubscribe from.
 
-Prefer something else? Follow [@SerhiiFounder](https://x.com/SerhiiFounder), or [join the newsletter](https://korniienko.dev/newsletter).
+Prefer something else? Follow [@SerhiiFounder](https://x.com/SerhiiFounder), or [join the newsletter](https://korniienko.dev/newsletter/?utm_source=github&utm_medium=readme&utm_campaign=bullshit-detector).
 
 ## Quickstart
 
@@ -191,7 +191,7 @@ I'm building these skills in the open — new detectors, adapters, and real fact
 
 - **[Watch → Custom → Releases](https://github.com/SerhiiKorniienko/bullshit-detector/releases)**: GitHub emails you every version, straight from the repo you already cloned. Nothing to sign up for.
 - Follow [@SerhiiFounder](https://x.com/SerhiiFounder) on X
-- [Join the newsletter](https://korniienko.dev/newsletter): new skills and what broke building them, roughly monthly
+- [Join the newsletter](https://korniienko.dev/newsletter/?utm_source=github&utm_medium=readme&utm_campaign=bullshit-detector): new skills and what broke building them, roughly monthly
 
 ## License
 
