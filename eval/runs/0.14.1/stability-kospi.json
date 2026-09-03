@@ -1,0 +1,309 @@
+{
+  "runs": 3,
+  "claims": 60,
+  "unanimous": 31,
+  "unanimous_rate": 0.517,
+  "mean_distinct_verdicts": 1.62,
+  "table": {
+    "K1": [
+      "confirmed",
+      "plausible",
+      "confirmed"
+    ],
+    "K2": [
+      "confirmed",
+      "plausible",
+      "confirmed"
+    ],
+    "K3": [
+      "confirmed",
+      "unverifiable",
+      "misleading"
+    ],
+    "K4": [
+      "misleading",
+      "misleading",
+      "plausible"
+    ],
+    "K5": [
+      "misleading",
+      "confirmed",
+      "misleading"
+    ],
+    "K6": [
+      "plausible",
+      "confirmed",
+      "confirmed"
+    ],
+    "K7": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K8": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K9": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K10": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K11": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K12": [
+      "misleading",
+      "confirmed",
+      "plausible"
+    ],
+    "K13": [
+      "confirmed",
+      "confirmed",
+      "plausible"
+    ],
+    "K14": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K15": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K16": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K17": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K18": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K19": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K20": [
+      "unverifiable",
+      "unverifiable",
+      "unverifiable"
+    ],
+    "K21": [
+      "misleading",
+      "plausible",
+      "plausible"
+    ],
+    "K22": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K23": [
+      "plausible",
+      "plausible",
+      "plausible"
+    ],
+    "K24": [
+      "confirmed",
+      "confirmed",
+      "plausible"
+    ],
+    "K25": [
+      "confirmed",
+      "plausible",
+      "confirmed"
+    ],
+    "K26": [
+      "unextracted",
+      "unverifiable",
+      "unverifiable"
+    ],
+    "K27": [
+      "false",
+      "misleading",
+      "unextracted"
+    ],
+    "K28": [
+      "unextracted",
+      "misleading",
+      "confirmed"
+    ],
+    "K29": [
+      "confirmed",
+      "plausible",
+      "unverifiable"
+    ],
+    "K30": [
+      "confirmed",
+      "plausible",
+      "plausible"
+    ],
+    "K31": [
+      "confirmed",
+      "confirmed",
+      "plausible"
+    ],
+    "K32": [
+      "confirmed",
+      "confirmed",
+      "misleading"
+    ],
+    "K33": [
+      "misleading",
+      "misleading",
+      "misleading"
+    ],
+    "K34": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K35": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K36": [
+      "confirmed",
+      "unverifiable",
+      "plausible"
+    ],
+    "K37": [
+      "confirmed",
+      "unverifiable",
+      "plausible"
+    ],
+    "K38": [
+      "unextracted",
+      "unverifiable",
+      "unverifiable"
+    ],
+    "K39": [
+      "confirmed",
+      "not checked",
+      "plausible"
+    ],
+    "K40": [
+      "misleading",
+      "plausible",
+      "plausible"
+    ],
+    "K41": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K42": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K43": [
+      "unextracted",
+      "plausible",
+      "unextracted"
+    ],
+    "K44": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K45": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K46": [
+      "confirmed",
+      "confirmed",
+      "plausible"
+    ],
+    "K47": [
+      "misleading",
+      "plausible",
+      "plausible"
+    ],
+    "K48": [
+      "plausible",
+      "plausible",
+      "plausible"
+    ],
+    "K49": [
+      "misleading",
+      "unextracted",
+      "unextracted"
+    ],
+    "K50": [
+      "unverifiable",
+      "unverifiable",
+      "unverifiable"
+    ],
+    "K51": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K52": [
+      "unverifiable",
+      "unverifiable",
+      "unverifiable"
+    ],
+    "K53": [
+      "confirmed",
+      "unverifiable",
+      "confirmed"
+    ],
+    "K54": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K55": [
+      "confirmed",
+      "not rated",
+      "not rated"
+    ],
+    "K56": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K57": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K58": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "K59": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "K60": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ]
+  }
+}

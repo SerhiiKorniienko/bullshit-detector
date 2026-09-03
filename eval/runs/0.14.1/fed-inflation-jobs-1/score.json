@@ -1,0 +1,264 @@
+{
+  "report": "fed-inflation-jobs-1/bs-report-fed-inflation-jobs.md",
+  "rows": 47,
+  "curated": 66,
+  "matched": 40,
+  "merged": 9,
+  "extraction_recall": 0.742,
+  "load_bearing_recall": 0.963,
+  "review_queue": [
+    {
+      "n": "7",
+      "text": "April 2026 payrolls were revised down by [31,000] jobs to [148,000] April is now at 148,000 jobs. This was also revised "
+    },
+    {
+      "n": "19",
+      "text": "The same JOLTS report showed [5.2 million] people were hired 5.2 million people were hired"
+    },
+    {
+      "n": "20",
+      "text": "The same JOLTS report showed [5.1 million] people separated from employment 5.1 million people separated from their empl"
+    },
+    {
+      "n": "29",
+      "text": "Personal consumption expenditures (spending) rose [0.7%], or [$156 billion], per data released [June 25, 2026] Personal "
+    },
+    {
+      "n": "32",
+      "text": "The University of Michigan's current economic conditions sub-index was up [4.1%] month-over-month and down [26.4%] year-"
+    },
+    {
+      "n": "33",
+      "text": "The University of Michigan's index of consumer expectations was up [15%] month-over-month and down [12.7%] year-over-yea"
+    },
+    {
+      "n": "37",
+      "text": "The ISM's employment sub-index has been in contraction for a while, as of the June 2026 report Employment's been contrac"
+    }
+  ],
+  "verdicts_scored": 49,
+  "exact_agreement": 0.776,
+  "tolerated_agreement": 0.857,
+  "qwk": 0.697,
+  "confusion": {
+    "confirmed->confirmed": 30,
+    "confirmed->false": 1,
+    "confirmed->plausible": 1,
+    "confirmed->unverifiable": 1,
+    "false->false": 3,
+    "misleading->confirmed": 2,
+    "misleading->plausible": 2,
+    "plausible->confirmed": 2,
+    "plausible->plausible": 4,
+    "plausible->unverifiable": 1,
+    "unverifiable->plausible": 1,
+    "unverifiable->unverifiable": 1
+  },
+  "known_true": 42,
+  "known_true_rate": 0.714,
+  "known_true_missed_by_extraction": 9,
+  "known_false": 3,
+  "known_false_catch_rate": 1.0,
+  "laundered_merges": [
+    "pair F59+F60 merged into row 46: rated plausible, harshest member label is severity 2"
+  ],
+  "pair_warnings": [],
+  "matches": {
+    "F10": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "F11": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "F12": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "F13": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "F14": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "F15": {
+      "row": "11",
+      "sim": 0.86
+    },
+    "F16": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "F17": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "F18": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "F19": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "F2": {
+      "row": "1",
+      "sim": 0.83
+    },
+    "F20": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "F21": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "F22": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "F23": {
+      "row": "21",
+      "sim": 1.0
+    },
+    "F25": {
+      "row": "22",
+      "sim": 0.88
+    },
+    "F26": {
+      "row": "23",
+      "sim": 0.5
+    },
+    "F27": {
+      "row": "23",
+      "sim": 0.6
+    },
+    "F28": {
+      "row": "23",
+      "sim": 0.65
+    },
+    "F29": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "F3": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "F30": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "F32": {
+      "row": "24",
+      "sim": 1.0
+    },
+    "F34": {
+      "row": "26",
+      "sim": 1.0
+    },
+    "F35": {
+      "row": "27",
+      "sim": 1.0
+    },
+    "F36": {
+      "row": "28",
+      "sim": 1.0
+    },
+    "F38": {
+      "row": "30",
+      "sim": 1.0
+    },
+    "F4": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "F40": {
+      "row": "31",
+      "sim": 1.0
+    },
+    "F41": {
+      "row": "34",
+      "sim": 0.73
+    },
+    "F42": {
+      "row": "34",
+      "sim": 1.0
+    },
+    "F44": {
+      "row": "35",
+      "sim": 1.0
+    },
+    "F45": {
+      "row": "36",
+      "sim": 1.0
+    },
+    "F46": {
+      "row": "38",
+      "sim": 1.0
+    },
+    "F48": {
+      "row": "40",
+      "sim": 1.0
+    },
+    "F49": {
+      "row": "39",
+      "sim": 1.0
+    },
+    "F50": {
+      "row": "40",
+      "sim": 1.0
+    },
+    "F51": {
+      "row": "41",
+      "sim": 1.0
+    },
+    "F52": {
+      "row": "41",
+      "sim": 1.0
+    },
+    "F54": {
+      "row": "42",
+      "sim": 1.0
+    },
+    "F55": {
+      "row": "43",
+      "sim": 1.0
+    },
+    "F57": {
+      "row": "44",
+      "sim": 1.0
+    },
+    "F58": {
+      "row": "45",
+      "sim": 1.0
+    },
+    "F59": {
+      "row": "46",
+      "sim": 1.0
+    },
+    "F60": {
+      "row": "46",
+      "sim": 1.0
+    },
+    "F63": {
+      "row": "47",
+      "sim": 1.0
+    },
+    "F7": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "F8": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "F9": {
+      "row": "6",
+      "sim": 1.0
+    }
+  }
+}

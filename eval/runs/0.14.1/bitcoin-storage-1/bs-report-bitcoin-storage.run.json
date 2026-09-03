@@ -1,0 +1,19 @@
+{"schema": "bullshit-detector/run@1", "version": "0.14.0",
+ "source": "https://youtu.be/2X2V3xv_jik", "report": "bs-report-bitcoin-storage.md",
+ "started": "2026-09-03T07:28:17Z", "finished": "2026-09-03T07:37:31Z", "wall_seconds": 554,
+ "mode": "claims-only", "model": "claude-sonnet-5", "effort": "xhigh", "harness": "claude-code",
+ "claims": {"extracted": 20, "checked": 19, "dropped_ambiguous": 0},
+ "source_words": 1094, "fetches": 4, "coverage_checks": 0, "tools": 28,
+ "queries": [
+   {"claim": 1, "pass": "first", "q": "Coldcard hardware wallet hack random number generator July 2026"},
+   {"claim": 2, "pass": "first", "q": "Coinkite Coldcard Bitcoin stolen total amount hack"},
+   {"claim": 16, "pass": "first", "q": "Coldcard hack victims race mempool rescue transaction mining pool directly"},
+   {"claim": 14, "pass": "first", "q": "Coinkite CEO apology Coldcard hack statement accountability"},
+   {"claim": 19, "pass": "first", "q": "Lovable AI \"50 million\" projects built"},
+   {"claim": 3, "pass": "first", "q": "Bitcoin price August 2025 vs August 2026"},
+   {"claim": 3, "pass": "follow-up", "q": "Bitcoin price August 5 2025 closing price"},
+   {"claim": 3, "pass": "follow-up", "q": "Bitcoin price August 5 2026"},
+   {"claim": 7, "pass": "first", "q": "Coinkite Coldcard company Toronto Canada based"},
+   {"claim": 12, "pass": "first", "q": "Coldcard hack attacker prioritized largest wallets first biggest balances"},
+   {"claim": 10, "pass": "follow-up", "q": "Coinkite Coldcard official security advisory postmortem MICROPY_HW_ENABLE_RNG"}
+ ]}

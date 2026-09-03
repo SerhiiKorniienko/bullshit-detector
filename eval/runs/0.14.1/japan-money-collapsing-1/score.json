@@ -1,0 +1,265 @@
+{
+  "report": "japan-money-collapsing-1/bs-report-japan-money-collapsing.md",
+  "rows": 43,
+  "curated": 74,
+  "matched": 42,
+  "merged": 15,
+  "extraction_recall": 0.77,
+  "load_bearing_recall": 0.865,
+  "review_queue": [
+    {
+      "n": "43",
+      "text": "An unnamed economist compared Japan's simultaneous currency intervention and rate hikes to 'tapping the brakes while kee"
+    }
+  ],
+  "verdicts_scored": 19,
+  "exact_agreement": 0.579,
+  "tolerated_agreement": 0.737,
+  "qwk": 0.461,
+  "confusion": {
+    "confirmed->confirmed": 8,
+    "confirmed->false": 1,
+    "confirmed->plausible": 3,
+    "false->false": 1,
+    "plausible->confirmed": 3,
+    "plausible->misleading": 1,
+    "plausible->plausible": 2
+  },
+  "known_true": 13,
+  "known_true_rate": 0.615,
+  "known_true_missed_by_extraction": 1,
+  "known_false": 1,
+  "known_false_catch_rate": 1.0,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "J10": {
+      "row": "23",
+      "sim": 0.6
+    },
+    "J11": {
+      "row": "24",
+      "sim": 1.0
+    },
+    "J12": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "J13": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "J14": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "J15": {
+      "row": "25",
+      "sim": 1.0
+    },
+    "J16": {
+      "row": "26",
+      "sim": 0.89
+    },
+    "J17": {
+      "row": "7",
+      "sim": 0.83
+    },
+    "J18": {
+      "row": "39",
+      "sim": 1.0
+    },
+    "J2": {
+      "row": "19",
+      "sim": 0.75
+    },
+    "J20": {
+      "row": "27",
+      "sim": 1.0
+    },
+    "J21": {
+      "row": "28",
+      "sim": 1.0
+    },
+    "J22": {
+      "row": "29",
+      "sim": 1.0
+    },
+    "J23": {
+      "row": "30",
+      "sim": 1.0
+    },
+    "J24": {
+      "row": "31",
+      "sim": 1.0
+    },
+    "J27": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "J28": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "J29": {
+      "row": "33",
+      "sim": 1.0
+    },
+    "J30": {
+      "row": "34",
+      "sim": 1.0
+    },
+    "J31": {
+      "row": "2",
+      "sim": 0.8
+    },
+    "J32": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "J33": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "J34": {
+      "row": "32",
+      "sim": 0.88
+    },
+    "J35": {
+      "row": "32",
+      "sim": 0.64
+    },
+    "J36": {
+      "row": "32",
+      "sim": 1.0
+    },
+    "J37": {
+      "row": "35",
+      "sim": 0.79
+    },
+    "J38": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "J39": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "J40": {
+      "row": "11",
+      "sim": 0.91
+    },
+    "J41": {
+      "row": "36",
+      "sim": 1.0
+    },
+    "J42": {
+      "row": "8",
+      "sim": 0.93
+    },
+    "J43": {
+      "row": "8",
+      "sim": 0.64
+    },
+    "J44": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "J45": {
+      "row": "18",
+      "sim": 0.56
+    },
+    "J46": {
+      "row": "37",
+      "sim": 1.0
+    },
+    "J49": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "J5": {
+      "row": "11",
+      "sim": 0.56
+    },
+    "J50": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "J51": {
+      "row": "38",
+      "sim": 1.0
+    },
+    "J52": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "J53": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "J54": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "J55": {
+      "row": "13",
+      "sim": 0.57
+    },
+    "J57": {
+      "row": "13",
+      "sim": 0.78
+    },
+    "J58": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "J6": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "J60": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "J61": {
+      "row": "40",
+      "sim": 1.0
+    },
+    "J62": {
+      "row": "40",
+      "sim": 0.5
+    },
+    "J63": {
+      "row": "42",
+      "sim": 1.0
+    },
+    "J64": {
+      "row": "41",
+      "sim": 1.0
+    },
+    "J67": {
+      "row": "18",
+      "sim": 0.9
+    },
+    "J68": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "J69": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "J7": {
+      "row": "21",
+      "sim": 1.0
+    },
+    "J8": {
+      "row": "22",
+      "sim": 1.0
+    },
+    "J9": {
+      "row": "20",
+      "sim": 1.0
+    }
+  }
+}

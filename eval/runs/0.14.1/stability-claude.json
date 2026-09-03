@@ -1,0 +1,149 @@
+{
+  "runs": 3,
+  "claims": 28,
+  "unanimous": 13,
+  "unanimous_rate": 0.464,
+  "mean_distinct_verdicts": 1.61,
+  "table": {
+    "C1": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "C2": [
+      "plausible",
+      "plausible",
+      "plausible"
+    ],
+    "C3": [
+      "confirmed",
+      "plausible",
+      "plausible"
+    ],
+    "C4": [
+      "confirmed",
+      "confirmed",
+      "plausible"
+    ],
+    "C5": [
+      "plausible",
+      "plausible",
+      "plausible"
+    ],
+    "C6": [
+      "misleading",
+      "misleading",
+      "plausible"
+    ],
+    "C7": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "C8": [
+      "misleading",
+      "misleading",
+      "misleading"
+    ],
+    "C9": [
+      "misleading",
+      "misleading",
+      "misleading"
+    ],
+    "C10": [
+      "plausible",
+      "unextracted",
+      "unextracted"
+    ],
+    "C11": [
+      "misleading",
+      "misleading",
+      "misleading"
+    ],
+    "C12": [
+      "plausible",
+      "plausible",
+      "plausible"
+    ],
+    "C13": [
+      "plausible",
+      "unextracted",
+      "misleading"
+    ],
+    "C14": [
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "C15": [
+      "plausible",
+      "confirmed",
+      "unextracted"
+    ],
+    "C16": [
+      "confirmed",
+      "misleading",
+      "confirmed"
+    ],
+    "C17": [
+      "confirmed",
+      "plausible",
+      "plausible"
+    ],
+    "C18": [
+      "confirmed",
+      "confirmed",
+      "unextracted"
+    ],
+    "C19": [
+      "confirmed",
+      "plausible",
+      "confirmed"
+    ],
+    "C20": [
+      "misleading",
+      "plausible",
+      "misleading"
+    ],
+    "C21": [
+      "confirmed",
+      "unextracted",
+      "confirmed"
+    ],
+    "C22": [
+      "confirmed",
+      "unextracted",
+      "confirmed"
+    ],
+    "C23": [
+      "misleading",
+      "misleading",
+      "confirmed"
+    ],
+    "C24": [
+      "unverifiable",
+      "unverifiable",
+      "unextracted"
+    ],
+    "C25": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "C26": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "C27": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ],
+    "C28": [
+      "unextracted",
+      "unextracted",
+      "unextracted"
+    ]
+  }
+}

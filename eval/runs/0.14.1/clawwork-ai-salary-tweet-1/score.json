@@ -1,0 +1,82 @@
+{
+  "report": "clawwork-ai-salary-tweet-1/bs-report-clawwork-ai-salary-tweet.md",
+  "rows": 10,
+  "curated": 17,
+  "matched": 10,
+  "merged": 3,
+  "extraction_recall": 0.765,
+  "load_bearing_recall": 0.75,
+  "review_queue": [],
+  "verdicts_scored": 13,
+  "exact_agreement": 0.538,
+  "tolerated_agreement": 0.846,
+  "qwk": -0.136,
+  "confusion": {
+    "confirmed->confirmed": 6,
+    "confirmed->plausible": 4,
+    "misleading->confirmed": 1,
+    "plausible->confirmed": 1,
+    "plausible->plausible": 1
+  },
+  "known_true": 12,
+  "known_true_rate": 0.75,
+  "known_true_missed_by_extraction": 2,
+  "known_false": 1,
+  "known_false_catch_rate": 0.0,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "T13": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "T14": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "T15": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "T16": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "T17": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "T2": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "T3": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "T4": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "T5": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "T6": {
+      "row": "7",
+      "sim": 1.0
+    },
+    "T7": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "T8": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "T9": {
+      "row": "6",
+      "sim": 1.0
+    }
+  }
+}

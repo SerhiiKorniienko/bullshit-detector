@@ -1,0 +1,128 @@
+{
+  "report": "our-solar-system-1/bs-report-our-solar-system.md",
+  "rows": 16,
+  "curated": 38,
+  "matched": 16,
+  "merged": 8,
+  "extraction_recall": 0.632,
+  "load_bearing_recall": 0.333,
+  "review_queue": [],
+  "verdicts_scored": 24,
+  "exact_agreement": 0.833,
+  "tolerated_agreement": 0.917,
+  "qwk": 0.784,
+  "confusion": {
+    "confirmed->confirmed": 18,
+    "confirmed->misleading": 1,
+    "false->false": 1,
+    "misleading->false": 1,
+    "misleading->misleading": 1,
+    "misleading->plausible": 1,
+    "plausible->false": 1
+  },
+  "known_true": 30,
+  "known_true_rate": 0.6,
+  "known_true_missed_by_extraction": 11,
+  "known_false": 1,
+  "known_false_catch_rate": 1.0,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "S1": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "S12": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "S13": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "S14": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "S15": {
+      "row": "7",
+      "sim": 1.0
+    },
+    "S17": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "S18": {
+      "row": "9",
+      "sim": 0.78
+    },
+    "S19": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "S2": {
+      "row": "2",
+      "sim": 0.84
+    },
+    "S20": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "S23": {
+      "row": "12",
+      "sim": 0.57
+    },
+    "S24": {
+      "row": "12",
+      "sim": 0.5
+    },
+    "S25": {
+      "row": "10a",
+      "sim": 1.0
+    },
+    "S26": {
+      "row": "10b",
+      "sim": 1.0
+    },
+    "S27": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "S29": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "S3": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "S30": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "S32": {
+      "row": "13",
+      "sim": 0.7
+    },
+    "S34": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "S35": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "S37": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "S4": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "S5": {
+      "row": "1",
+      "sim": 0.5
+    }
+  }
+}

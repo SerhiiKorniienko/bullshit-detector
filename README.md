@@ -122,12 +122,16 @@ Honest limits, because a tool like this earns nothing by overselling itself:
   reporting sometimes re-enters quoted secondhand by an aggregator, which looks like an independent
   source and isn't. [The measurements are here](./experiments/2026-07-30-credible-sources.md); it's
   worse than I assumed before running them.
-- **It has an eval harness and no published number yet.** [`eval/`](./eval/README.md) scores a run
-  against hand-labelled claims, but the labels on its ten cases are unreviewed drafts, so
-  there is still no number for how often it's right. The only evidence of accuracy is reports it
-  wrote about content its author chose, which is exactly the circularity its own
-  [self-audit](./examples/0.4.x/report-own-readme.md) flagged and editing can't fix. Tracked as
-  [#3](https://github.com/SerhiiKorniienko/bullshit-detector/issues/3), and it's the top of the backlog.
+- **It has a measured score, and the score is not good.** On a ten-case corpus of 480
+  hand-labelled claims it found 70% of the curated claims, confirmed 69% of the claims known to be
+  true against a 95% target, caught 69% of the claims known to be false, and rated 2 true claims
+  false. Same content, three runs: half the claims changed verdict at least once. The full reading,
+  per case, with what it does and does not mean, is in [`eval/RESULTS.md`](./eval/RESULTS.md); the
+  labels are drafts pending owner review and the evidence base is not frozen, so the verdict
+  columns carry retrieval noise. This narrows the circularity its own
+  [self-audit](./examples/0.4.x/report-own-readme.md) flagged (labels written by the same author
+  who picked the content); it does not remove it. Tracked as
+  [#3](https://github.com/SerhiiKorniienko/bullshit-detector/issues/3).
 - **Verdicts vary between runs.** Web search is non-deterministic; the same query minutes apart can
   return a mostly different evidence base. Treat a single report as one reading, not a measurement.
 

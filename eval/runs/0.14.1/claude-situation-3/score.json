@@ -1,0 +1,127 @@
+{
+  "report": "claude-situation-3/bs-report-claude-situation.md",
+  "rows": 23,
+  "curated": 28,
+  "matched": 19,
+  "merged": 0,
+  "extraction_recall": 0.679,
+  "load_bearing_recall": 0.818,
+  "review_queue": [
+    {
+      "n": "6",
+      "text": "A revenue tracker showed Anthropic's annualized revenue at $54 billion in late May [2026], $67 billion in early June, $7"
+    },
+    {
+      "n": "17",
+      "text": "The AI industry's job-replacement business plan (10 million workers/year) is running at something under 100,000/year -- "
+    },
+    {
+      "n": "19",
+      "text": "The bosses of the big AI labs [e.g. Sam Altman and Dario Amodei] spent years touring podcasts and conferences prophesyin"
+    },
+    {
+      "n": "22",
+      "text": "Anthropic's [~$1 trillion] valuation is a price tag near the entire yearly economic output of Switzerland A price tag ne"
+    }
+  ],
+  "verdicts_scored": 19,
+  "exact_agreement": 0.526,
+  "tolerated_agreement": 0.842,
+  "qwk": 0.548,
+  "confusion": {
+    "confirmed->confirmed": 5,
+    "confirmed->misleading": 1,
+    "confirmed->plausible": 2,
+    "false->misleading": 2,
+    "misleading->confirmed": 1,
+    "misleading->misleading": 2,
+    "misleading->plausible": 2,
+    "plausible->confirmed": 1,
+    "plausible->plausible": 3
+  },
+  "known_true": 13,
+  "known_true_rate": 0.538,
+  "known_true_missed_by_extraction": 5,
+  "known_false": 2,
+  "known_false_catch_rate": 1.0,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "C1": {
+      "row": "1",
+      "sim": 1.0
+    },
+    "C11": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "C12": {
+      "row": "10",
+      "sim": 1.0
+    },
+    "C13": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "C14": {
+      "row": "12",
+      "sim": 1.0
+    },
+    "C16": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "C17": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "C19": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "C2": {
+      "row": "2",
+      "sim": 1.0
+    },
+    "C20": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "C21": {
+      "row": "23",
+      "sim": 0.93
+    },
+    "C22": {
+      "row": "21",
+      "sim": 1.0
+    },
+    "C23": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "C3": {
+      "row": "3",
+      "sim": 1.0
+    },
+    "C4": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "C5": {
+      "row": "5",
+      "sim": 0.86
+    },
+    "C6": {
+      "row": "7",
+      "sim": 0.94
+    },
+    "C8": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "C9": {
+      "row": "9",
+      "sim": 1.0
+    }
+  }
+}

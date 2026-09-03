@@ -1,0 +1,297 @@
+{
+  "report": "britain-poor-country-1/bs-report-britain-poor-country.md",
+  "rows": 58,
+  "curated": 60,
+  "matched": 39,
+  "merged": 9,
+  "extraction_recall": 0.8,
+  "load_bearing_recall": 0.793,
+  "review_queue": [
+    {
+      "n": "1",
+      "text": "On Wednesday 22 May 2024, then-PM Rishi Sunak announced a general election, speaking outside 10 Downing Street in heavy "
+    },
+    {
+      "n": "2",
+      "text": "A protester outside Downing Street played D:Ream's 'Things Can Only Get Better' during Sunak's election announcement — a"
+    },
+    {
+      "n": "3",
+      "text": "The Conservative Party had governed the UK for 14 years by the time of the 2024 general election [01:02] the conservativ"
+    },
+    {
+      "n": "21",
+      "text": "David Cameron made high-profile promises to bring net migration down into the 'tens of thousands' [12:52] making high-pr"
+    },
+    {
+      "n": "22",
+      "text": "In 2014, one of David Cameron's own Conservative MPs defected to UKIP [12:52] in 2014 one of Cameron's own MPS even defe"
+    },
+    {
+      "n": "23",
+      "text": "The available evidence at the time suggested staying in the EU was the more prosperous economic choice for the UK [13:55"
+    },
+    {
+      "n": "25",
+      "text": "Theresa May became Prime Minister after David Cameron's resignation, with Boris Johnson pulling out of the Conservative "
+    },
+    {
+      "n": "26",
+      "text": "Theresa May called a snap 2017 election hoping to increase her majority, but the Conservatives lost seats instead, forci"
+    },
+    {
+      "n": "27",
+      "text": "Theresa May told an ITV interviewer that the naughtiest/most rebellious thing she had ever done was run through a field "
+    },
+    {
+      "n": "28",
+      "text": "Theresa May's Brexit withdrawal agreement was rejected by Parliament in three separate votes before she resigned [19:44]"
+    },
+    {
+      "n": "29",
+      "text": "Boris Johnson officially became Prime Minister on 24 July 2019 [20:47] officially takes over as prime minister on the 24"
+    },
+    {
+      "n": "34",
+      "text": "Boris Johnson was hospitalized and moved to intensive care at St Thomas' Hospital after contracting COVID-19 [23:55] lyi"
+    },
+    {
+      "n": "39",
+      "text": "Boris Johnson reportedly told colleagues he would rather 'let the bodies pile high' than impose another lockdown [26:05]"
+    },
+    {
+      "n": "40",
+      "text": "The Conservative Party's opinion poll lead peaked at around 22% while Boris Johnson was hospitalized with COVID [26:05] "
+    },
+    {
+      "n": "41",
+      "text": "In May 2021 the Conservatives won the Hartlepool by-election, their first win there since 1959 [26:05] in May the conser"
+    },
+    {
+      "n": "44a",
+      "text": "Boris Johnson attempted to promote an MP (Chris Pincher) who had been credibly accused of multiple counts of sexual assa"
+    },
+    {
+      "n": "45",
+      "text": "Liz Truss was a co-author of the 2012 book 'Britannia Unchained' [29:16] a one-time contributor to a book called britani"
+    },
+    {
+      "n": "48",
+      "text": "The Daily Star ran a livestream betting that Liz Truss would resign before a lettuce wilted, and the lettuce 'won' [30:1"
+    },
+    {
+      "n": "50",
+      "text": "Rishi Sunak became UK Prime Minister on 25 October 2022 [31:22] on the 25th of October 2022 he becomes prime minister of"
+    }
+  ],
+  "verdicts_scored": 4,
+  "exact_agreement": 0.5,
+  "tolerated_agreement": 0.75,
+  "qwk": 0.0,
+  "confusion": {
+    "confirmed->confirmed": 2,
+    "misleading->confirmed": 1,
+    "plausible->confirmed": 1
+  },
+  "known_true": 4,
+  "known_true_rate": 0.5,
+  "known_true_missed_by_extraction": 2,
+  "known_false": 1,
+  "known_false_catch_rate": 0.0,
+  "laundered_merges": [],
+  "pair_warnings": [],
+  "matches": {
+    "B1": {
+      "row": "4",
+      "sim": 1.0
+    },
+    "B10": {
+      "row": "11",
+      "sim": 1.0
+    },
+    "B12": {
+      "row": "12a",
+      "sim": 1.0
+    },
+    "B13": {
+      "row": "12b",
+      "sim": 1.0
+    },
+    "B14": {
+      "row": "12c",
+      "sim": 0.92
+    },
+    "B15": {
+      "row": "13",
+      "sim": 1.0
+    },
+    "B16": {
+      "row": "14",
+      "sim": 1.0
+    },
+    "B17": {
+      "row": "15",
+      "sim": 1.0
+    },
+    "B18": {
+      "row": "16",
+      "sim": 1.0
+    },
+    "B20": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "B21": {
+      "row": "17",
+      "sim": 1.0
+    },
+    "B22": {
+      "row": "18",
+      "sim": 0.67
+    },
+    "B23": {
+      "row": "18",
+      "sim": 1.0
+    },
+    "B24": {
+      "row": "19",
+      "sim": 1.0
+    },
+    "B25": {
+      "row": "20",
+      "sim": 1.0
+    },
+    "B26": {
+      "row": "54",
+      "sim": 0.67
+    },
+    "B27": {
+      "row": "24",
+      "sim": 1.0
+    },
+    "B29": {
+      "row": "30",
+      "sim": 1.0
+    },
+    "B3": {
+      "row": "5",
+      "sim": 1.0
+    },
+    "B30": {
+      "row": "30",
+      "sim": 1.0
+    },
+    "B31": {
+      "row": "31",
+      "sim": 1.0
+    },
+    "B32": {
+      "row": "32",
+      "sim": 1.0
+    },
+    "B33": {
+      "row": "33",
+      "sim": 1.0
+    },
+    "B34": {
+      "row": "35",
+      "sim": 1.0
+    },
+    "B35": {
+      "row": "36",
+      "sim": 1.0
+    },
+    "B36": {
+      "row": "36",
+      "sim": 1.0
+    },
+    "B37": {
+      "row": "37",
+      "sim": 1.0
+    },
+    "B38": {
+      "row": "38",
+      "sim": 1.0
+    },
+    "B4": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "B40": {
+      "row": "42",
+      "sim": 1.0
+    },
+    "B41": {
+      "row": "43",
+      "sim": 1.0
+    },
+    "B42": {
+      "row": "43",
+      "sim": 1.0
+    },
+    "B43": {
+      "row": "44b",
+      "sim": 1.0
+    },
+    "B44": {
+      "row": "46",
+      "sim": 1.0
+    },
+    "B46": {
+      "row": "47",
+      "sim": 1.0
+    },
+    "B47": {
+      "row": "47",
+      "sim": 1.0
+    },
+    "B48": {
+      "row": "49",
+      "sim": 1.0
+    },
+    "B49": {
+      "row": "51",
+      "sim": 1.0
+    },
+    "B5": {
+      "row": "6",
+      "sim": 1.0
+    },
+    "B50": {
+      "row": "51",
+      "sim": 1.0
+    },
+    "B51": {
+      "row": "52",
+      "sim": 1.0
+    },
+    "B52": {
+      "row": "52",
+      "sim": 0.64
+    },
+    "B57": {
+      "row": "53",
+      "sim": 0.92
+    },
+    "B6": {
+      "row": "7",
+      "sim": 1.0
+    },
+    "B60": {
+      "row": "55",
+      "sim": 1.0
+    },
+    "B7": {
+      "row": "8",
+      "sim": 1.0
+    },
+    "B8": {
+      "row": "9",
+      "sim": 1.0
+    },
+    "B9": {
+      "row": "10",
+      "sim": 1.0
+    }
+  }
+}
