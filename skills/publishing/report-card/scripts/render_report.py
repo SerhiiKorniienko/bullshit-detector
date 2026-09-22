@@ -91,7 +91,6 @@ MDY_DATE = re.compile(r"\b([A-Za-z]{3,9})\.?\s+(\d{1,2}),?\s+(\d{4})\b")
 MONTH_NUMBERS = {m: i for i, m in enumerate(
     ("jan", "feb", "mar", "apr", "may", "jun",
      "jul", "aug", "sep", "oct", "nov", "dec"), start=1)}
-IMAGE_SUFFIX = re.compile(r"\.(?:png|jpe?g|webp|gif)$", re.I)
 
 # schema.org/Article. Google truncates a headline past ~110 characters, and a
 # BS report title carries the subject's own words, which run long.
@@ -150,27 +149,8 @@ def checked_date(raw: str) -> str | None:
     return None
 
 
-def derive_canonical(og_image: str | None) -> str | None:
-    """Infer the page's public URL from the link-preview image URL.
-
-    A published report and its card are written side by side under one stem:
-    `<base>/<slug>.html` is served as `<base>/<slug>`, and the card is
-    `<base>/<slug>.png`. Dropping the image suffix therefore names the page.
-
-    This exists so that callers which already pass `--og-image` get a canonical
-    tag without being changed. `--canonical` overrides it whenever the two do
-    not line up.
-    """
-    if not og_image:
-        return None
-    url = IMAGE_SUFFIX.sub("", og_image)
-    if url == og_image or not urlsplit(url).scheme:
-        return None
-    return url
-
-
 def site_name(canonical: str | None) -> str | None:
-    """The host a page is published under, e.g. `korniienko.dev`.
+    """The host a page is published under, e.g. `example.org`.
 
     Read from the URL rather than configured, so this script carries no
     knowledge of where anyone publishes. A report rendered with no canonical has
@@ -600,12 +580,12 @@ def build(md: str, og_image: str | None, canonical: str | None = None,
 
     # Canonical, social tags and structured data.
     #
-    # These pages are the long-form end of the project: a single report runs to
-    # thousands of words of original research and is cited by search and by AI
-    # crawlers. Until now they shipped with no canonical at all, so every
-    # spelling of a URL that reached one was a separate page to a search engine,
-    # and no structured data, so none of it could be read as an article.
-    canonical = canonical or derive_canonical(og_image)
+    # A hosted report runs to thousands of words and gets cited by search engines
+    # and AI crawlers. Without a canonical every spelling of its URL is a separate
+    # page to them, and without structured data none of it reads as an article.
+    # The canonical is only ever the one the caller states: guessing it from
+    # another URL names the wrong address as the real one, which is worse than
+    # naming none.
     publisher = site_name(canonical)
     published = checked_date(checked_raw)
 
@@ -966,9 +946,8 @@ def main() -> None:
     ap.add_argument("-o", "--out", help="output path (default: same name, .html)")
     ap.add_argument("--og-image", help="absolute URL for the link-preview image")
     ap.add_argument("--canonical",
-                    help="absolute URL the page will be served at. Default: derived from "
-                         "--og-image by dropping the image suffix, since a report and its "
-                         "card share a stem. Without either, the page ships no canonical "
+                    help="absolute URL the page will be served at. Emits <link rel=canonical>, "
+                         "og:url and the Article url. Without it the page ships no canonical "
                          "tag rather than a guessed one.")
     ap.add_argument("--author", default=DEFAULT_AUTHOR,
                     help=f"name for the Article author in the structured data "

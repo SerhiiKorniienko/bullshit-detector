@@ -92,11 +92,10 @@ somewhere; skip it for local files.
 For a hosted page the script also emits `<link rel="canonical">`, Open Graph and Twitter card
 tags, and `Article` structured data. It needs the page's public URL to do that:
 
-- `--canonical <absolute-url>` states it outright.
-- With only `--og-image`, the URL is derived by dropping the image suffix, because a published
-  report and its card share a stem: `<base>/<slug>.png` sits next to `<base>/<slug>`.
-- With neither, the page ships no canonical and no `url` in the structured data. A guessed
-  canonical is worse than none, because it tells search engines the wrong address is the real one.
+- `--canonical <absolute-url>` is that URL. Pass it whenever the page has a fixed address.
+- Without it, the page ships no canonical and no `url` in the structured data. The script never
+  guesses one from `--og-image` or anything else: a wrong canonical tells search engines the wrong
+  address is the real one, which is worse than none.
 
 `--author <name>` and `--author-type Person|Organization` set the Article author. The default is
 the tool itself, since this skill runs for everyone; pass your own name when you publish.
