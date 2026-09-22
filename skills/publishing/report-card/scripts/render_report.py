@@ -6,7 +6,7 @@
 """Render a BS report (markdown) as a self-contained HTML report card.
 
 Usage:
-    uv run render_report.py <report.md> [-o out.html] [--og-image URL]
+    uv run render_report.py <report.md> [-o out.html] [--og-image URL] [--canonical URL]
 
 Output: one HTML file. Inline CSS, inline JS, no network requests, no fonts to
 download. Opens in any browser, prints to a clean PDF, and reads on a phone —
@@ -34,11 +34,13 @@ Exit codes: 0 rendered · 1 bad input · 3 report failed the compliance gate.
 
 import argparse
 import html
+import json
 import os
 import re
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import urlsplit
 
 # ---------------------------------------------------------------------------
 # Palette. Shared with share/scripts/render_carousel.py by copy, not by import:
@@ -80,6 +82,21 @@ AMBIG_LINE = re.compile(r"^>?\s*\*\*Ambiguous:\s*(.+?)$", re.M)
 RUN_LINE = re.compile(r"^\*(run:[^*]*)\*\s*$", re.M | re.I)
 VERSION_STAMP = re.compile(r"bullshit-detector\s+v?(\d+\.\d+\.\d+|unknown)", re.I)
 REPORT_PREFIX = re.compile(r"^BS Report:\s*")
+# "**Checked:** 2026-09-05 · bullshit-detector 0.14.0" — the day the report was
+# produced, which is both its publication and its last-modified date. Real
+# reports also write it as "3 Aug 2026" and "Aug 3, 2026", so all three parse.
+ISO_DATE = re.compile(r"\b(\d{4}-\d{2}-\d{2})\b")
+DMY_DATE = re.compile(r"\b(\d{1,2})\s+([A-Za-z]{3,9})\.?\s+(\d{4})\b")
+MDY_DATE = re.compile(r"\b([A-Za-z]{3,9})\.?\s+(\d{1,2}),?\s+(\d{4})\b")
+MONTH_NUMBERS = {m: i for i, m in enumerate(
+    ("jan", "feb", "mar", "apr", "may", "jun",
+     "jul", "aug", "sep", "oct", "nov", "dec"), start=1)}
+IMAGE_SUFFIX = re.compile(r"\.(?:png|jpe?g|webp|gif)$", re.I)
+
+# schema.org/Article. Google truncates a headline past ~110 characters, and a
+# BS report title carries the subject's own words, which run long.
+HEADLINE_MAX = 110
+DEFAULT_AUTHOR = "Bullshit Detector"
 
 # Claim numbers carry a letter suffix when a row splits late — the don't-merge rule
 # turns row 24 into `24a` and `24b` rather than renumbering the table under it. A
@@ -110,6 +127,129 @@ def classify(row: str) -> str | None:
 def slugify(text: str) -> str:
     s = re.sub(r"[^\w\s-]", "", text.lower())
     return re.sub(r"[\s_-]+", "-", s).strip("-") or "section"
+
+
+def checked_date(raw: str) -> str | None:
+    """The `**Checked:**` day as `YYYY-MM-DD`, or None when it cannot be read.
+
+    An unreadable date yields no date at all. `datePublished` guessed from the
+    render time would claim the research happened today, which is the one thing
+    structured data on a fact-check must not say.
+    """
+    m = ISO_DATE.search(raw)
+    if m:
+        return m.group(1)
+    for pattern, order in ((DMY_DATE, (3, 2, 1)), (MDY_DATE, (3, 1, 2))):
+        m = pattern.search(raw)
+        if not m:
+            continue
+        year, month_name, day = (m.group(i) for i in order)
+        month = MONTH_NUMBERS.get(month_name[:3].lower())
+        if month:
+            return f"{year}-{month:02d}-{int(day):02d}"
+    return None
+
+
+def derive_canonical(og_image: str | None) -> str | None:
+    """Infer the page's public URL from the link-preview image URL.
+
+    A published report and its card are written side by side under one stem:
+    `<base>/<slug>.html` is served as `<base>/<slug>`, and the card is
+    `<base>/<slug>.png`. Dropping the image suffix therefore names the page.
+
+    This exists so that callers which already pass `--og-image` get a canonical
+    tag without being changed. `--canonical` overrides it whenever the two do
+    not line up.
+    """
+    if not og_image:
+        return None
+    url = IMAGE_SUFFIX.sub("", og_image)
+    if url == og_image or not urlsplit(url).scheme:
+        return None
+    return url
+
+
+def site_name(canonical: str | None) -> str | None:
+    """The host a page is published under, e.g. `korniienko.dev`.
+
+    Read from the URL rather than configured, so this script carries no
+    knowledge of where anyone publishes. A report rendered with no canonical has
+    no site to name.
+    """
+    if not canonical:
+        return None
+    return urlsplit(canonical).netloc or None
+
+
+def lede(md: str, score_m: "re.Match[str] | None") -> str:
+    """The paragraph directly under the score line, if a report has one.
+
+    Some reports write the whole verdict into the score line; others put the band
+    name there ("Hype-heavy") and the reasoning in the paragraph below. Only the
+    first was reaching the page description, so half the reports shipped an
+    eleven-character summary to search engines and link previews.
+    """
+    if not score_m:
+        return ""
+    rest = md[score_m.end():].lstrip("\n")
+    para: list[str] = []
+    for line in rest.split("\n"):
+        if not line.strip():
+            break
+        if line.lstrip().startswith(("#", "|", ">")):
+            break
+        para.append(line.strip())
+    return strip_markdown(" ".join(para))
+
+
+def page_description(verdict_line: str, extra: str, limit: int = 200) -> str:
+    """One line for `<meta name="description">`, `og:description` and the JSON-LD.
+
+    The band name alone says nothing a reader can act on, so when the verdict
+    line is that short the paragraph under it is folded in. Long descriptions are
+    cut at a word boundary: a sentence chopped mid-word looks like a bug on the
+    one surface where a stranger meets the report first.
+    """
+    text = verdict_line
+    if len(text) < 80 and extra:
+        text = f"{text}. {extra}" if text else extra
+    text = " ".join(text.split())
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(" ", 1)[0].rstrip(" .,;:")
+    return f"{cut}…"
+
+
+def article_jsonld(*, headline: str, description: str, canonical: str | None,
+                   og_image: str | None, date: str | None,
+                   author: str, author_type: str, publisher: str | None) -> str:
+    """schema.org/Article for the report page.
+
+    Every field comes from the report or the caller. Fields that cannot be known
+    are left out rather than guessed: structured data that states a wrong date or
+    a wrong publisher is worse than structured data that omits them.
+    """
+    data: dict[str, object] = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": headline[:HEADLINE_MAX],
+        "description": description,
+        "author": {"@type": author_type, "name": author},
+    }
+    if date:
+        data["datePublished"] = date
+        data["dateModified"] = date
+    if publisher:
+        data["publisher"] = {"@type": "Organization", "name": publisher}
+    if canonical:
+        data["url"] = canonical
+        data["mainEntityOfPage"] = {"@type": "WebPage", "@id": canonical}
+    if og_image:
+        data["image"] = og_image
+    # `</script>` inside a JSON string would close the block early.
+    return ('<script type="application/ld+json">'
+            + json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+            + '</script>')
 
 
 # ---------------------------------------------------------------------------
@@ -355,7 +495,8 @@ def strip_markdown(text: str) -> str:
     return text.strip()
 
 
-def build(md: str, og_image: str | None) -> tuple[dict, str]:
+def build(md: str, og_image: str | None, canonical: str | None = None,
+          author: str = DEFAULT_AUTHOR, author_type: str = "Organization") -> tuple[dict, str]:
     title_m = H1.search(md)
     title = title_m.group(1) if title_m else "BS Report"
 
@@ -412,7 +553,7 @@ def build(md: str, og_image: str | None) -> tuple[dict, str]:
             f'<div class="score-num">{score}<span class="score-den">/10</span></div>'
             f'<div class="score-band">{html.escape(band)}</div></div>'
             f'<p class="score-verdict">{inline(verdict_line)}</p>')
-        og_desc = strip_markdown(verdict_line)
+        og_desc = page_description(strip_markdown(verdict_line), lede(md, score_m))
         og_title = f"{strip_markdown(title)} — {score}/10"
     else:
         hero_score = '<div class="score score--none"><div class="score-num">—</div>' \
@@ -457,9 +598,53 @@ def build(md: str, og_image: str | None) -> tuple[dict, str]:
     run_html = (f'<p class="run">{html.escape(run_m.group(1))}</p>' if run_m else "")
     version = version_m.group(1) if version_m else "unknown"
 
-    og_tags = (f'<meta property="og:image" content="{html.escape(og_image, quote=True)}">'
-               f'<meta name="twitter:card" content="summary_large_image">'
-               if og_image else '<meta name="twitter:card" content="summary">')
+    # Canonical, social tags and structured data.
+    #
+    # These pages are the long-form end of the project: a single report runs to
+    # thousands of words of original research and is cited by search and by AI
+    # crawlers. Until now they shipped with no canonical at all, so every
+    # spelling of a URL that reached one was a separate page to a search engine,
+    # and no structured data, so none of it could be read as an article.
+    canonical = canonical or derive_canonical(og_image)
+    publisher = site_name(canonical)
+    published = checked_date(checked_raw)
+
+    canonical_tag = (f'<link rel="canonical" href="{html.escape(canonical, quote=True)}">'
+                     if canonical else "")
+    esc_title = html.escape(og_title, quote=True)
+    esc_desc = html.escape(og_desc, quote=True)
+    social = [
+        '<meta property="og:type" content="article">',
+        f'<meta property="og:title" content="{esc_title}">',
+        f'<meta property="og:description" content="{esc_desc}">',
+        f'<meta name="twitter:title" content="{esc_title}">',
+        f'<meta name="twitter:description" content="{esc_desc}">',
+    ]
+    if canonical:
+        social.insert(0, f'<meta property="og:url" content="{html.escape(canonical, quote=True)}">')
+    if publisher:
+        social.insert(0, f'<meta property="og:site_name" content="{html.escape(publisher, quote=True)}">')
+    if published:
+        social.append(f'<meta property="article:published_time" content="{published}">')
+    if og_image:
+        esc_image = html.escape(og_image, quote=True)
+        social.append(f'<meta property="og:image" content="{esc_image}">')
+        social.append(f'<meta name="twitter:image" content="{esc_image}">')
+        social.append('<meta name="twitter:card" content="summary_large_image">')
+    else:
+        social.append('<meta name="twitter:card" content="summary">')
+    og_tags = "\n".join(social)
+
+    jsonld = article_jsonld(
+        headline=strip_markdown(og_title),
+        description=og_desc,
+        canonical=canonical,
+        og_image=og_image,
+        date=published,
+        author=author,
+        author_type=author_type,
+        publisher=publisher,
+    )
 
     # Backslashes are not allowed inside f-string expressions before 3.12, and
     # this file must run on 3.10.
@@ -496,12 +681,11 @@ def build(md: str, og_image: str | None) -> tuple[dict, str]:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(og_title)}</title>
 <meta name="description" content="{html.escape(og_desc, quote=True)}">
-<meta property="og:type" content="article">
-<meta property="og:title" content="{html.escape(og_title, quote=True)}">
-<meta property="og:description" content="{html.escape(og_desc, quote=True)}">
+{canonical_tag}
 {og_tags}
 <meta name="generator" content="bullshit-detector {html.escape(version)}">
 <meta name="theme-color" content="#FFF200">
+{jsonld}
 <style>{CSS}</style>
 </head>
 <body>
@@ -781,6 +965,18 @@ def main() -> None:
     ap.add_argument("report", help="path to the report .md")
     ap.add_argument("-o", "--out", help="output path (default: same name, .html)")
     ap.add_argument("--og-image", help="absolute URL for the link-preview image")
+    ap.add_argument("--canonical",
+                    help="absolute URL the page will be served at. Default: derived from "
+                         "--og-image by dropping the image suffix, since a report and its "
+                         "card share a stem. Without either, the page ships no canonical "
+                         "tag rather than a guessed one.")
+    ap.add_argument("--author", default=DEFAULT_AUTHOR,
+                    help=f"name for the Article author in the structured data "
+                         f"(default: {DEFAULT_AUTHOR}, the instrument that produced the "
+                         f"report, since this script ships to everyone)")
+    ap.add_argument("--author-type", choices=("Organization", "Person"), default="Organization",
+                    help="schema.org type for --author (default: Organization). Pass Person "
+                         "when the author is a human being.")
     ap.add_argument("--tally", help="path to tally.py (default: found automatically)")
     ap.add_argument("--no-check", action="store_true",
                     help="skip the compliance gate entirely (for non-report markdown)")
@@ -827,7 +1023,8 @@ def main() -> None:
 
     out = Path(args.out) if args.out else src.with_suffix(".html")
     existed = out.exists()
-    meta, page = build(md, args.og_image)
+    meta, page = build(md, args.og_image, canonical=args.canonical,
+                       author=args.author, author_type=args.author_type)
     out.write_text(page, encoding="utf-8")
 
     # Don't reopen a tab the user already has. Re-rendering is normal — the run
