@@ -87,6 +87,23 @@ viewing a report they already have.
 `--og-image <absolute-url>` adds a link-preview image. Only useful once the page is hosted
 somewhere; skip it for local files.
 
+## Tags for a hosted page
+
+For a hosted page the script also emits `<link rel="canonical">`, Open Graph and Twitter card
+tags, and `Article` structured data. It needs the page's public URL to do that:
+
+- `--canonical <absolute-url>` is that URL. Pass it whenever the page has a fixed address.
+- Without it, the page ships no canonical and no `url` in the structured data. The script never
+  guesses one from `--og-image` or anything else: a wrong canonical tells search engines the wrong
+  address is the real one, which is worse than none.
+
+`--author <name>` and `--author-type Person|Organization` set the Article author. The default is
+the tool itself, since this skill runs for everyone; pass your own name when you publish.
+
+`datePublished` comes from the report's own `**Checked:**` line, never from the render time. A
+fact-check that stamps today's date on work done last month is the one thing this structured data
+must not say, so a date it cannot read produces no date at all.
+
 Then tell the user the path and that it opens in any browser. On macOS `open <path>` does it.
 
 ## What the page adds over the markdown
