@@ -36,12 +36,17 @@ Report bookkeeping is enforced, not instructed. `skills/analysis/bullshit-detect
 
 The `agents/` directory ships with the Claude Code plugin (auto-discovered) and holds subagents that skills delegate to — e.g. `claim-extractor` pinned to a cheap model for parallel claim extraction on long transcripts. SKILL.md bodies must stay portable: reference such agents conditionally ("if your harness supports subagents…"), never as a hard requirement.
 
-The README banner in `assets/` is generated, not hand-edited: `uv run scripts/render_banner.py`
-writes `banner-light.png` and `banner-dark.png`, and the README picks between them with a
-`<picture>` element. It carries **no version, score or claim count on purpose** — a number frozen
-into an image is a number nobody remembers to update, and this repo cannot afford a stale figure on
-its front page. Type is fitted to the box at render time rather than hardcoded, because a hardcoded
-size clipped the title the first time the canvas width changed. Inter ships in `scripts/fonts/`
-under the SIL OFL (`OFL.txt` travels with it).
+The README banner PNGs in assets/ and the plugin icon (assets/icon.svg) are generated, not
+hand-edited, but their generators and the Inter fonts live in the marketing repo
+(~/Work/personal/bullshit-detector-marketing/assets/), not here. They were moved out on purpose: the
+directory validator holds any version whose scripts reference a bundled image or font, and nothing
+under skills/ needs them — the HTML report and the carousel use system fonts. The banner carries
+**no version, score or claim count on purpose** — a number frozen into an image is a number nobody
+remembers to update, and this repo cannot afford a stale figure on its front page. The README shows
+the banner with Markdown image syntax and GitHub's light-mode-only / dark-mode-only suffixes, because
+the validator wants Markdown image syntax, not a picture element. The icon is an SVG of glyph
+outlines rather than a PNG because the validator reads SVG as text and holds binaries for a reviewer.
+Do not write image or font paths in backticks or code blocks anywhere in the repo, and do not add
+scripts that load them — the validator treats both as a script reaching for an unread binary.
 
 To (re)link every promoted skill into the local harness skill directories (`~/.claude/skills`, `~/.agents/skills`), run `scripts/link-skills.sh`. Symlinks point into this repo, so `git pull` keeps them current; re-run after adding, removing, or renaming a skill.
