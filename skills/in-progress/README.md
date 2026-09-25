@@ -1,6 +1,6 @@
 # In progress
 
-Drafts not yet ready to ship. Nothing here is installed by the plugin, linked by `scripts/link-skills.sh`, or listed in the top-level README.
+Drafts not yet ready to ship. Nothing here is installed by the plugin, linked by `scripts/link-skills.py`, or listed in the top-level README.
 
 Planned:
 
