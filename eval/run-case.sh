@@ -29,7 +29,7 @@ REPORT="$OUT/bs-report-$CASE_ID.md"
 CLAIMS="$OUT/bs-report-$CASE_ID.claims.jsonl"
 SKILL="${EVAL_SKILL:-$HOME/.claude/skills/bullshit-detector}"
 [ -e "$SKILL" ] || SKILL="$HOME/.agents/skills/bullshit-detector"
-[ -e "$SKILL" ] || { echo "no installed skill found — run scripts/link-skills.sh" >&2; exit 1; }
+[ -e "$SKILL" ] || { echo "no installed skill found — run: uv run scripts/link-skills.py" >&2; exit 1; }
 [ -f "$TRANSCRIPT" ] || { echo "no transcript at $TRANSCRIPT" >&2; exit 1; }
 
 # The prompt encodes the method rules that are not optional:

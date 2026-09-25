@@ -49,4 +49,4 @@ outlines rather than a PNG because the validator reads SVG as text and holds bin
 Do not write image or font paths in backticks or code blocks anywhere in the repo, and do not add
 scripts that load them — the validator treats both as a script reaching for an unread binary.
 
-To (re)link every promoted skill into the local harness skill directories (`~/.claude/skills`, `~/.agents/skills`), run `scripts/link-skills.sh`. Symlinks point into this repo, so `git pull` keeps them current; re-run after adding, removing, or renaming a skill.
+To (re)link every promoted skill into the local harness skill directories (`~/.claude/skills`, `~/.agents/skills`), run `uv run scripts/link-skills.py`. Symlinks point into this repo, so `git pull` keeps them current; re-run after adding, removing, or renaming a skill. It was a shell script until 0.14.3, and the plugin directory's validator held every scanned version for a reviewer on it, judging that it "could reach" a bundled image; the shell scripts it did not flag differ from it only in not creating symlinks or deleting directories. Don't port it back to shell.

@@ -25,7 +25,7 @@ npx skills@latest add SerhiiKorniienko/bullshit-detector
 
 Then just ask: *"is this bullshit? \<url\>"*. Skills live in `~/.claude/skills/` (installer) or the plugin cache; Claude Code picks them up automatically.
 
-Contributors: clone the repo and run `scripts/link-skills.sh` — it symlinks the promoted skills into `~/.claude/skills`, so repo edits are live instantly.
+Contributors: clone the repo and run `uv run scripts/link-skills.py` — it symlinks the promoted skills into `~/.claude/skills`, so repo edits are live instantly.
 
 ## Claude Desktop app: Code tab
 
