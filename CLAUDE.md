@@ -37,8 +37,8 @@ Report bookkeeping is enforced, not instructed. `skills/analysis/bullshit-detect
 The `agents/` directory ships with the Claude Code plugin (auto-discovered) and holds subagents that skills delegate to — e.g. `claim-extractor` pinned to a cheap model for parallel claim extraction on long transcripts. SKILL.md bodies must stay portable: reference such agents conditionally ("if your harness supports subagents…"), never as a hard requirement.
 
 The README banner PNGs in assets/ and the plugin icon (assets/icon.svg) are generated, not
-hand-edited, but their generators and the Inter fonts live in the marketing repo
-(~/Work/personal/bullshit-detector-marketing/assets/), not here. They were moved out on purpose: the
+hand-edited, but their generators and the Inter fonts live in the separate marketing repo, not
+here. They were moved out on purpose: the
 directory validator holds any version whose scripts reference a bundled image or font, and nothing
 under skills/ needs them — the HTML report and the carousel use system fonts. The banner carries
 **no version, score or claim count on purpose** — a number frozen into an image is a number nobody
