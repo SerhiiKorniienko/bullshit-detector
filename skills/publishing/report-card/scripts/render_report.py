@@ -106,6 +106,25 @@ DEFAULT_AUTHOR = "Bullshit Detector"
 # tool cannot ship.
 CLAIM_ROW = re.compile(r"^\|\s*(\d+[a-z]?)\s*\|")
 TABLE_SEP = re.compile(r"^\|[\s:|-]+\|\s*$")
+# A cell boundary is a pipe with no backslash in front of it. `tally.py --compose`
+# writes a literal pipe inside a cell as `\|`, the GFM escape, and splitting on every
+# pipe turned a claim quoting "usage limit reached|<unix_seconds>" into two cells:
+# the row gained a column and every cell after it slid one place to the right.
+CELL_BOUNDARY = re.compile(r"(?<!\\)\|")
+
+
+def split_row(row: str) -> list[str]:
+    """A table row's cells, outer pipes dropped and `\\|` restored to a literal pipe.
+
+    Split before stripping the outer pipes: `strip("|")` on a last cell ending in an
+    escaped pipe would eat the escape's pipe along with the row's closing one.
+    """
+    cells = [c.strip().replace("\\|", "|") for c in CELL_BOUNDARY.split(row.strip())]
+    if cells and not cells[0]:
+        cells = cells[1:]
+    if cells and not cells[-1]:
+        cells = cells[:-1]
+    return cells
 
 
 def classify(row: str) -> str | None:
@@ -116,7 +135,7 @@ def classify(row: str) -> str | None:
     row — and matching anywhere in the line silently promotes those to confirmed.
     Same bug, same fix as tally.py.
     """
-    for cell in (c.strip() for c in row.split("|")):
+    for cell in split_row(row):
         for glyph, key in GLYPH_TO_KEY.items():
             if cell.startswith(glyph):
                 return key
@@ -401,8 +420,7 @@ def render_blocks(lines: list[str], claim_counter: dict) -> str:
 def render_table(rows: list[str], claim_counter: dict) -> str:
     """Render a markdown table. Claim tables get per-row verdict metadata so the
     filter chips and the mobile card layout have something to work with."""
-    cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows
-             if not TABLE_SEP.match(r)]
+    cells = [split_row(r) for r in rows if not TABLE_SEP.match(r)]
     if not cells:
         return ""
 
